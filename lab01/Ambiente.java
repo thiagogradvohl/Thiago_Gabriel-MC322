@@ -1,5 +1,3 @@
-package lab01;
-
 public class Ambiente {
     private int altura;
     private int largura;
@@ -18,6 +16,6 @@ public class Ambiente {
     }
 
     public boolean dentroDosLimites(int x, int y) {
-        return this.largura >= x && this.altura >= y;
+        return x <= this.largura && x >= 0 && y >= 0 && y <= this.altura;
     }
 }
