@@ -12,7 +12,7 @@ public class Main {
         
         if (ambiente.dentroDosLimites(robo.getPosicaox(), robo.getPosicaoy()))  //Se robo esta dentro dos limites
             System.out.printf("Está dentro dos limites\n");
-        else
+        else //caso contrário
             System.out.printf("Não está dentro dos limites\n");
         
     }
