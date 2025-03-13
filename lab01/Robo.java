@@ -5,6 +5,7 @@ public class Robo
     private int posicaoy;
 
     public Robo(int posicaox, int posicaoy, String nome) {
+        //Método construtor: Define o nome, a posicao x e a posicao y do robô.
         this.nome = nome;
         this.posicaox = posicaox;
         this.posicaoy = posicaoy;
