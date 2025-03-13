@@ -7,9 +7,13 @@ public class Main {
         robo.exibirPosicao();
 
         robo.mover(10, 10);
-        
-        System.out.printf("Está dentro do limite %b\n", ambiente.dentroDosLimites(20, 20));
-        
+
         robo.exibirPosicao();
+        
+        if (ambiente.dentroDosLimites(robo.getPosicaox(), robo.getPosicaoy()))  //Se robo esta dentro dos limites
+            System.out.printf("Está dentro dos limites\n");
+        else
+            System.out.printf("Não está dentro dos limites\n");
+        
     }
 }
