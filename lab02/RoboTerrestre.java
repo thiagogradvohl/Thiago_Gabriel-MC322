@@ -10,10 +10,12 @@ public class RoboTerrestre extends Robo {
         return velocidadeMaxima;    
     }
     
+    @Override
     public void mover(int delta_x, int delta_y, int velocidade) {
         if (velocidade > this.velocidadeMaxima)
             System.out.printf("Não foi possível realizar o movimento. A velocidade está acima da velocidade máxima.\n");
         else 
-            mover(delta_x, delta_y);
+            this.posicaox += delta_x;   
+            this.posicaoy += delta_y;   
     }   
 }
