@@ -1,8 +1,8 @@
 public class Robo 
 {
     private String nome;
-    private int posicaox;
-    private int posicaoy;
+    protected int posicaox;
+    protected int posicaoy;
 
     public Robo(int posicaox, int posicaoy, String nome) {
         //Método construtor: Define o nome, a posicao x e a posicao y do robô.
@@ -26,7 +26,7 @@ public class Robo
         return posicaoy;
     }
 
-    public void mover(int deltaX, int deltaY) {
+    public void mover(int deltaX, int deltaY, int velocidade) {
         //move as posições x e y do robô de acordo com um delta x e um delta y.
         this.posicaox += deltaX;
         this.posicaoy += deltaY; 
