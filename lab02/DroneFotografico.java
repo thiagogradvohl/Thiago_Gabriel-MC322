@@ -1,4 +1,4 @@
-public class DroneFotografico extends RoboAereo{
+public class DroneFotografico extends RoboAereo {
     private boolean camera_ligada;
     private int fotos_tiradas; //quantidade de fotos tiradas
 
@@ -17,7 +17,8 @@ public class DroneFotografico extends RoboAereo{
     }
 
     public void tirar_foto() {
-        if (this.camera_ligada) {
+        //essa funcao faz o drone tirar uma foto aerea de sua posicao 
+        if (this.camera_ligada) {  
             System.out.printf("Foto tirada na posição: (%d, %d, %d).\n", getPosicaox(), getPosicaoy(), getAltitude());
             this.fotos_tiradas++;
         }
