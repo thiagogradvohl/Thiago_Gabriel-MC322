@@ -26,10 +26,10 @@ public class Robo
         return posicaoy;
     }
 
-    public void mover(int deltaX, int deltaY, int velocidade) {
+    public void mover(int delta_x, int delta_y) {
         //move as posições x e y do robô de acordo com um delta x e um delta y.
-        this.posicaox += deltaX;
-        this.posicaoy += deltaY; 
+        this.posicaox += delta_x;
+        this.posicaoy += delta_y; 
     }
     
     public void exibirPosicao() {
