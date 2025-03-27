@@ -1,4 +1,6 @@
 public class DroneEntregador extends RoboAereo {
+    //Essa é uma subclasse de robos aereos que representam robos entregadores. 
+    //Eles operam com destinos e pontos de partida, e as respectivas coordenadas de ambos lugares. Além disso, o robo é provido com um metodo de calcular distancia total e a restante ao ponto de chegada
     int destino_x;
     int destino_y;
     int destino_z;
@@ -22,6 +24,7 @@ public class DroneEntregador extends RoboAereo {
     }
 
     public void CalculaDistanciaTotal(){
+        //calcula e imprime a distância total, pela norma euclidiana ,do trajeto
         double distancia_total = Math.sqrt(
             Math.pow((destino_x - partida_x), 2) +
             Math.pow((destino_y - partida_y), 2) +
@@ -32,6 +35,7 @@ public class DroneEntregador extends RoboAereo {
     }
 
     public void CalculaDistanciaRestante(){
+        //calcula e imprime para cada dada posição do robo, a distancia restante para chegar no destino
         double distancia_restante = Math.sqrt(
             Math.pow((destino_x - getPosicaox()), 2) +
             Math.pow((destino_y - getPosicaoy()), 2) +
