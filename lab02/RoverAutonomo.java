@@ -1,4 +1,5 @@
 public class RoverAutonomo extends RoboTerrestre {
+    //Subclasse de robos terrestres que percorre trechos de modo autonomo, usando uma bateria que descarrega pelo caminho
     int energia;
     
     
@@ -15,6 +16,7 @@ public class RoverAutonomo extends RoboTerrestre {
     }
    
     public void Recarregar(int energia_adicionada){
+        //recarrega a bateria do robo por uma quantidade especificada
         setEnergia(getEnergia()+energia_adicionada);
         if(getEnergia() > 100)
         {
@@ -26,6 +28,8 @@ public class RoverAutonomo extends RoboTerrestre {
 
     @Override
     public void mover(int delta_x, int delta_y, int velocidade) {
+        //move o robo em uma distancia especificada em cada eixo do plano, seguindo uma pré-determinada velocidade.
+        //computa o consumo de bateria do trajeto e verifica se ela será ou nao suficiente para o trajeto
         int consumo = Math.abs(delta_x) + Math.abs(delta_y); 
         if (energia < consumo) {
             System.out.println("Bateria insuficiente para o movimento. \nFavor carregar\n.");
