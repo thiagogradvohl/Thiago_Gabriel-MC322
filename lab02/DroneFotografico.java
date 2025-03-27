@@ -43,4 +43,12 @@ public class DroneFotografico extends RoboAereo {
         else
             System.out.printf("A câmera já está desligada.\n");
     }
+
+    public void setCamera_ligada(boolean camera_ligada) {
+        this.camera_ligada = camera_ligada;
+    }
+
+    public void setFotos_tiradas(int fotos_tiradas) {
+        this.fotos_tiradas = fotos_tiradas;
+    }
 }
