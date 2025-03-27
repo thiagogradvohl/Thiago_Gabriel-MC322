@@ -1,16 +1,16 @@
 public class Ambiente {
-    private int altura;
+    private int comprimento;
     private int largura;
 
-    public Ambiente(int altura, int largura) {
-        //Método construtor: Define a altura e a largura do ambiente de movimentação do robô.
-        this.altura = altura;
+    public Ambiente(int comprimento, int largura) {
+        //Método construtor: Define a comprimento e a largura do ambiente de movimentação do robô.
+        this.comprimento = comprimento;
         this.largura = largura;
     }
     
-    public int getAltura() {
-        //retorna a altura do ambiente de movimentação do robô.
-        return altura;
+    public int getcomprimento() {
+        //retorna a comprimento do ambiente de movimentação do robô.
+        return comprimento;
     }
 
     public int getLargura() {
@@ -20,6 +20,6 @@ public class Ambiente {
 
     public boolean dentroDosLimites(int x, int y) {
         //retorna se o robô está, ou não, nos limites do ambiente.
-        return x <= this.largura && x >= 0 && y >= 0 && y <= this.altura;
+        return x <= this.largura && x >= 0 && y >= 0 && y <= this.comprimento;
     }
 }
