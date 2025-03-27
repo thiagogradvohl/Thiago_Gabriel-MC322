@@ -1,27 +1,70 @@
-public class AmbienteAereo extends Ambiente{
-    private int altitude;
+public class BB_8 extends RoboTerrestre {
+    //esse robo se locomove como uma bola, com frequencia angular, diametro e velocidade caracteristicos
+    private int diametro;
+    private int frequencia_rotacao;
+    private boolean modo_ataque;
 
-    public AmbienteAereo(int comprimento, int largura, int altitude) {
-        //Método construtor: Define a altura e a largura do ambiente de movimentação do robô.
-        super(comprimento, largura);
-        this.altitude = altitude;
-
+    public BB_8(int diametro, int frequencia_rotacao, int posicaox, int posicaoy, String nome, int velocidadeMaxima, boolean modo_ataque) {
+        super(posicaox, posicaoy, nome, velocidadeMaxima, 0);
+        this.diametro = diametro;
+        this.frequencia_rotacao = frequencia_rotacao;
+        this.modo_ataque = modo_ataque;
+        setVelocidade(velocidade());
     }
-    
-    public void dentroDosLimites(RoboAereo robo) {
-        //retorna se o robô está, ou não, nos limites do ambiente.
-        if (robo.getPosicaox() <= getLargura() && robo.getPosicaox() >= 0 && robo.getPosicaoy() >= 0 && robo.getPosicaoy() <= getcomprimento() && robo.getAltitude() <= getAltitude() && robo.getAltitude() >= 0)
-        System.out.println("O robo esta dentro dos limites.");
+
+    private int velocidade() {
+        //metodo velocidade sobrecarregado da super classe RoboTerrestre,
+        //calcula a velocidade do BB_8 com base no diametro e na frequencia angular
+        //velocidade = f * d * pi
+        return this.frequencia_rotacao * this.diametro * (int) Math.PI;
+    }
+
+    public void atacar() {
+        if (this.modo_ataque)
+            System.out.printf("O BB_8 atacou o alvo na sua posicao: (%d, %d)\n", getPosicaox(), getPosicaoy());
         else
-        System.out.println("O robo nao esta dentro dos limites.");
+            System.out.println("O robo nao atacou. O modo ataque esta desligado.");
     }
-    
-    public int getAltitude()
-    {
-       return this.altitude;
+
+    public void ligar_modo_ataque() {
+        if (this.modo_ataque) 
+            System.out.println("O modo ataque ja esta ligado.");
+        else {
+            this.modo_ataque = true;
+            System.out.println("O modo ataque foi ligado!");
+        }
     }
-    
-    public void setAltitude(int altitude) {
-        this.altitude = altitude;
+
+    public void desligar_modo_ataque() {
+        if (!this.modo_ataque) 
+            System.out.println("O modo ataque ja esta desligado.");
+        else {
+            this.modo_ataque = false;
+            System.out.println("O modo ataque foi desligado!");
+        }
+    }
+
+    public int getDiametro() {
+        return diametro;
+    }
+
+    public int getFrequencia_rotacao() {
+        return frequencia_rotacao;
+    }
+
+    public void setDiametro(int diametro) {
+        this.diametro = diametro;
+    }
+
+    public void setFrequencia_rotacao(int frequencia_rotacao) {
+        this.frequencia_rotacao = frequencia_rotacao;
+    }
+
+    public boolean isModo_ataque() {
+        return modo_ataque;
+    }
+
+    public void setModo_ataque(boolean modo_ataque) {
+        this.modo_ataque = modo_ataque;
     }
 }
