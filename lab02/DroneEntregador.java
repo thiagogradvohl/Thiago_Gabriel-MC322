@@ -43,6 +43,68 @@ public class DroneEntregador extends RoboAereo {
         );
         System.out.printf("A distância restante do trajeto é: %.2f\n",distancia_restante);
     }
-    
 
+    public int getDestino_x() {
+        return destino_x;
+    }
+
+    public int getDestino_y() {
+        return destino_y;
+    }
+
+    public int getDestino_z() {
+        return destino_z;
+    }
+
+    public String getNome_destino() {
+        return nome_destino;
+    }
+
+    public int getPartida_x() {
+        return partida_x;
+    }
+
+    public int getPartida_y() {
+        return partida_y;
+    }
+
+    public int getPartida_z() {
+        return partida_z;
+    }
+
+    public String getNome_partida() {
+        return nome_partida;
+    }
+
+    public void setDestino_x(int destino_x) {
+        this.destino_x = destino_x;
+    }
+
+    public void setDestino_y(int destino_y) {
+        this.destino_y = destino_y;
+    }
+
+    public void setDestino_z(int destino_z) {
+        this.destino_z = destino_z;
+    }
+
+    public void setNome_destino(String nome_destino) {
+        this.nome_destino = nome_destino;
+    }
+
+    public void setPartida_x(int partida_x) {
+        this.partida_x = partida_x;
+    }
+
+    public void setPartida_y(int partida_y) {
+        this.partida_y = partida_y;
+    }
+
+    public void setPartida_z(int partida_z) {
+        this.partida_z = partida_z;
+    }
+
+    public void setNome_partida(String nome_partida) {
+        this.nome_partida = nome_partida;
+    }
 }

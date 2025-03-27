@@ -2,13 +2,14 @@ public class BB_8 extends RoboTerrestre {
     //esse robo se locomove como uma bola, com frequencia angular, diametro e velocidade caracteristicos
     private int diametro;
     private int frequencia_rotacao;
-    private int velocidade;
+    private boolean modo_ataque;
 
-    public BB_8(int diametro, int frequencia_rotacao, int posicaox, int posicaoy, String nome, int velocidadeMaxima) {
-        super(posicaox, posicaoy, nome, velocidadeMaxima);
+    public BB_8(int diametro, int frequencia_rotacao, int posicaox, int posicaoy, String nome, int velocidadeMaxima, boolean modo_ataque) {
+        super(posicaox, posicaoy, nome, velocidadeMaxima, 0);
         this.diametro = diametro;
         this.frequencia_rotacao = frequencia_rotacao;
-        this.velocidade = velocidade();
+        this.modo_ataque = modo_ataque;
+        setVelocidade(velocidade());
     }
 
     private int velocidade() {
@@ -18,16 +19,29 @@ public class BB_8 extends RoboTerrestre {
         return this.frequencia_rotacao * this.diametro * (int) Math.PI;
     }
 
-    @Override
-    public void mover(int delta_x, int delta_y) {
-        //metodo mover sobrescrito do Robo e RoboTerrestre
-        //agora considera a velocidade caracteristica do objeto e nao mais o movimento em 1 segundo (RoboTerrestre) 
-        if (this.velocidade > this.getVelocidadeMaxima())
-            System.out.printf("Não foi possível realizar o movimento. A velocidade está acima da velocidade máxima.\n");
+    public void atacar() {
+        if (this.modo_ataque)
+            System.out.printf("O BB_8 atacou o alvo na sua posicao: (%d, %d)\n", getPosicaox(), getPosicaoy());
+        else
+            System.out.println("O robo nao atacou. O modo ataque esta desligado.");
+    }
+
+    public void ligar_modo_ataque() {
+        if (this.modo_ataque) 
+            System.out.println("O modo ataque ja esta ligado.");
         else {
-            this.posicaox += delta_x;   
-            this.posicaoy += delta_y;  
-        }    
+            this.modo_ataque = true;
+            System.out.println("O modo ataque foi ligado!");
+        }
+    }
+
+    public void desligar_modo_ataque() {
+        if (!this.modo_ataque) 
+            System.out.println("O modo ataque ja esta desligado.");
+        else {
+            this.modo_ataque = false;
+            System.out.println("O modo ataque foi desligado!");
+        }
     }
 
     public int getDiametro() {
@@ -38,7 +52,19 @@ public class BB_8 extends RoboTerrestre {
         return frequencia_rotacao;
     }
 
-    public int getVelocidade() {
-        return velocidade;
+    public void setDiametro(int diametro) {
+        this.diametro = diametro;
+    }
+
+    public void setFrequencia_rotacao(int frequencia_rotacao) {
+        this.frequencia_rotacao = frequencia_rotacao;
+    }
+
+    public boolean isModo_ataque() {
+        return modo_ataque;
+    }
+
+    public void setModo_ataque(boolean modo_ataque) {
+        this.modo_ataque = modo_ataque;
     }
 }

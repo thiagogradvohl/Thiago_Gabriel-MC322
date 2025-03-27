@@ -4,8 +4,8 @@ import java.util.List;
 public class Robo 
 {
     private String nome;
-    private int posicaox;
-    private int posicaoy;
+    protected int posicaox;
+    protected int posicaoy;
 
     public Robo(int posicaox, int posicaoy, String nome) {
         //Método construtor: Define o nome, a posicao x e a posicao y do robô.
@@ -40,13 +40,18 @@ public class Robo
     
     public void mover(int deltaX, int deltaY) {
         //move as posições x e y do robô de acordo com um delta x e um delta y.
-        this.posicaox += deltaX;
-        this.posicaoy += deltaY; 
+        if (this.posicaox + deltaX >= 0 && this.posicaoy >= 0) {
+            this.posicaox += deltaX;
+            this.posicaoy += deltaY; 
+            System.out.println("O robo se moveu!");
+        }
+        else
+            System.out.println("O robo nao se moveu, pois iria para coordenadas negativas.");
     }
     
     public void exibirPosicao() {
         //imprime as posições x e y do robô.
-        System.out.printf("Posicao X: %d\nPosicao Y: %d\n", posicaox, posicaoy);
+        System.out.printf("Posicao X: %d\nPosicao Y: %d\n", this.posicaox, this.posicaoy);
     }
     public List<int[]> identificarObstaculos(List<Obstaculo> obstaculos){
         //identifica
@@ -57,21 +62,22 @@ public class Robo
         {
             if(obs.getPosicaox() == getPosicaox()+1 || obs.getPosicaox() == getPosicaox()-1)
             {
-                obstaculos_vizinhos.add(new int[]{obs.getPosicaox(),getPosicaoy()});
+                obstaculos_vizinhos.add(new int[]{obs.getPosicaox(),obs.getPosicaoy()});
             }
-            if(obs.getPosicaoy() == getPosicaoy()+1 || obs.getPosicaoy() == getPosicaoy()-1)
+            else if(obs.getPosicaoy() == getPosicaoy()+1 || obs.getPosicaoy() == getPosicaoy()-1)
             {
-                obstaculos_vizinhos.add(new int[]{obs.getPosicaox(),getPosicaoy()});
+                obstaculos_vizinhos.add(new int[]{obs.getPosicaox(),obs.getPosicaoy()});
             }
         }
 
         return obstaculos_vizinhos;
     }
-    public void exibirObstaculos(List<Obstaculo> obstaculos)
+
+    public void exibirObstaculos(List<int[]> obstaculos)
     {
-        for(Obstaculo obs : obstaculos)
+        for(int[] obs : obstaculos)
         {
-            System.out.printf("Obstáculo na posição (%d,%d)",obs.getPosicaox(),obs.getPosicaoy());
+            System.out.printf("Obstáculo na posição (%d,%d)\n",obs[0],obs[1]);
         }
     }
 }
