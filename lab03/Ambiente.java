@@ -1,11 +1,17 @@
+import java.util.ArrayList;
+
 public class Ambiente {
     private int comprimento;
     private int largura;
+    ArrayList<Robo> robos;
+    ArrayList<Obstaculo> obstaculos;
 
     public Ambiente(int comprimento, int largura) {
-        //Método construtor: Define a comprimento e a largura do ambiente de movimentação do robô.
+        //Método construtor: Define a comprimento, a largura e cria os arrays que armazenam robos e obstaculos do ambiente.
         this.comprimento = comprimento;
         this.largura = largura;
+        this.robos = new ArrayList<Robo>();
+        this.obstaculos = new ArrayList<Obstaculo>();
     }
     
     public int getcomprimento() {
@@ -13,9 +19,33 @@ public class Ambiente {
         return comprimento;
     }
 
+    public ArrayList<Robo> getRobos() {
+        return robos;
+    }
+
+    public ArrayList<Obstaculo> getObstaculos() {
+        return obstaculos;
+    }
+
     public int getLargura() {
         //retorna a largura do ambiente de movimentação do robô.
         return largura;
+    }
+
+    public void setComprimento(int comprimento) {
+        this.comprimento = comprimento;
+    }
+
+    public void setLargura(int largura) {
+        this.largura = largura;
+    }
+
+    public void setRobos(ArrayList<Robo> robos) {
+        this.robos = robos;
+    }
+
+    public void setObstaculos(ArrayList<Obstaculo> obstaculos) {
+        this.obstaculos = obstaculos;
     }
 
     public void dentroDosLimites(Robo robo) {
@@ -25,12 +55,12 @@ public class Ambiente {
         else
             System.out.println("O robo nao esta dentro dos limites.");
     }
-
-    public void setComprimento(int comprimento) {
-        this.comprimento = comprimento;
+    
+    public void adicionarRobo(Robo r) {
+        this.robos.add(r);
     }
 
-    public void setLargura(int largura) {
-        this.largura = largura;
+    public void removerRobo(Robo r) {
+        this.robos.remove(r);
     }
 }
