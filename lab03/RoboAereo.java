@@ -31,24 +31,23 @@ public class RoboAereo extends Robo {
             this.altitude -= metros;
     }
     
-    public List<int[]> identificarObstaculosAereos(List<ObstaculoAereo> obstaculos){
+    public List<int[]> identificarObstaculosAereos(List<Obstaculo> obstaculos) {
         //identifica
         
         List<int[]> obstaculos_vizinhos = new ArrayList<>();
 
-        for(ObstaculoAereo obs : obstaculos)
-        {
+        for(Obstaculo obs : obstaculos) {
             if(obs.getPosicaox() == getPosicaox()+1 || obs.getPosicaox() == getPosicaox()-1)
             {
-                obstaculos_vizinhos.add(new int[]{obs.getPosicaox(),obs.getPosicaoy(),obs.getAltitudeObs()});
+                obstaculos_vizinhos.add(new int[]{obs.getPosicaox(),obs.getPosicaoy(),obs.getAltura()});
             }
             else if(obs.getPosicaoy() == getPosicaoy()+1 || obs.getPosicaoy() == getPosicaoy()-1)
             {
-                obstaculos_vizinhos.add(new int[]{obs.getPosicaox(),obs.getPosicaoy(),obs.getAltitudeObs()});
+                obstaculos_vizinhos.add(new int[]{obs.getPosicaox(),obs.getPosicaoy(),obs.getAltura()});
             }
-            else if (obs.getAltitudeObs() == getAltitude()+1 || obs.getAltitudeObs() == getAltitude()-1)
+            else if (obs.getAltura() == getAltitude()+1 || obs.getAltura() == getAltitude() - 1)
             {
-                obstaculos_vizinhos.add(new int[]{obs.getPosicaox(),obs.getPosicaoy(),obs.getAltitudeObs()});
+                obstaculos_vizinhos.add(new int[]{obs.getPosicaox(),obs.getPosicaoy(),obs.getAltura()});
             }
         }
 
@@ -56,10 +55,8 @@ public class RoboAereo extends Robo {
     }
 
     @Override
-    public void exibirObstaculos(List<int[]> obstaculos)
-    {
-        for(int[] obs : obstaculos)
-        {
+    public void exibirObstaculos(List<int[]> obstaculos) {
+        for(int[] obs : obstaculos) {
             System.out.printf("Obstáculo na posição (%d,%d,%d)\n",obs[0],obs[1],obs[2]);
         }
     }

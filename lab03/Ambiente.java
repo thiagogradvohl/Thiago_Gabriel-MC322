@@ -3,13 +3,15 @@ import java.util.ArrayList;
 public class Ambiente {
     private int comprimento;
     private int largura;
+    private int altitude;
     ArrayList<Robo> robos;
     ArrayList<Obstaculo> obstaculos;
 
-    public Ambiente(int comprimento, int largura) {
+    public Ambiente(int comprimento, int largura, int altitude) {
         //Método construtor: Define a comprimento, a largura e cria os arrays que armazenam robos e obstaculos do ambiente.
         this.comprimento = comprimento;
         this.largura = largura;
+        this.altitude = altitude;
         this.robos = new ArrayList<Robo>();
         this.obstaculos = new ArrayList<Obstaculo>();
     }
