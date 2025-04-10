@@ -1,5 +1,9 @@
 public enum TipoObstaculo {
     
+    PAREDE (3 , true ) ,
+    ARVORE (5 , true ) ,
+    PREDIO (10 , true ) ,
+    BURACO (0 , true ) ,
     VULCAO (10, true ),
     METEORO (5, true ),
     GAIVOTA (2, true ),
