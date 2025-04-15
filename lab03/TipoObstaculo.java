@@ -1,28 +1,32 @@
 public enum TipoObstaculo {
     
-    PAREDE (3 , true ) ,
-    ARVORE (5 , true ) ,
-    PREDIO (10 , true ) ,
-    BURACO (0 , true ) ,
-    VULCAO (10, true ),
-    METEORO (5, true ),
-    GAIVOTA (2, true ),
-    PEIXE (1, true),
-    OUTRO (-1 , false); // Altura -1 representa valor variavel
-        
+    PAREDE (3 , true, "Sólido" ) ,
+    ARVORE (5 , true, "Sólido" ) ,
+    PREDIO (10 , true, "Sólido" ) ,
+    VULCAO (10, true, "Sólido" ) ,
+    RIO (0, true, "Líquido") ,
+    CACHOEIRA (8 , true, "Líquido") ,
+    H2S (10, true, "Gás") ;
+
     private final int alturaPadrao;
     private final boolean bloqueiaPassagem;
+    private final String estadoFisico; //determina o estado fisico do obstaculo
     
-    TipoObstaculo (int alturaPadrao, boolean bloqueiaPassagem ) {
+    TipoObstaculo (int alturaPadrao, boolean bloqueiaPassagem, String estadoFisico) {
         this.alturaPadrao = alturaPadrao;  //altura do obstaculo
         this.bloqueiaPassagem = bloqueiaPassagem;  
+        this.estadoFisico = estadoFisico;
     }
     
-    public int getAlturaPadrao () {
+    public int getAlturaPadrao() {
         return alturaPadrao ;
     }
 
-    public boolean isBloqueiaPassagem () {
+    public String getEstadoFisico() {
+        return estadoFisico;
+    }
+
+    public boolean isBloqueiaPassagem() {
         return bloqueiaPassagem;
     }
 }

@@ -53,6 +53,7 @@ public class Robo
         //imprime as posições x e y do robô.
         System.out.printf("Posicao X: %d\nPosicao Y: %d\n", this.posicaox, this.posicaoy);
     }
+    
     public List<int[]> identificarObstaculos(List<Obstaculo> obstaculos){
         //identifica
 
