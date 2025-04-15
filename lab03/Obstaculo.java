@@ -7,7 +7,7 @@ public class Obstaculo {
     private TipoObstaculo tipo;
     
     public Obstaculo(int posicao_x1, int posicao_y1, int altura, int posicao_x2, int posicao_y2, TipoObstaculo tipo) {
-        //Metodo construtor: Nao utiliza a altura padrao do tipo do obstaculo
+        //Metodo construtor: Nao utiliza o padrao do tipo do obstaculo
         this.posicao_x1 = posicao_x1;
         this.posicao_y1 = posicao_y1;
         this.posicao_x2 = posicao_x2;
@@ -16,12 +16,13 @@ public class Obstaculo {
         this.tipo = tipo;
     }
 
-    public Obstaculo(int posicao_x1, int posicao_y1, int posicao_x2, int posicao_y2, TipoObstaculo tipo) {
-        //Método construtor: utiliza a altura padrao do tipo do obstaculo
+    public Obstaculo(int posicao_x1, int posicao_y1, TipoObstaculo tipo) {
+        //Método construtor: utiliza a altura, largura e comprimento padrao do tipo do obstaculo
+        //posicao x1 e y1 sao o inicio do obstaculo
         this.posicao_x1 = posicao_x1;
         this.posicao_y1 = posicao_y1;
-        this.posicao_x2 = posicao_x2;
-        this.posicao_y2 = posicao_y2;
+        this.posicao_x2 = posicao_x1 + tipo.getComprimentoPadrao();
+        this.posicao_y2 = posicao_y1 + tipo.getLarguraPadrao();
         this.altura = tipo.getAlturaPadrao();
         this.tipo = tipo;
     }
