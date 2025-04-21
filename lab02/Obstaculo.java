@@ -1,42 +1,87 @@
-public class Obstaculo
-{
-    private String nome_obstaculo;
-    private int pos_x;
-    private int pos_y;
+public class Obstaculo {
+    //coordenadas do obstaculo aereo (possui altura):
+    private int posicao_x1;
+    private int posicao_y1;
+    private int altura;
+    //coordenadas do obstaculo terrestre:
+    private int posicao_x2;
+    private int posicao_y2;
+    private TipoObstaculo tipo;
     
-    public Obstaculo(int pos_x, int pos_y, String nome_obstaculo){
-        //Método construtor: Define o nome, a posicao x e a posicao y e a posicao z do obstaculo.
-        this.nome_obstaculo = nome_obstaculo;
-        this.pos_x = pos_x;
-        this.pos_y=pos_y;
-    }
-    public String getNome() {
-        //retorna o nome do Obstaculo.
-        return nome_obstaculo;
+    public Obstaculo(int posicao_x1, int posicao_y1, int altura, TipoObstaculo tipo) {
+        //Método construtor: Define o a posicao x, a posicao y, a posicao z e o tipo do obstaculo (aereo).
+        this.posicao_x1 = posicao_x1;
+        this.posicao_y1 = posicao_y1;
+        this.altura = altura;
+        this.tipo = tipo;
     }
 
-    public int getPosicaox() {
-        //retorna a posição x do Obstaculo.
-        return pos_x;
+    public Obstaculo(int posicao_x2, int posicao_y2, TipoObstaculo tipo) {
+        //Método construtor: Define a posicao x e a posicao y e o tipo do obstaculo (terrestre).
+        this.posicao_x2 = posicao_x2;
+        this.posicao_y2 = posicao_y2;
+        this.tipo = tipo;
     }
 
-    public void setNome_obstaculo(String nome_obstaculo) {
-        this.nome_obstaculo = nome_obstaculo;
+    public int getAltura() {
+        return altura;
     }
-    public void setPos_x(int pos_x) {
-        this.pos_x = pos_x;
+
+    public int getPosicao_x1() {
+        return posicao_x1;
     }
-    public void setPos_y(int pos_y) {
-        this.pos_y = pos_y;
+
+    public int getPosicao_y1() {
+        return posicao_y1;
     }
-    public int getPosicaoy() {
-        //retorna a posição y do Obstaculo.
-        return pos_y;
+
+    public int getPosicao_x2() {
+        return posicao_x2;
     }
-    
-    public void exibirPosicao() {
-        //imprime as posições x e y do Obstaculo.
-        System.out.printf("Posicao X: %d\nPosicao Y: %d\n", pos_x, pos_y);
+
+    public int getPosicao_y2() {
+        return posicao_y2;
     }
-    
+
+    public TipoObstaculo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoObstaculo tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setPosicao_x1(int posicao_x1) {
+        this.posicao_x1 = posicao_x1;
+    }
+
+    public void setPosicao_y1(int posicao_y1) {
+        this.posicao_y1 = posicao_y1;
+    }
+
+    public void setPosicao_x2(int posicao_x2) {
+        this.posicao_x2 = posicao_x2;
+    }
+
+    public void setPosicao_y2(int posicao_y2) {
+        this.posicao_y2 = posicao_y2;
+    }
+
+    public void setAltura(int altura) {
+        this.altura = altura;
+    }
+
+    public String toString1() {
+        //toString para o caso em que o obstaculo eh terrestre
+        String out = "";
+        out += "Obstaculo " + getTipo() + " esta na posicao (" + getPosicao_x2() + ", " + getPosicao_y2() + ")";
+        return out;
+    }
+
+    public String toString2() {
+        //toString para o caso em que o obstaculo eh aereo
+        String out = "";
+        out += "Obstaculo " + getTipo() + " esta na posicao (" + getPosicao_x1() + ", " + getPosicao_y1() + ", " + getAltura() + ")";
+        return out;
+    }
 }
