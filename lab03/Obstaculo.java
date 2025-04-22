@@ -79,7 +79,7 @@ public class Obstaculo {
         String out = "";
         out += "Obstaculo do tipo " + getTipo();
         out += " ocupa o espaco (" + getPosicao_x1() + ", " + getPosicao_y1() + ") x (" + getPosicao_x2() + ", " + getPosicao_y2() + ") x (0, " + getAltura() + ")";
-        return out; 
+        return out;
     }
 }
 
