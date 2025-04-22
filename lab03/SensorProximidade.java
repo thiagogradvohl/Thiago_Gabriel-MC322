@@ -19,15 +19,15 @@ public class SensorProximidade extends Sensor{
 
         for(Obstaculo obs : this.ambiente_robos.obstaculos)
         {
-            if(obs.getPosicao_x2() == this.robo.posicaox && obs.getPosicao_y2() == this.robo.getPosicaoy())
+            if(obs.getPosicao_x2() == this.robo.getPosicaox() && obs.getPosicao_y2() == this.robo.getPosicaoy())
             {
                 System.out.printf("Robô colidiu com um obstáculo!\nPosição da colisão: (%d,%d)",obs.getPosicao_x2(),obs.getPosicao_y2());
             }
-            else if(obs.getPosicao_x2() == this.robo.posicaox+1 || obs.getPosicao_x2() == this.robo.posicaox-1)
+            else if(obs.getPosicao_x2() == this.robo.getPosicaox()+1 || obs.getPosicao_x2() == this.robo.getPosicaox()-1)
             {
                 obstaculos_vizinhos.add(new int[]{obs.getPosicao_x2(),obs.getPosicao_y2()});
             }
-            else if(obs.getPosicao_y2() == this.robo.posicaoy+1 || obs.getPosicao_y2() == this.robo.posicaoy-1)
+            else if(obs.getPosicao_y2() == this.robo.getPosicaoy()+1 || obs.getPosicao_y2() == this.robo.getPosicaoy()-1)
             {
                 obstaculos_vizinhos.add(new int[]{obs.getPosicao_x2(),obs.getPosicao_y2()});
             }

@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class RoboAereo extends Robo {
     private int altitude;
     private int altitudeMaxima;

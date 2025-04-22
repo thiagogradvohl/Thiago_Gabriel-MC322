@@ -1,11 +1,13 @@
 import java.util.List;
+import java.util.ArrayList;
 
 public class Robo 
 {
     private String nome;
-    protected int posicaox;
-    protected int posicaoy;
-    private List<Sensor> sensores;
+    private int posicaox;
+    private int posicaoy;
+    private List<Sensor> sensores = new ArrayList<>();
+    
 
     public Robo(int posicaox, int posicaoy, String nome) {
         //Método construtor: Define o nome, a posicao x e a posicao y do robô.

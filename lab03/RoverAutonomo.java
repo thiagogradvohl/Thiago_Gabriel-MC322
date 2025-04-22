@@ -35,9 +35,9 @@ public class RoverAutonomo extends RoboTerrestre {
             System.out.println("Bateria insuficiente para o movimento.\nFavor carregar.");
             return;
         }
-        else if (this.posicaox + delta_x >= 0 && this.posicaoy >= 0) {
-            this.posicaox += delta_x;
-            this.posicaoy += delta_y; 
+        else if (getPosicaox() + delta_x >= 0 && getPosicaoy() >= 0) {
+            setPosicaox(getPosicaox()+delta_x);
+            setPosicaoy(getPosicaoy()+delta_y);
             this.energia -= consumo;
         }
         else

@@ -18,7 +18,7 @@ public class SensorAltitude extends SensorProximidade {
 
         for(Obstaculo obs : this.ambiente_robos.obstaculos)
         {
-            if(obs.getPosicao_x1() == this.robo_aereo.posicaox && obs.getPosicao_y1() == this.robo_aereo.getPosicaoy() && obs.getAltura() == this.robo_aereo.getAltitude())
+            if(obs.getPosicao_x1() == this.robo_aereo.getPosicaox() && obs.getPosicao_y1() == this.robo_aereo.getPosicaoy() && obs.getAltura() == this.robo_aereo.getAltitude())
             {
                 System.out.printf("Robô colidiu com um obstáculo!\nPosição da colisão: (%d,%d,%d)",obs.getPosicao_x2(),obs.getPosicao_y2(),obs.getAltura());
             }
