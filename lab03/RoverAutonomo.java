@@ -3,9 +3,9 @@ public class RoverAutonomo extends RoboTerrestre {
     private int energia;
     
     
-    public RoverAutonomo(int posicaox, int posicaoy, String nome, int velocidadeMaxima, int velocidade, int energia)
+    public RoverAutonomo(int posicaox, int posicaoy, String nome, int velocidadeMaxima, int velocidade, int energia, Sensor sensor)
     {
-        super(posicaox, posicaoy, nome, velocidadeMaxima, velocidade);
+        super(posicaox, posicaoy, nome, velocidadeMaxima, velocidade, sensor);
         this.energia = energia;
     }
     public int getEnergia(){

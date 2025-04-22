@@ -2,8 +2,8 @@ public class RoboAereo extends Robo {
     private int altitude;
     private int altitudeMaxima;
 
-    public RoboAereo(int posicaox, int posicaoy, int altitude, int altitudeMaxima, String nome) {  //método construtor para o robo aereo
-        super(posicaox, posicaoy, nome);  //determina os atributos ja existentes na classe mae
+    public RoboAereo(int posicaox, int posicaoy, int altitude, int altitudeMaxima, String nome, Sensor sensor) {  //método construtor para o robo aereo
+        super(posicaox, posicaoy, nome, sensor);  //determina os atributos ja existentes na classe mae
         this.altitude = altitude;
         this.altitudeMaxima = altitudeMaxima;
     }
@@ -36,8 +36,13 @@ public class RoboAereo extends Robo {
     public void setAltitudeMaxima(int altitudeMaxima) {
         this.altitudeMaxima = altitudeMaxima;
     }
-    public void exibirPosicao() {
-        //imprime as posições x,y e z do robô.
-        System.out.printf("Posicao X: %d\nPosicao Y: %d\nAltitude: %d\n", getPosicaox(), getPosicaoy(), getAltitude());
+
+    public String toString() {
+        String out = "";
+        out += getNome() + "esta na posicao" + "( " + getPosicaox() + ", " + getPosicaoy() + ").\n";
+        out += "Seus sensores sao: ";
+        for (Sensor s : getSensores())
+            out += s.toString();
+        return out;
     }
 }

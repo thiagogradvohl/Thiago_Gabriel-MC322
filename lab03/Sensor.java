@@ -10,7 +10,11 @@ public abstract class Sensor {
     public void setRaio(int raio){
         this.raio = raio;
     }
-    public abstract void monitorar(String nome_lugar);
+    public abstract void monitorar(String nome_lugar, Robo robo);
 
-    
+    public String toString() {
+        String out = "--- Sensor---\n";
+        out += ".Raio de varredura = " + getRaio() + ".";
+        return out;
+    }
 }

@@ -11,8 +11,8 @@ public class DroneEntregador extends RoboAereo {
     int partida_z;
     String nome_partida;
 
-    public DroneEntregador(int posicaox, int posicaoy, int altitude, int altitudeMaxima, String nome, int destino_x, int destino_y, int destino_z, String nome_destino, String nome_partida, int partida_x, int partida_y, int partida_z){
-        super(posicaox, posicaoy, altitude, altitudeMaxima, nome);
+    public DroneEntregador(int posicaox, int posicaoy, int altitude, int altitudeMaxima, String nome, int destino_x, int destino_y, int destino_z, String nome_destino, String nome_partida, int partida_x, int partida_y, int partida_z, Sensor sensor){
+        super(posicaox, posicaoy, altitude, altitudeMaxima, nome, sensor);
         this.destino_x = destino_x;
         this.destino_y = destino_y;
         this.destino_z = destino_z;

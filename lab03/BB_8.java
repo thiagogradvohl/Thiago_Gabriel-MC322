@@ -4,8 +4,8 @@ public class BB_8 extends RoboTerrestre {
     private int frequencia_rotacao;
     private boolean modo_ataque;
 
-    public BB_8(int diametro, int frequencia_rotacao, int posicaox, int posicaoy, String nome, int velocidadeMaxima, boolean modo_ataque) {
-        super(posicaox, posicaoy, nome, velocidadeMaxima, 0);
+    public BB_8(int diametro, int frequencia_rotacao, int posicaox, int posicaoy, String nome, int velocidadeMaxima, boolean modo_ataque, Sensor sensor) {
+        super(posicaox, posicaoy, nome, velocidadeMaxima, 0, sensor);
         this.diametro = diametro;
         this.frequencia_rotacao = frequencia_rotacao;
         this.modo_ataque = modo_ataque;

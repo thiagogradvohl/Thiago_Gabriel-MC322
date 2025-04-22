@@ -2,52 +2,55 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SensorAltitude extends SensorProximidade {
+    //Essa classe é um tipo de sensor de proximidade (classe SensorProximidade) que funciona para RobosAereos
+    //ou seja, considera a altitude tanto dos obstaculos quanto dos robos para a analise
 
     public SensorAltitude(double raio, Ambiente ambiente_robos) {
         super(raio, ambiente_robos);
     }
 
-
-    public List<int[]> identificarObstaculosAereos(RoboAereo robo_aereo){
+    public List<Obstaculo> identificarObstaculosAereos(RoboAereo robo_aereo){
         
         
-        List<int[]> obstaculos_vizinhos = new ArrayList<>();
+        List<Obstaculo> obstaculos_vizinhos = new ArrayList<>();
 
         for(Obstaculo obs : this.ambiente_robos.obstaculos)
-        {
-            if(obs.getPosicao_x1() == robo_aereo.getPosicaox() && obs.getPosicao_y1() == robo_aereo.getPosicaoy() && obs.getAltura() == robo_aereo.getAltitude())
+        {   
+            //calculo da distancia minima entre o robo e o obstaculo:
+            double distancia_x = distancia1D(robo_aereo.getPosicaox(), obs.getPosicao_x1(), obs.getPosicao_x2());
+            double distancia_y = distancia1D(robo_aereo.getPosicaoy(), obs.getPosicao_y1(), obs.getPosicao_y2());
+            double distancia_z = distancia1D(robo_aereo.getAltitude(), 0, obs.getAltura());
+            double distancia = Math.sqrt(Math.pow(distancia_x, 2) + Math.pow(distancia_y, 2) + Math.pow(distancia_z, 2));
+
+            if(obs.getPosicao_x1() <= robo_aereo.getPosicaox() && robo_aereo.getPosicaox() <= obs.getPosicao_x2() && obs.getPosicao_y1() <= robo_aereo.getPosicaoy() 
+            && robo_aereo.getPosicaoy() <= obs.getPosicao_y2() && obs.getAltura() >= robo_aereo.getAltitude()) 
             {
                 System.out.printf("Robô colidiu com um obstáculo!\nPosição da colisão: (%d,%d,%d)",obs.getPosicao_x2(),obs.getPosicao_y2(),obs.getAltura());
             }
-            else if(obs.getPosicao_x1() == robo_aereo.getPosicaox()+1 || obs.getPosicao_x1() == robo_aereo.getPosicaox()-1)
-            {
-                obstaculos_vizinhos.add(new int[]{obs.getPosicao_x1(),obs.getPosicao_y1(),obs.getAltura()});
-            }
-            else if(obs.getPosicao_y1() == robo_aereo.getPosicaoy()+1 || obs.getPosicao_y1() == robo_aereo.getPosicaoy()-1)
-            {
-                obstaculos_vizinhos.add(new int[]{obs.getPosicao_x1(),obs.getPosicao_y1(),obs.getAltura()});
-            }
-            else if (obs.getAltura() == robo_aereo.getAltitude()+1 || obs.getAltura() == robo_aereo.getAltitude()-1)
-            {
-                obstaculos_vizinhos.add(new int[]{obs.getPosicao_x1(),obs.getPosicao_y1(),obs.getAltura()});
-            }
+            else if(distancia <= getRaio())  //dentro do raio de busca
+                obstaculos_vizinhos.add(obs);
         }
 
         return obstaculos_vizinhos;
     }
 
-    @Override
-    public void exibirObstaculos(List<int[]> obstaculos_aereos)
-    {
-        for(int[] obs : obstaculos_aereos)
-        {
-            System.out.printf("Obstáculo na posição (%d,%d,%d)\n",obs[0],obs[1],obs[2]);
+    public void monitorar(String nome_lugar, RoboAereo robo_aereo) {
+        //Sobrecarga do metodo monitorar do SensorProximidade para analisar a proximidade para
+        //um RoboAereo 
+        List<Obstaculo> proximos = identificarObstaculosAereos(robo_aereo);
+        if (proximos != null) {
+            System.out.printf("---Obstaculos encontrados pelo Sensor de Altitude em %s (no raio de proximidade igual a %d)---\n",
+            nome_lugar, getRaio());
+            exibirObstaculos(proximos);
         }
+        else   
+            System.out.println("---O Sensor de Altitude nao encontrou Obstaculos---");
     }
 
-    public void monitorar(RoboAereo robo_aereo) {
-        List<int[]> proximos = identificarObstaculosAereos(robo_aereo);
-        exibirObstaculos(proximos);
+    @Override
+    public String toString() {
+        String out = "--- Sensor de Altitude --- \n";
+        out += ".Raio de varredura = " + getRaio() + " .";
+        return out;
     }
-
 }

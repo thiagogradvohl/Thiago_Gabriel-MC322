@@ -15,8 +15,7 @@ public class SensorOxigenio extends Sensor{
     }
 
     @Override
-
-    public void monitorar(String nome_lugar){
+    public void monitorar(String nome_lugar, Robo robo){
 
         if (concentracao_o2 > 50) {
             System.out.printf("Oxigênio elevado! Risco de oxidação acelerada/Risco de incêndio!\nLugar: %s\nTemperatura: %d\nStatus: Risco de danos estruturais!\n",nome_lugar,this.concentracao_o2);
@@ -27,4 +26,11 @@ public class SensorOxigenio extends Sensor{
         }
     }
 
+    @Override
+    public String toString() {
+        String out = "--- Sensor de Temperatura ---\n";
+        out += ".Raio de varredura = " + getRaio() + " .\n";
+        out += ".Concentracao de oxigenio no ambiente = " + getConcentracao_o2() + " .";
+        return out;
+    }
 }

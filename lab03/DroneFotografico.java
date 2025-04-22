@@ -2,8 +2,8 @@ public class DroneFotografico extends RoboAereo {
     private boolean camera_ligada;
     private int fotos_tiradas; //quantidade de fotos tiradas
 
-    public DroneFotografico(int posicaox, int posicaoy, int altitude, int altitudeMaxima, String nome, boolean tem_camera) {
-        super(posicaox, posicaoy, altitude, altitudeMaxima, nome);
+    public DroneFotografico(int posicaox, int posicaoy, int altitude, int altitudeMaxima, String nome, boolean tem_camera, Sensor sensor) {
+        super(posicaox, posicaoy, altitude, altitudeMaxima, nome, sensor);
         this.camera_ligada = false;
         this.fotos_tiradas = 0;
     }

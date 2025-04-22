@@ -6,14 +6,16 @@ public class Robo
     private String nome;
     private int posicaox;
     private int posicaoy;
-    private List<Sensor> sensores = new ArrayList<>();
+    private List<Sensor> sensores;
     
 
-    public Robo(int posicaox, int posicaoy, String nome) {
+    public Robo(int posicaox, int posicaoy, String nome, Sensor sensor) {
         //Método construtor: Define o nome, a posicao x e a posicao y do robô.
         this.nome = nome;
         this.posicaox = posicaox;
         this.posicaoy = posicaoy;
+        this.sensores = new ArrayList<Sensor>();
+        this.sensores.add(sensor);
     }
 
     public String getNome() {
@@ -62,7 +64,7 @@ public class Robo
 
     public void usarSensores(String local) {
         for (Sensor s : sensores) {
-            s.monitorar(local);
+            s.monitorar(local, this);
         }
     }
 
@@ -72,5 +74,18 @@ public class Robo
 
     public void setSensores(List<Sensor> sensores) {
         this.sensores = sensores;
+    }
+
+    public void removerSensor(Sensor sensor) {
+        this.sensores.remove(sensor);
+    }
+
+    public String toString() {
+        String out = "";
+        out += getNome() + "esta na posicao" + "( " + getPosicaox() + ", " + getPosicaoy() + ").\n";
+        out += "Seus sensores sao: ";
+        for (Sensor s : sensores)
+            out += s.toString();
+        return out;
     }
 }

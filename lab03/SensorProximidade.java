@@ -2,52 +2,66 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SensorProximidade extends Sensor{
-    private Robo robo;
     Ambiente ambiente_robos;
 
-    public SensorProximidade(double raio, Robo robo, Ambiente ambiente_robos){
+    public SensorProximidade(double raio, Ambiente ambiente_robos){
         super(raio);
-        this.robo = robo;
         this.ambiente_robos = ambiente_robos;
         
     }
 
-    public List<int[]> identificarObstaculos(){
-        
+    protected double distancia1D(double ponto, double min, double max) {
+        if (ponto < min) 
+            return min - ponto;
+        if (ponto > max) 
+            return ponto - max;
+        return 0;
+    }
 
-        List<int[]> obstaculos_vizinhos = new ArrayList<>();
+    public List<Obstaculo> identificarObstaculos(Robo robo){
+        
+        
+        List<Obstaculo> obstaculos_vizinhos = new ArrayList<>();
 
         for(Obstaculo obs : this.ambiente_robos.obstaculos)
-        {
-            if(obs.getPosicao_x2() == this.robo.getPosicaox() && obs.getPosicao_y2() == this.robo.getPosicaoy())
+        {   
+            double distancia_x = distancia1D(robo.getPosicaox(), obs.getPosicao_x1(), obs.getPosicao_x2());
+            double distancia_y = distancia1D(robo.getPosicaoy(), obs.getPosicao_y1(), obs.getPosicao_y2());
+            double distancia = Math.sqrt(Math.pow(distancia_x, 2) + Math.pow(distancia_y, 2));
+
+            if(obs.getPosicao_x1() <= robo.getPosicaox() && robo.getPosicaox() <= obs.getPosicao_x2() && obs.getPosicao_y1() <= robo.getPosicaoy() 
+            && robo.getPosicaoy() <= obs.getPosicao_y2())
             {
-                System.out.printf("Robô colidiu com um obstáculo!\nPosição da colisão: (%d,%d)",obs.getPosicao_x2(),obs.getPosicao_y2());
+                System.out.printf("Robô colidiu com um obstáculo!\nPosição da colisão: (%d,%d,%d)",obs.getPosicao_x2(),obs.getPosicao_y2(),obs.getAltura());
             }
-            else if(obs.getPosicao_x2() == this.robo.getPosicaox()+1 || obs.getPosicao_x2() == this.robo.getPosicaox()-1)
-            {
-                obstaculos_vizinhos.add(new int[]{obs.getPosicao_x2(),obs.getPosicao_y2()});
-            }
-            else if(obs.getPosicao_y2() == this.robo.getPosicaoy()+1 || obs.getPosicao_y2() == this.robo.getPosicaoy()-1)
-            {
-                obstaculos_vizinhos.add(new int[]{obs.getPosicao_x2(),obs.getPosicao_y2()});
-            }
+            else if(distancia <= getRaio())
+                obstaculos_vizinhos.add(obs);
         }
 
         return obstaculos_vizinhos;
     }
 
-    public void exibirObstaculos(List<int[]> obstaculos_vizinhos)
-    {
-        for(int[] obs : obstaculos_vizinhos)
-        {
-            System.out.printf("Obstáculo na posição (%d,%d)\n",obs[0],obs[1]);
-        }
+    public void exibirObstaculos(List<Obstaculo> obstaculos) {
+        for(Obstaculo obs : obstaculos)
+            System.out.println(obs);
     }
 
     @Override
-    public void monitorar(String nome_lugar){
-        List<int[]> obstaculos_vizinhos = identificarObstaculos();
-        exibirObstaculos(obstaculos_vizinhos);
+    public void monitorar(String nome_lugar, Robo robo) {
+        List<Obstaculo> obstaculos_vizinhos = identificarObstaculos(robo);
+        if (obstaculos_vizinhos != null) {
+            System.out.printf("---Obstaculos encontrados pelo Sensor de Proximidade em %s (com raio de proximidade igual a %d)---\n",
+            nome_lugar, getRaio());
+            exibirObstaculos(obstaculos_vizinhos);
+        }
+        else   
+            System.out.println("---O Sensor de Proximidade nao encontrou Obstaculos---");
     }
-    
+
+    @Override
+    public String toString() {
+        String out = "--- Sensor de Proximidade ---";
+        out += ".Raio de varredura = " + getRaio() + " .";
+        return out;
+    }
 }

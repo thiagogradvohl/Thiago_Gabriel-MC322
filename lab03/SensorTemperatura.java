@@ -15,8 +15,7 @@ public class SensorTemperatura extends Sensor{
     }
 
     @Override
-
-    public void monitorar(String nome_lugar){
+    public void monitorar(String nome_lugar, Robo robo){
 
         if(this.temperatura >= 70)
         {
@@ -30,6 +29,14 @@ public class SensorTemperatura extends Sensor{
         {
             System.out.printf("ALERTA! Temperatura de suporte mínima atingida!\nLugar: %s\nTemperatura: %d\nStatus: Risco de danos estruturais!",nome_lugar,this.temperatura);
         }
+    }
+
+    @Override
+    public String toString() {
+        String out = "--- Sensor de Temperatura ---\n";
+        out += ".Raio de varredura = " + getRaio() + " .\n";
+        out += ".Temperarura do ambiente = " + getTemperatura() + " .";
+        return out;
     }
 
 }
