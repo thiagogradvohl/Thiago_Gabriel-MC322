@@ -30,7 +30,7 @@ public class RoboTerrestre extends Robo {
     @Override
     public void mover(int delta_x, int delta_y) {
         //metodo sobrescrito do Robo, move o robo se a sua velocidade for menor que a velocidade maxima
-        if (getVelocidade() > this.velocidadeMaxima || getPosicaox + delta_x < 0 || getPosicaoy + delta_y < 0)
+        if (getVelocidade() > this.velocidadeMaxima || getPosicaox() + delta_x < 0 || getPosicaoy() + delta_y < 0)
             System.out.printf("Não foi possível realizar o movimento.\n");
         else {
             setPosicaox(getPosicaox()+delta_x); 
