@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class Robo 
@@ -6,6 +5,7 @@ public class Robo
     private String nome;
     protected int posicaox;
     protected int posicaoy;
+    private List<Sensor> sensores;
 
     public Robo(int posicaox, int posicaoy, String nome) {
         //Método construtor: Define o nome, a posicao x e a posicao y do robô.
@@ -53,31 +53,22 @@ public class Robo
         //imprime as posições x e y do robô.
         System.out.printf("Posicao X: %d\nPosicao Y: %d\n", this.posicaox, this.posicaoy);
     }
-    public List<int[]> identificarObstaculos(List<Obstaculo> obstaculos){
-        //identifica
-
-        List<int[]> obstaculos_vizinhos = new ArrayList<>();
-
-        for(Obstaculo obs : obstaculos)
-        {
-            if(obs.getPosicaox() == getPosicaox()+1 || obs.getPosicaox() == getPosicaox()-1)
-            {
-                obstaculos_vizinhos.add(new int[]{obs.getPosicaox(),obs.getPosicaoy()});
-            }
-            else if(obs.getPosicaoy() == getPosicaoy()+1 || obs.getPosicaoy() == getPosicaoy()-1)
-            {
-                obstaculos_vizinhos.add(new int[]{obs.getPosicaox(),obs.getPosicaoy()});
-            }
-        }
-
-        return obstaculos_vizinhos;
+    
+    public void adicionarSensor(Sensor sensor) {
+        sensores.add(sensor);
     }
 
-    public void exibirObstaculos(List<int[]> obstaculos)
-    {
-        for(int[] obs : obstaculos)
-        {
-            System.out.printf("Obstáculo na posição (%d,%d)\n",obs[0],obs[1]);
+    public void usarSensores(String local) {
+        for (Sensor s : sensores) {
+            s.monitorar(local);
         }
+    }
+
+    public List<Sensor> getSensores() {
+        return sensores;
+    }
+
+    public void setSensores(List<Sensor> sensores) {
+        this.sensores = sensores;
     }
 }
