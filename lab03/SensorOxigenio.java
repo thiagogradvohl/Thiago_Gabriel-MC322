@@ -16,13 +16,13 @@ public class SensorOxigenio extends Sensor{
 
     @Override
     public void monitorar(String nome_lugar, Robo robo){
-
-        if (concentracao_o2 > 50) {
+        //Essa funcao analisa a concentracao de O2 em certo lugar no ambiente
+        if (concentracao_o2 > 50) { 
             System.out.printf("Oxigênio elevado! Risco de oxidação acelerada/Risco de incêndio!\nLugar: %s\nTemperatura: %d\nStatus: Risco de danos estruturais!\n",nome_lugar,this.concentracao_o2);
         } else if (concentracao_o2 >= 21) {
-            System.out.printf("Nível normal\nLugar: %s\nTemperatura: %d\nStatus: Risco de danos estruturais!\n",nome_lugar,this.concentracao_o2);
+            System.out.printf("Nível normal\nLugar: %s\nConcentração de O2: %d\nStatus: Risco de danos estruturais!\n",nome_lugar,this.concentracao_o2);
         } else {
-            System.out.printf("Pouco risco de oxidação.\nLugar: %s\nTemperatura: %d\nStatus: Risco de danos estruturais!\n",nome_lugar,this.concentracao_o2);
+            System.out.printf("Pouco risco de oxidação.\nLugar: %s\nConcentração de O2: %d\nStatus: Risco de danos estruturais!\n",nome_lugar,this.concentracao_o2);
         }
     }
 

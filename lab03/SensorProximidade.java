@@ -11,6 +11,8 @@ public class SensorProximidade extends Sensor{
     }
 
     protected double distancia1D(double ponto, double min, double max) {
+        //Essa funcao calcula a distancia de um ponto para outro em uma dimensao
+        //sera usada para calcular a distancia de um robo ate um obstaculo 
         if (ponto < min) 
             return min - ponto;
         if (ponto > max) 
@@ -20,20 +22,19 @@ public class SensorProximidade extends Sensor{
 
     public List<Obstaculo> identificarObstaculos(Robo robo){
         
-        
         List<Obstaculo> obstaculos_vizinhos = new ArrayList<>();
 
         for(Obstaculo obs : this.ambiente_robos.obstaculos)
         {   
+            //calcula a distancia entre o robo e um dado obstaculo
             double distancia_x = distancia1D(robo.getPosicaox(), obs.getPosicao_x1(), obs.getPosicao_x2());
             double distancia_y = distancia1D(robo.getPosicaoy(), obs.getPosicao_y1(), obs.getPosicao_y2());
             double distancia = Math.sqrt(Math.pow(distancia_x, 2) + Math.pow(distancia_y, 2));
 
-            if(obs.getPosicao_x1() <= robo.getPosicaox() && robo.getPosicaox() <= obs.getPosicao_x2() && obs.getPosicao_y1() <= robo.getPosicaoy() 
-            && robo.getPosicaoy() <= obs.getPosicao_y2())
+            if(distancia == 0)   //robo colidiu
             {
-                System.out.printf("Robô colidiu com um obstáculo!\nPosição da colisão: (%d,%d,%d)",obs.getPosicao_x2(),obs.getPosicao_y2(),obs.getAltura());
-            }
+                System.out.printf("Robô colidiu com o %s!\nPosição da colisão: (%d,%d, 0)", obs, robo.getPosicaox(), robo.getPosicaoy());
+            }   
             else if(distancia <= getRaio())
                 obstaculos_vizinhos.add(obs);
         }
@@ -50,7 +51,7 @@ public class SensorProximidade extends Sensor{
     public void monitorar(String nome_lugar, Robo robo) {
         List<Obstaculo> obstaculos_vizinhos = identificarObstaculos(robo);
         if (obstaculos_vizinhos != null) {
-            System.out.printf("---Obstaculos encontrados pelo Sensor de Proximidade em %s (com raio de proximidade igual a %d)---\n",
+            System.out.printf("---Obstaculos encontrados pelo Sensor de Proximidade em %s (no raio de proximidade igual a %d)---\n",
             nome_lugar, getRaio());
             exibirObstaculos(obstaculos_vizinhos);
         }

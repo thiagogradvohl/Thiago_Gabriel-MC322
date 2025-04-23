@@ -1,17 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class SensorAltitude extends SensorProximidade {
+public class SensorProximidadeAereo extends SensorProximidade {
     //Essa classe é um tipo de sensor de proximidade (classe SensorProximidade) que funciona para RobosAereos
     //ou seja, considera a altitude tanto dos obstaculos quanto dos robos para a analise
 
-    public SensorAltitude(double raio, Ambiente ambiente_robos) {
+    public SensorProximidadeAereo(double raio, Ambiente ambiente_robos) {
         super(raio, ambiente_robos);
     }
 
     public List<Obstaculo> identificarObstaculosAereos(RoboAereo robo_aereo){
-        
-        
+        //Essa funcao identifica obstaculos vizinhos ao robo dentro do raio de busca
         List<Obstaculo> obstaculos_vizinhos = new ArrayList<>();
 
         for(Obstaculo obs : this.ambiente_robos.obstaculos)
@@ -22,11 +21,9 @@ public class SensorAltitude extends SensorProximidade {
             double distancia_z = distancia1D(robo_aereo.getAltitude(), 0, obs.getAltura());
             double distancia = Math.sqrt(Math.pow(distancia_x, 2) + Math.pow(distancia_y, 2) + Math.pow(distancia_z, 2));
 
-            if(obs.getPosicao_x1() <= robo_aereo.getPosicaox() && robo_aereo.getPosicaox() <= obs.getPosicao_x2() && obs.getPosicao_y1() <= robo_aereo.getPosicaoy() 
-            && robo_aereo.getPosicaoy() <= obs.getPosicao_y2() && obs.getAltura() >= robo_aereo.getAltitude()) 
-            {
-                System.out.printf("Robô colidiu com um obstáculo!\nPosição da colisão: (%d,%d,%d)",obs.getPosicao_x2(),obs.getPosicao_y2(),obs.getAltura());
-            }
+            if(distancia == 0) 
+                System.out.printf("Robô colidiu com o %s!\nPosição da colisão: (%d,%d,%d)",obs,robo_aereo.getPosicaox(),robo_aereo.getPosicaoy(),robo_aereo.getAltitude());
+    
             else if(distancia <= getRaio())  //dentro do raio de busca
                 obstaculos_vizinhos.add(obs);
         }

@@ -16,7 +16,7 @@ public class SensorTemperatura extends Sensor{
 
     @Override
     public void monitorar(String nome_lugar, Robo robo){
-
+        //Essa funcao analisa a temperatura em certo lugar no ambiente
         if(this.temperatura >= 70)
         {
             System.out.printf("ALERTA! Temperatura de suporte máxima atingida!\nLugar: %s\nTemperatura: %d\nStatus: Risco de danos estruturais!\n",nome_lugar,this.temperatura);
