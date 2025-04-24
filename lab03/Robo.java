@@ -44,12 +44,14 @@ public class Robo
     
     public void mover(int deltaX, int deltaY) {
         //move as posições x e y do robô de acordo com um delta x e um delta y.
-        if (this.posicaox + deltaX >= 0 && this.posicaoy >= 0) {
-            this.posicaox += deltaX;
-            this.posicaoy += deltaY; 
+        int novo_x = this.posicaox + deltaX;
+        int novo_y = this.posicaoy + deltaY; 
+        if (novo_x >= 0 && novo_y >= 0) {
+            this.posicaox = novo_x;
+            this.posicaoy = novo_y; 
             System.out.println("O robo se moveu!");
         }
-        else
+        else if (novo_x < 0 && novo_y < 0)
             System.out.println("O robo nao se moveu, pois iria para coordenadas negativas.");
     }
     

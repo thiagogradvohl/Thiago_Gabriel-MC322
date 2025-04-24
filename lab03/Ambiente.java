@@ -28,7 +28,7 @@ public class Ambiente {
         return concentracao_o2;
     }
     
-    public int getcomprimento() {
+    public int getComprimento() {
         //retorna a comprimento do ambiente de movimentação do robô.
         return comprimento;
     }
@@ -65,21 +65,23 @@ public class Ambiente {
         this.altitude = altitude;
     }
 
-    public boolean dentroDosLimites(Robo robo) {
-        //retorna se o robô está, ou não, nos limites do ambiente.
-        if (robo.getPosicaox() <= this.largura && robo.getPosicaox() >= 0 && robo.getPosicaoy() >= 0 && robo.getPosicaoy() <= this.comprimento)
-            if (!(robo instanceof RoboAereo) || (robo instanceof RoboAereo && ((RoboAereo)robo).getAltitude() <= this.getAltitude()))  //se robo nao for aereo e se robo for aereo (downcasting) e estiver dentro da altura
+    public boolean dentroDosLimites(int x, int y, int altitude) {
+        //retorna se o robo/obstaculo esta, ou nao, nos limites do ambiente.
+        if (x <= getComprimento() && y <= getLargura() && altitude <= getAltitude())
                 return true;
         return false;
     }
-    
+
     public void adicionarRobo(Robo r) {
         //adiciona o robo ao ambiente se ele estiver dentro dos limites
-        if (dentroDosLimites(r)) {
+        int altitude_robo = 0;  //para robo terrestre e classe Robo
+        if (r instanceof RoboAereo)    //se Robo for RoboAereo
+            altitude_robo = ((RoboAereo)r).getAltitude();
+
+        if (dentroDosLimites(r.getPosicaox(), r.getPosicaoy(), altitude_robo)) {
             this.robos.add(r);
             System.out.println("O robo foi adicionado ao ambiente!");
         }
-
         else
             System.out.println("O robo nao foi adicionado ao ambiente! Ele esta fora dos limites.");
     }
@@ -89,7 +91,12 @@ public class Ambiente {
     }
     
     public void adicionarObstaculo(Obstaculo o) {
-        this.obstaculos.add(o);
+        if (dentroDosLimites(o.getPosicao_x2(), o.getPosicao_y2(), o.getAltura())) {
+            this.obstaculos.add(o);
+            System.out.println("O obstaculo foi adicionado ao ambiente!");
+        }
+        else
+            System.out.println("O obstaculo nao foi adicionado ao ambiente! Ele esta fora dos limites.");
     }
 
     public void removerObstaculo(Obstaculo o) {
@@ -98,7 +105,7 @@ public class Ambiente {
 
     public String toString() {
         String out = "";
-        out += "Ambiente com dimensoes " + getcomprimento() + " x " + getLargura() + " x " + getAltitude();
+        out += "Ambiente com dimensoes " + getComprimento() + " x " + getLargura() + " x " + getAltitude();
         out += ", Temperatura = " + getTemperatura() + " C e Concentracao de O2 = " + getConcentracao_o2() + " mol/l:\n";
         
         if (robos.size() == 0)
@@ -115,9 +122,8 @@ public class Ambiente {
         else {
             out += "  |-->Obstaculos: \n";
             for (int i = 0; i < obstaculos.size(); i++) 
-                out += "  " + obstaculos.get(i);
+                out += "    ### " + obstaculos.get(i);
         }
-
         return out;
     }
 }

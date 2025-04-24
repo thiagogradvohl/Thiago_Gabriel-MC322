@@ -1,9 +1,9 @@
 public enum TipoObstaculo {
     
-    PAREDE (3, 2, 10, true) ,
-    ARVORE (5, 2, 2, true) ,
-    PREDIO (10, 10, 10, true) ,
-    VULCAO (12, 12, 12, true) ,
+    PAREDE (3, 2, 3, true) ,
+    ARVORE (3, 2, 1, true) ,
+    PREDIO (10, 5, 5, true) ,
+    VULCAO (12, 5, 6, true) ,
     RIO (0, 4, 15, true) ,
     CACHOEIRA (8, 4, 1, true) ,
     OUTRO (-1, -1, -1, true) ;  //-1 representa dimensoes variaveis

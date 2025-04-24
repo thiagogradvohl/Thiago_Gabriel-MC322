@@ -28,13 +28,13 @@ public class SensorTemperatura extends Sensor{
     public void monitorar(Robo robo){
         //Essa funcao analisa a temperatura em certo lugar no ambiente
         if (ambiente.getTemperatura() >= getTemperatura_max())
-            System.out.printf("->ALERTA! Temperatura de suporte máxima atingida!\nTemperatura: %d C acima da maxima permitida (%d C)\nStatus: Risco de danos estruturais!\n",ambiente.getTemperatura(),getTemperatura_max());
+            System.out.printf("->ALERTA! Temperatura de suporte máxima atingida! Temperatura = %d C acima da maxima permitida (%d C). Status: Risco de danos estruturais!\n",ambiente.getTemperatura(),getTemperatura_max());
         
         else if (ambiente.getTemperatura() > getTemperatura_min())        
-            System.out.printf("->Temperatura adequada.\nTemperatura: %d C dentro do padrao de %d até %d C\n",ambiente.getTemperatura(),getTemperatura_min(), getTemperatura_max());
+            System.out.printf("->Temperatura adequada. Temperatura = %d C dentro do padrao de %d até %d C\n",ambiente.getTemperatura(),getTemperatura_min(), getTemperatura_max());
         
         else    
-            System.out.printf("->ALERTA! Temperatura de suporte minima atingida!\nTemperatura: %d abaixo da minima permitida (%d C)\nStatus: Risco de danos estruturais!",ambiente.getTemperatura(),getTemperatura_min());
+            System.out.printf("->ALERTA! Temperatura de suporte minima atingida! Temperatura = %d C abaixo da minima permitida (%d C). Status: Risco de danos estruturais!\n",ambiente.getTemperatura(),getTemperatura_min());
     
     }
 
