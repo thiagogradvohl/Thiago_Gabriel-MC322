@@ -3,18 +3,30 @@ Equipe:
 
 
 1)Explicando a main:
+    1.1) Menu nao-interativo:
+        Primeiro, define-se e instancia-se os objetos de todas as classes do lab03, imprimindo os status do que esta sendo feito.
 
-    Primeiro, define-se os robos terrestres e os obstaculos terrestres, e adiciona os obstaculos em um array
-list que guarda as coordenadas de cada obstaculos.
+        Após isso, testa-se se os métodos básicos inerentes à classe robo terrestre, robo aereo e ambiente.
+        Adicionando sensores aos robos; e obstaculos e robos ao ambiente. 
 
-    Após isso, testa-se se os métodos inerentes à classe robo terrestre estão devidamente funcionando
+        Em seguida, testa-se se todos os sensores dos robos.
 
-    Em seguida, testa-se se os robos terrestres previamente instanciados encontram-se, ou não, dentro dos limites
- do obstaculo definido a priori (teste do metodo "IdentificaObstaculos")
+    1.2) Menu interativo
+        O usuario pode mover os robos, verificar os status dos robos e do ambiente, e utilizar sensores dos robos.
+        Ou seja, ele nao consegue criar e instanciar novos objetos.
+    
+2)Explicando o Diagrama UML (PNG na pasta lab03 do repositorio):
+    2.1) Heranca: 
+        -RoboTerrestre e RoboAereo herdam de Robo
+        -SensorTemperatura, SensorProximidade e SensorOxigenio herdam de Sensor
+    2.2) Dependencia:
+        -Sensor depende de Robo e de Ambiente
+    2.3) Composicao:
+        -Ambiente contem Robo (1 para 1..*) e Obstaculo (1 para 1..*)
+        -Obstaculo contem TipoObstaculo (1 para 1)
+    2.4) Agregacao:
+        -Robos podem ter Sensor (1 para 0..*)
 
-    De modo similar, cria-se os obstaculos e os robos aereos, testa-se os métodos da classe RoboAereo e testa-se se o
-método "IdentificarObstaculosAereos" funciona corretamente
+3)Versao Java: openjdk 17.0.4
 
-    Cria-se os robos vinculados às subclasses de ambos robos "pais" (aereo e terrestre), testando os respectivos métodos
-associados a eles
-
+4)IDE: VsCode

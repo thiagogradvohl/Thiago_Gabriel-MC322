@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SensorProximidade extends Sensor{
-
+    //Esse sensor identifica obstaculos dentro do raio de busca e os imprime,
+    //bem como verifica colisoes do robo com os obstaculos do ambiente
     public SensorProximidade(double raio, Ambiente ambiente){
         super(raio, ambiente);
     }

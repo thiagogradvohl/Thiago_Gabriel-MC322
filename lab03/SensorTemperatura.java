@@ -1,6 +1,8 @@
-public class SensorTemperatura extends Sensor{
+public class SensorTemperatura extends Sensor {
     private int temperatura_max;
     private int temperatura_min;
+    //Esse sensor analisa a temperatura em um ambiente,
+    //de acordo com o min e max, que sao seus atributos
 
     public SensorTemperatura(double raio, Ambiente ambiente, int temperatura_max, int temperatura_min){
         super(raio, ambiente);

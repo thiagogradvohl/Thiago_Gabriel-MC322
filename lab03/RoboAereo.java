@@ -1,4 +1,5 @@
 public class RoboAereo extends Robo {
+    //Essa subclasse representa os robos com altura (robos aereos) e herda da classe Robo
     private int altitude;
     private int altitudeMaxima;
 

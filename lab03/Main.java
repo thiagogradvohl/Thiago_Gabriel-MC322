@@ -106,7 +106,7 @@ public class Main {
         //movimentação dos robôs
         else if(resposta_1 == 3)
         {
-            System.out.println("Escolha o robô que deseja mover: (1) Robô terrestre\n(2) Robô aéreo");
+            System.out.println("Escolha o robô que deseja mover:\n(1) Robô terrestre\n(2) Robô aéreo");
             int resposta_2 = scanner.nextInt();
 
             int delta_x;
@@ -159,7 +159,7 @@ public class Main {
         else if(resposta_1 == 4)
         {
 
-            System.out.println("Escolha o robô que deseja ver o sensor: (1) Robô terrestre\n(2) Robô aéreo");
+            System.out.println("Escolha o robô que deseja ver o sensor:\n(1) Robô terrestre\n(2) Robô aéreo");
             int resposta_2 = scanner.nextInt();
 
             if(resposta_2 == 1)
@@ -172,9 +172,8 @@ public class Main {
                 System.out.println("Relatório geral dos sensores para o robô aéreo");
                 ra.usarSensores();
             }
-
-            
-
         }
+
+        scanner.close();
     }
 }

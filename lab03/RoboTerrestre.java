@@ -1,4 +1,5 @@
 public class RoboTerrestre extends Robo {
+        //Essa subclasse representa os robos terrestres (metodo mover sobescrito depende da velocidade) e herda da classe Robo
     private int velocidadeMaxima;
     private int velocidade;
     

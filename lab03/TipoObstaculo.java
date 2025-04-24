@@ -1,5 +1,7 @@
 public enum TipoObstaculo {
-    
+    //Essa classe representa os tipos de obstaculo com dimensoes predefinidas
+    //Sera usada pela classe Obstaculo
+
     PAREDE (3, 2, 3, true) ,
     ARVORE (3, 2, 1, true) ,
     PREDIO (10, 5, 5, true) ,

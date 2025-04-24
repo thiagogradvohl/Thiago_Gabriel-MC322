@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Ambiente {
+    //Essa classe representa o ambiente onde sao adicionados robos e obstaculos
     private int comprimento;
     private int largura;
     private int altitude;

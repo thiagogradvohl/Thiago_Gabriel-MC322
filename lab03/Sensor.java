@@ -1,4 +1,6 @@
 public abstract class Sensor {
+    //Essa classe abstrata representa os sensores dos robos.
+    //Suas subclasses realizarao a sobescrita do metodo monitorar (abstrato)
     private double raio;
     Ambiente ambiente;
 

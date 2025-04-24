@@ -1,4 +1,6 @@
 public class SensorOxigenio extends Sensor{
+    //Esse sensor verifica a qualidade da concentracao de oxigenio em um ambiente,
+    //de acordo com o min e max, que sao seus atributos
     private int concentracao_o2_min;  //unidade = mol/l
     private int concentracao_o2_max;
 

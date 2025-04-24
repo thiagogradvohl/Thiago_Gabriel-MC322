@@ -1,4 +1,6 @@
 public class Obstaculo {
+    //Essa classe representa os obstaculos que serao colocados em um ambiente
+    
     private int posicao_x1;
     private int posicao_y1;
     private int altura;
