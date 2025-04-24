@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-//Falta adicionar obstaculos e ler entradas + testar o sensor de proximidade para robos aereos
 public class Main {
     public static void main(String[] args) {
         System.out.println("######### Iniciando as classes #########");
