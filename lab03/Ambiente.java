@@ -107,7 +107,7 @@ public class Ambiente {
             if (i != obstaculos.size() - 1)
                 out += " ;";            
         }
-        out += " .\n";
+        out += " .";
         return out;
     }
 }
