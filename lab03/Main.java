@@ -8,8 +8,10 @@ public class Main {
 
         SensorProximidade sp1 = new SensorProximidade(5, a);
         SensorProximidade sp2 = new SensorProximidade(10, a);
-        SensorOxigenio so = new SensorOxigenio(5, a, 30, 20);
-        SensorTemperatura st = new SensorTemperatura(5, a, 100, 20);
+        SensorOxigenio so1 = new SensorOxigenio(5, a, 30, 20);
+        SensorOxigenio so2 = new SensorOxigenio(10, a, 30, 20);
+        SensorTemperatura st1 = new SensorTemperatura(5, a, 100, 20);
+        SensorTemperatura st2 = new SensorTemperatura(10, a, 10, 0);
         
         Obstaculo o1 = new Obstaculo(2, 2, TipoObstaculo.PAREDE);
         Obstaculo o2 = new Obstaculo(7, 8, TipoObstaculo.CACHOEIRA);
@@ -29,8 +31,10 @@ public class Main {
         System.out.println();
 
         System.out.println("######### Adicionando novos sensores aos robos #########");
-        ra.adicionarSensor(st);
-        rt.adicionarSensor(so);
+        ra.adicionarSensor(st1);
+        ra.adicionarSensor(so1);
+        rt.adicionarSensor(st2);
+        rt.adicionarSensor(so2);
         System.out.println(ra);
         System.out.println(rt);
 
@@ -52,7 +56,5 @@ public class Main {
         System.out.println("######## Testando os sensores (de Proximidade e de Temperatura) do Robo Aereo #########");
         ra.usarSensores();
         System.out.println();
-
-        System.out.println(a);
     }
 }

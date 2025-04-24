@@ -37,6 +37,7 @@ public class RoboAereo extends Robo {
         this.altitudeMaxima = altitudeMaxima;
     }
 
+    @Override
     public String toString() {
         String out = "";
         out += "Robo aereo " + getNome() + " esta na posicao " + "(" + getPosicaox() + ", " + getPosicaoy() + ", " + getAltitude() + "), ";
