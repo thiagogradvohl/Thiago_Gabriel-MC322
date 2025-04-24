@@ -6,8 +6,8 @@ public class Ambiente {
     private int altitude;
     private final int concentracao_o2;
     private final int temperatura;
-    ArrayList<Robo> robos;
-    ArrayList<Obstaculo> obstaculos;
+    private ArrayList<Robo> robos;
+    private ArrayList<Obstaculo> obstaculos;
 
     public Ambiente(int comprimento, int largura, int altitude, int concentracao_o2, int temperatura) {
         //Método construtor: Define a comprimento, a largura e cria os arrays que armazenam robos e obstaculos do ambiente.
@@ -65,16 +65,23 @@ public class Ambiente {
         this.altitude = altitude;
     }
 
-    public void dentroDosLimites(Robo robo) {
+    public boolean dentroDosLimites(Robo robo) {
         //retorna se o robô está, ou não, nos limites do ambiente.
         if (robo.getPosicaox() <= this.largura && robo.getPosicaox() >= 0 && robo.getPosicaoy() >= 0 && robo.getPosicaoy() <= this.comprimento)
-            System.out.println("O robo esta dentro dos limites.");
-        else
-            System.out.println("O robo nao esta dentro dos limites.");
+            if (!(robo instanceof RoboAereo) || (robo instanceof RoboAereo && ((RoboAereo)robo).getAltitude() <= this.getAltitude()))  //se robo nao for aereo e se robo for aereo (downcasting) e estiver dentro da altura
+                return true;
+        return false;
     }
     
     public void adicionarRobo(Robo r) {
-        this.robos.add(r);
+        //adiciona o robo ao ambiente se ele estiver dentro dos limites
+        if (dentroDosLimites(r)) {
+            this.robos.add(r);
+            System.out.println("O robo foi adicionado ao ambiente!");
+        }
+
+        else
+            System.out.println("O robo nao foi adicionado ao ambiente! Ele esta fora dos limites.");
     }
 
     public void removerRobo(Robo r) {
@@ -91,23 +98,26 @@ public class Ambiente {
 
     public String toString() {
         String out = "";
-        out += "---Ambiente com dimensoes " + getcomprimento() + " x " + getLargura() + " x " + getAltitude();
-        out += ", temperatura = " + getTemperatura() + "e concentracao de O2 = " + getConcentracao_o2() + "\n";
-        out += "|--Robos: ";
-        for (int i = 0; i < robos.size(); i++) {
-            out += robos.get(i);
-            if (i != robos.size() - 1)
-                out += " ;";            
+        out += "Ambiente com dimensoes " + getcomprimento() + " x " + getLargura() + " x " + getAltitude();
+        out += ", Temperatura = " + getTemperatura() + " C e Concentracao de O2 = " + getConcentracao_o2() + " mol/l:\n";
+        
+        if (robos.size() == 0)
+            out += "  |-->O ambiente nao possui Robos.\n";
+        else {
+            out += "  |-->Robos: \n";
+            for (int i = 0; i < robos.size(); i++)
+                out += "    ### " + robos.get(i);         
         }
-        out += " .\n";
 
-        out += "|--Obstaculos: ";
-        for (int i = 0; i < obstaculos.size(); i++) {
-            out += obstaculos.get(i);
-            if (i != obstaculos.size() - 1)
-                out += " ;";            
+        if (obstaculos .size() == 0)
+            out += "  |-->O ambiente nao possui obstaculos.\n";
+        
+        else {
+            out += "  |-->Obstaculos: \n";
+            for (int i = 0; i < obstaculos.size(); i++) 
+                out += "  " + obstaculos.get(i);
         }
-        out += " .";
+
         return out;
     }
 }

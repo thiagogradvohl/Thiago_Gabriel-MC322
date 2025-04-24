@@ -37,4 +37,19 @@ public class RoboTerrestre extends Robo {
             setPosicaoy(getPosicaoy()+delta_y); 
         } 
     }
+
+    @Override
+    public String toString() {
+        String out = "";
+        out += "Robo terrestre " + getNome() + " esta na posicao " + "(" + getPosicaox() + ", " + getPosicaoy() + "), ";
+        out += "com Velocidade = " + getVelocidade() + " x Velocidade Maxima = " + getVelocidadeMaxima() + ":\n";
+        if (getSensores() == null) 
+            out += "        |-->Ele nao possui sensores.";
+        else {
+            out += "        |-->Sensores:\n";
+            for (Sensor s : getSensores())
+                out += "          |-->" + s.toString() + "\n";
+        }
+        return out;
+    } 
 }

@@ -30,7 +30,7 @@ public class SensorOxigenio extends Sensor{
         if (ambiente.getConcentracao_o2() > getConcentracao_o2_max()) { 
             System.out.printf("->Oxigenio elevado! Risco de oxidação acelerada/Risco de incêndio!\nConcentracao de O2: %d mol/l maior do que a maxima (%d mol/l)\nStatus: Risco de danos estruturais!\n",ambiente.getConcentracao_o2(), getConcentracao_o2_max());
         } else if (ambiente.getConcentracao_o2() >= getConcentracao_o2_min()) {
-            System.out.printf("->Nivel normal\nConcentracao de O2: %d mol/l dentro da faixa de %d até %d mol/l\nStatus: Tudo normal!\n",ambiente.getConcentracao_o2(), getConcentracao_o2_min(), getConcentracao_o2_max());
+            System.out.printf("->Nivel normal! Concentracao de O2 = %d mol/l dentro da faixa de %d até %d mol/l\n",ambiente.getConcentracao_o2(), getConcentracao_o2_min(), getConcentracao_o2_max());
         } else {
             System.out.printf("->Pouco risco de oxidação.\nConcentração de O2: %d mol/l abaixo da minima (%d mol/l)\nStatus: Risco de danos estruturais!\n",ambiente.getConcentracao_o2(), getConcentracao_o2_min());
         }
@@ -38,9 +38,9 @@ public class SensorOxigenio extends Sensor{
 
     @Override
     public String toString() {
-        String out = "--Sensor de Oxigenio\n";
-        out += "Raio de varredura = " + getRaio() + " .\n";
-        out += "Intervalo ideal de Concentracao de O2: " + getConcentracao_o2_min() + "até " + getConcentracao_o2_max() + " mol/l.";
+        String out = "Sensor de Oxigenio: ";
+        out += "Raio de varredura = " + getRaio() + "; ";
+        out += "Intervalo ideal de Concentracao de O2: " + getConcentracao_o2_min() + " ate " + getConcentracao_o2_max() + " mol/l";
         return out;
     }
 }

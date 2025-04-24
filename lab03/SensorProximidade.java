@@ -21,12 +21,16 @@ public class SensorProximidade extends Sensor{
         
         List<Obstaculo> obstaculos_vizinhos = new ArrayList<>();
 
-        for(Obstaculo obs : this.ambiente.obstaculos)
+        for(Obstaculo obs : this.ambiente.getObstaculos())
         {   
             //calcula a distancia entre o robo e um dado obstaculo
             double distancia_x = distancia1D(robo.getPosicaox(), obs.getPosicao_x1(), obs.getPosicao_x2());
             double distancia_y = distancia1D(robo.getPosicaoy(), obs.getPosicao_y1(), obs.getPosicao_y2());
-            double distancia = Math.sqrt(Math.pow(distancia_x, 2) + Math.pow(distancia_y, 2));
+            double distancia_z = 0;
+            if (robo instanceof RoboAereo)
+                distancia_z = distancia1D(((RoboAereo)robo).getAltitude(), 0, obs.getAltura());
+
+            double distancia = Math.sqrt(Math.pow(distancia_x, 2) + Math.pow(distancia_y, 2) + Math.pow(distancia_z, 2));
 
             if(distancia == 0)   //robo colidiu
             {
@@ -47,7 +51,7 @@ public class SensorProximidade extends Sensor{
     @Override
     public void monitorar(Robo robo) {
         List<Obstaculo> obstaculos_vizinhos = identificarObstaculos(robo);
-        if (obstaculos_vizinhos != null) {
+        if (obstaculos_vizinhos.size() != 0) {
             System.out.printf("->Obstaculos encontrados pelo Sensor de Proximidade (no raio de proximidade igual a %d):\n", getRaio());
             exibirObstaculos(obstaculos_vizinhos);
         }
@@ -57,7 +61,7 @@ public class SensorProximidade extends Sensor{
 
     @Override
     public String toString() {
-        String out = "--Sensor de Proximidade\n";
+        String out = "Sensor de Proximidade: ";
         out += "Raio de varredura = " + getRaio();
         return out;
     }

@@ -13,7 +13,7 @@ public class SensorProximidadeAereo extends SensorProximidade {
         //Essa funcao identifica obstaculos vizinhos ao robo dentro do raio de busca
         List<Obstaculo> obstaculos_vizinhos = new ArrayList<>();
 
-        for(Obstaculo obs : this.ambiente.obstaculos)
+        for(Obstaculo obs : this.ambiente.getObstaculos())
         {   
             //calculo da distancia minima entre o robo e o obstaculo:
             double distancia_x = distancia1D(robo_aereo.getPosicaox(), obs.getPosicao_x1(), obs.getPosicao_x2());

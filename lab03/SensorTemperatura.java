@@ -40,9 +40,9 @@ public class SensorTemperatura extends Sensor{
 
     @Override
     public String toString() {
-        String out = "--Sensor de Temperatura\n";
-        out += "Raio de varredura = " + getRaio() + " .\n";
-        out += "Intervalo ideal de Temperatura: " + getTemperatura_min() + "até " + getTemperatura_max() + " C.";
+        String out = "Sensor de Temperatura: ";
+        out += "Raio de varredura = " + getRaio() + "; ";
+        out += "Intervalo ideal de Temperatura: " + getTemperatura_min() + " até " + getTemperatura_max() + " C";
         return out;
     }
 

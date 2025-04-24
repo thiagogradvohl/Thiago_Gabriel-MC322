@@ -82,10 +82,14 @@ public class Robo
 
     public String toString() {
         String out = "";
-        out += "---" + getNome() + "esta na posicao" + "( " + getPosicaox() + ", " + getPosicaoy() + ").\n";
-        out += "Seus sensores sao: ";
-        for (Sensor s : sensores)
-            out += s.toString();
+        out += "Robo " + getNome() + " esta na posicao " + "(" + getPosicaox() + ", " + getPosicaoy() + "):\n";
+        if (getSensores() == null) 
+            out += "        |-->Ele nao possui sensores.";
+        else {
+            out += "        |-->Sensores:\n";
+            for (Sensor s : getSensores())
+                out += "          |-->" + s.toString() + "\n";
+        }
         return out;
-    }
+    } 
 }
