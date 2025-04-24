@@ -51,7 +51,7 @@ public class Robo
             this.posicaoy = novo_y; 
             System.out.println("O robo se moveu!");
         }
-        else if (novo_x < 0 && novo_y < 0)
+        else 
             System.out.println("O robo nao se moveu, pois iria para coordenadas negativas.");
     }
     
