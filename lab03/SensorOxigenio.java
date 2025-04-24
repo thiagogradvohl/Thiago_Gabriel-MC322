@@ -1,36 +1,46 @@
 public class SensorOxigenio extends Sensor{
-    private int concentracao_o2;
+    private int concentracao_o2_min;  //unidade = mol/l
+    private int concentracao_o2_max;
 
-    public SensorOxigenio(double raio, int concentracao_o2){
-        super(raio);
-        this.concentracao_o2 = concentracao_o2;
+    public SensorOxigenio(double raio, Ambiente ambiente, int concentracao_o2_max, int concentracao_o2_min){
+        super(raio, ambiente);
+        this.concentracao_o2_max = concentracao_o2_max;
+        this.concentracao_o2_min = concentracao_o2_min;
     }
     
-    public int getConcentracao_o2() {
-        return concentracao_o2;
+    public int getConcentracao_o2_max() {
+        return concentracao_o2_max;
     }
     
-    public void setconcentracao_o2(int concentracao_o2) {
-        this.concentracao_o2 = concentracao_o2;
+    public int getConcentracao_o2_min() {
+        return concentracao_o2_min;
+    }
+
+    public void setConcentracao_o2_min(int concentracao_o2_min) {
+        this.concentracao_o2_min = concentracao_o2_min;
+    }
+
+    public void setConcentracao_o2_max(int concentracao_o2_max) {
+        this.concentracao_o2_max = concentracao_o2_max;
     }
 
     @Override
-    public void monitorar(String nome_lugar, Robo robo){
+    public void monitorar(Robo robo){
         //Essa funcao analisa a concentracao de O2 em certo lugar no ambiente
-        if (concentracao_o2 > 50) { 
-            System.out.printf("Oxigênio elevado! Risco de oxidação acelerada/Risco de incêndio!\nLugar: %s\nTemperatura: %d\nStatus: Risco de danos estruturais!\n",nome_lugar,this.concentracao_o2);
-        } else if (concentracao_o2 >= 21) {
-            System.out.printf("Nível normal\nLugar: %s\nConcentração de O2: %d\nStatus: Risco de danos estruturais!\n",nome_lugar,this.concentracao_o2);
+        if (ambiente.getConcentracao_o2() > getConcentracao_o2_max()) { 
+            System.out.printf("->Oxigenio elevado! Risco de oxidação acelerada/Risco de incêndio!\nConcentracao de O2: %d mol/l maior do que a maxima (%d mol/l)\nStatus: Risco de danos estruturais!\n",ambiente.getConcentracao_o2(), getConcentracao_o2_max());
+        } else if (ambiente.getConcentracao_o2() >= getConcentracao_o2_min()) {
+            System.out.printf("->Nivel normal\nConcentracao de O2: %d mol/l dentro da faixa de %d até %d mol/l\nStatus: Tudo normal!\n",ambiente.getConcentracao_o2(), getConcentracao_o2_min(), getConcentracao_o2_max());
         } else {
-            System.out.printf("Pouco risco de oxidação.\nLugar: %s\nConcentração de O2: %d\nStatus: Risco de danos estruturais!\n",nome_lugar,this.concentracao_o2);
+            System.out.printf("->Pouco risco de oxidação.\nConcentração de O2: %d mol/l abaixo da minima (%d mol/l)\nStatus: Risco de danos estruturais!\n",ambiente.getConcentracao_o2(), getConcentracao_o2_min());
         }
     }
 
     @Override
     public String toString() {
-        String out = "--- Sensor de Temperatura ---\n";
-        out += ".Raio de varredura = " + getRaio() + " .\n";
-        out += ".Concentracao de oxigenio no ambiente = " + getConcentracao_o2() + " .";
+        String out = "--Sensor de Oxigenio\n";
+        out += "Raio de varredura = " + getRaio() + " .\n";
+        out += "Intervalo ideal de Concentracao de O2: " + getConcentracao_o2_min() + "até " + getConcentracao_o2_max() + " mol/l.";
         return out;
     }
 }

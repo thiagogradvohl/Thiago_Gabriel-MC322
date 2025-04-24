@@ -39,7 +39,7 @@ public class RoboAereo extends Robo {
 
     public String toString() {
         String out = "";
-        out += getNome() + "esta na posicao" + "( " + getPosicaox() + ", " + getPosicaoy() + ").\n";
+        out += "---" + getNome() + "esta na posicao" + "( " + getPosicaox() + ", " + getPosicaoy() + ").\n";
         out += "Seus sensores sao: ";
         for (Sensor s : getSensores())
             out += s.toString();

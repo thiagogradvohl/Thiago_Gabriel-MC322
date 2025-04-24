@@ -2,12 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SensorProximidade extends Sensor{
-    Ambiente ambiente_robos;
 
-    public SensorProximidade(double raio, Ambiente ambiente_robos){
-        super(raio);
-        this.ambiente_robos = ambiente_robos;
-        
+    public SensorProximidade(double raio, Ambiente ambiente){
+        super(raio, ambiente);
     }
 
     protected double distancia1D(double ponto, double min, double max) {
@@ -24,7 +21,7 @@ public class SensorProximidade extends Sensor{
         
         List<Obstaculo> obstaculos_vizinhos = new ArrayList<>();
 
-        for(Obstaculo obs : this.ambiente_robos.obstaculos)
+        for(Obstaculo obs : this.ambiente.obstaculos)
         {   
             //calcula a distancia entre o robo e um dado obstaculo
             double distancia_x = distancia1D(robo.getPosicaox(), obs.getPosicao_x1(), obs.getPosicao_x2());
@@ -48,21 +45,20 @@ public class SensorProximidade extends Sensor{
     }
 
     @Override
-    public void monitorar(String nome_lugar, Robo robo) {
+    public void monitorar(Robo robo) {
         List<Obstaculo> obstaculos_vizinhos = identificarObstaculos(robo);
         if (obstaculos_vizinhos != null) {
-            System.out.printf("---Obstaculos encontrados pelo Sensor de Proximidade em %s (no raio de proximidade igual a %d)---\n",
-            nome_lugar, getRaio());
+            System.out.printf("->Obstaculos encontrados pelo Sensor de Proximidade (no raio de proximidade igual a %d):\n", getRaio());
             exibirObstaculos(obstaculos_vizinhos);
         }
         else   
-            System.out.println("---O Sensor de Proximidade nao encontrou Obstaculos---");
+            System.out.println("->O Sensor de Proximidade nao encontrou Obstaculos");
     }
 
     @Override
     public String toString() {
-        String out = "--- Sensor de Proximidade ---";
-        out += ".Raio de varredura = " + getRaio() + " .";
+        String out = "--Sensor de Proximidade\n";
+        out += "Raio de varredura = " + getRaio();
         return out;
     }
 }

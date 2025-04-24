@@ -59,12 +59,12 @@ public class Robo
     }
     
     public void adicionarSensor(Sensor sensor) {
-        sensores.add(sensor);
+        this.sensores.add(sensor);
     }
 
-    public void usarSensores(String local) {
+    public void usarSensores() {
         for (Sensor s : sensores) {
-            s.monitorar(local, this);
+            s.monitorar(this);
         }
     }
 
@@ -82,7 +82,7 @@ public class Robo
 
     public String toString() {
         String out = "";
-        out += getNome() + "esta na posicao" + "( " + getPosicaox() + ", " + getPosicaoy() + ").\n";
+        out += "---" + getNome() + "esta na posicao" + "( " + getPosicaox() + ", " + getPosicaoy() + ").\n";
         out += "Seus sensores sao: ";
         for (Sensor s : sensores)
             out += s.toString();

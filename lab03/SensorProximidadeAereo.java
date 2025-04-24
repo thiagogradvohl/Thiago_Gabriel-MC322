@@ -5,15 +5,15 @@ public class SensorProximidadeAereo extends SensorProximidade {
     //Essa classe é um tipo de sensor de proximidade (classe SensorProximidade) que funciona para RobosAereos
     //ou seja, considera a altitude tanto dos obstaculos quanto dos robos para a analise
 
-    public SensorProximidadeAereo(double raio, Ambiente ambiente_robos) {
-        super(raio, ambiente_robos);
+    public SensorProximidadeAereo(double raio, Ambiente ambiente) {
+        super(raio, ambiente);
     }
 
     public List<Obstaculo> identificarObstaculosAereos(RoboAereo robo_aereo){
         //Essa funcao identifica obstaculos vizinhos ao robo dentro do raio de busca
         List<Obstaculo> obstaculos_vizinhos = new ArrayList<>();
 
-        for(Obstaculo obs : this.ambiente_robos.obstaculos)
+        for(Obstaculo obs : this.ambiente.obstaculos)
         {   
             //calculo da distancia minima entre o robo e o obstaculo:
             double distancia_x = distancia1D(robo_aereo.getPosicaox(), obs.getPosicao_x1(), obs.getPosicao_x2());
@@ -31,23 +31,22 @@ public class SensorProximidadeAereo extends SensorProximidade {
         return obstaculos_vizinhos;
     }
 
-    public void monitorar(String nome_lugar, RoboAereo robo_aereo) {
+    public void monitorar(RoboAereo robo_aereo) {
         //Sobrecarga do metodo monitorar do SensorProximidade para analisar a proximidade para
         //um RoboAereo 
         List<Obstaculo> proximos = identificarObstaculosAereos(robo_aereo);
         if (proximos != null) {
-            System.out.printf("---Obstaculos encontrados pelo Sensor de Altitude em %s (no raio de proximidade igual a %d)---\n",
-            nome_lugar, getRaio());
+            System.out.printf("->Obstaculos encontrados pelo Sensor de Altitude (no raio de proximidade igual a %d):\n",getRaio());
             exibirObstaculos(proximos);
         }
         else   
-            System.out.println("---O Sensor de Altitude nao encontrou Obstaculos---");
+            System.out.println("->O Sensor de Altitude nao encontrou Obstaculos.");
     }
 
     @Override
     public String toString() {
-        String out = "--- Sensor de Altitude --- \n";
-        out += ".Raio de varredura = " + getRaio() + " .";
+        String out = "--Sensor de Altitude\n";
+        out += "Raio de varredura = " + getRaio() + " .";
         return out;
     }
 }
