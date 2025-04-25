@@ -64,9 +64,9 @@ public class Robo
         this.sensores.add(sensor);
     }
 
-    public void usarSensores() {
+    public void usarSensores(Ambiente ambiente) {
         for (Sensor s : sensores) {
-            s.monitorar(this);
+            s.monitorar(this, ambiente);
         }
     }
 

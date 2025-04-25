@@ -8,12 +8,12 @@ public class Main {
         System.out.println(a);
 
         //Instanciando os sensores:
-        SensorProximidade sp1 = new SensorProximidade(5, a);
-        SensorProximidade sp2 = new SensorProximidade(10, a);
-        SensorOxigenio so1 = new SensorOxigenio(5, a, 30, 20);
-        SensorOxigenio so2 = new SensorOxigenio(10, a, 30, 20);
-        SensorTemperatura st1 = new SensorTemperatura(5, a, 100, 20);
-        SensorTemperatura st2 = new SensorTemperatura(10, a, 10, 0);
+        SensorProximidade sp1 = new SensorProximidade(5);
+        SensorProximidade sp2 = new SensorProximidade(10);
+        SensorOxigenio so1 = new SensorOxigenio(5, 30, 20);
+        SensorOxigenio so2 = new SensorOxigenio(10, 30, 20);
+        SensorTemperatura st1 = new SensorTemperatura(5, 100, 20);
+        SensorTemperatura st2 = new SensorTemperatura(10, 10, 0);
         
         //Instanciando os obstaculos:
         Obstaculo o1 = new Obstaculo(2, 2, TipoObstaculo.PAREDE);
@@ -54,11 +54,11 @@ public class Main {
         System.out.println();
 
         System.out.println("######## Testando os sensores (de Proximidade e de Oxigenio) do Robo Terrestre #########");
-        rt.usarSensores();
+        rt.usarSensores(a);
         System.out.println();
 
         System.out.println("######## Testando os sensores (de Proximidade e de Temperatura) do Robo Aereo #########");
-        ra.usarSensores();
+        ra.usarSensores(a);
         System.out.println();
 
         System.out.println(a);
@@ -164,12 +164,12 @@ public class Main {
             if(resposta_2 == 1)
             {
                 System.out.println("Relatório geral dos sensores para o robô terrestre: ");
-                rt.usarSensores();
+                rt.usarSensores(a);
             }
             else if(resposta_2 == 2)
             {
                 System.out.println("Relatório geral dos sensores para o robô aéreo");
-                ra.usarSensores();
+                ra.usarSensores(a);
             }
         }
 

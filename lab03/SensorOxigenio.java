@@ -4,8 +4,8 @@ public class SensorOxigenio extends Sensor{
     private int concentracao_o2_min;  //unidade = mol/l
     private int concentracao_o2_max;
 
-    public SensorOxigenio(double raio, Ambiente ambiente, int concentracao_o2_max, int concentracao_o2_min){
-        super(raio, ambiente);
+    public SensorOxigenio(double raio, int concentracao_o2_max, int concentracao_o2_min){
+        super(raio);
         this.concentracao_o2_max = concentracao_o2_max;
         this.concentracao_o2_min = concentracao_o2_min;
     }
@@ -27,8 +27,8 @@ public class SensorOxigenio extends Sensor{
     }
 
     @Override
-    public void monitorar(Robo robo){
-        //Essa funcao analisa a concentracao de O2 em certo lugar no ambiente
+    public void monitorar(Robo robo, Ambiente ambiente){
+        //Essa funcao analisa a concentracao de O2 no ambiente
         if (ambiente.getConcentracao_o2() > getConcentracao_o2_max()) { 
             System.out.printf("->Oxigenio elevado! Risco de oxidação acelerada/Risco de incêndio!\nConcentracao de O2: %d mol/l maior do que a maxima (%d mol/l)\nStatus: Risco de danos estruturais!\n",ambiente.getConcentracao_o2(), getConcentracao_o2_max());
         } else if (ambiente.getConcentracao_o2() >= getConcentracao_o2_min()) {

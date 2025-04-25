@@ -4,8 +4,8 @@ import java.util.List;
 public class SensorProximidade extends Sensor{
     //Esse sensor identifica obstaculos dentro do raio de busca e os imprime,
     //bem como verifica colisoes do robo com os obstaculos do ambiente
-    public SensorProximidade(double raio, Ambiente ambiente){
-        super(raio, ambiente);
+    public SensorProximidade(double raio){
+        super(raio);
     }
 
     protected double distancia3D(Robo robo, Obstaculo obs) {
@@ -29,11 +29,11 @@ public class SensorProximidade extends Sensor{
         return 0;
     }
 
-    public List<Obstaculo> identificarObstaculos(Robo robo){
+    public List<Obstaculo> identificarObstaculos(Robo robo, Ambiente ambiente){
         
         List<Obstaculo> obstaculos_vizinhos = new ArrayList<>();
 
-        for(Obstaculo obs : this.ambiente.getObstaculos())
+        for(Obstaculo obs : ambiente.getObstaculos())
         {   
             double distancia = distancia3D(robo, obs);
 
@@ -55,8 +55,8 @@ public class SensorProximidade extends Sensor{
     }
 
     @Override
-    public void monitorar(Robo robo) {
-        List<Obstaculo> obstaculos_vizinhos = identificarObstaculos(robo);
+    public void monitorar(Robo robo, Ambiente ambiente) {
+        List<Obstaculo> obstaculos_vizinhos = identificarObstaculos(robo, ambiente);
         if (obstaculos_vizinhos.size() != 0) {
             System.out.printf("->Obstaculos encontrados pelo Sensor de Proximidade (no raio de proximidade igual a %.1f):\n", getRaio());
             exibirObstaculos(obstaculos_vizinhos);

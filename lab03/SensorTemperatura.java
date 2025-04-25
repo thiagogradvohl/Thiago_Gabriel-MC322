@@ -4,8 +4,8 @@ public class SensorTemperatura extends Sensor {
     //Esse sensor analisa a temperatura em um ambiente,
     //de acordo com o min e max, que sao seus atributos
 
-    public SensorTemperatura(double raio, Ambiente ambiente, int temperatura_max, int temperatura_min){
-        super(raio, ambiente);
+    public SensorTemperatura(double raio, int temperatura_max, int temperatura_min){
+        super(raio);
         this.temperatura_max = temperatura_max;
         this.temperatura_min = temperatura_min;
     }
@@ -27,7 +27,7 @@ public class SensorTemperatura extends Sensor {
     }
 
     @Override
-    public void monitorar(Robo robo){
+    public void monitorar(Robo robo, Ambiente ambiente){
         //Essa funcao analisa a temperatura em certo lugar no ambiente
         if (ambiente.getTemperatura() >= getTemperatura_max())
             System.out.printf("->ALERTA! Temperatura de suporte máxima atingida! Temperatura = %d C acima da maxima permitida (%d C). Status: Risco de danos estruturais!\n",ambiente.getTemperatura(),getTemperatura_max());

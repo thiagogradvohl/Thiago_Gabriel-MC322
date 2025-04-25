@@ -2,11 +2,9 @@ public abstract class Sensor {
     //Essa classe abstrata representa os sensores dos robos.
     //Suas subclasses realizarao a sobescrita do metodo monitorar (abstrato)
     private double raio;
-    Ambiente ambiente;
 
-    public Sensor(double raio, Ambiente ambiente){
+    public Sensor(double raio){
         this.raio = raio;
-        this.ambiente = ambiente;
     }
 
     public double getRaio(){
@@ -16,16 +14,8 @@ public abstract class Sensor {
     public void setRaio(double raio) {
         this.raio = raio;
     }
-
-    public Ambiente getAmbiente() {
-        return ambiente;
-    }
-
-    public void setAmbiente(Ambiente ambiente) {
-        this.ambiente = ambiente;
-    }
-
-    public abstract void monitorar(Robo robo);
+    
+    public abstract void monitorar(Robo robo, Ambiente ambiente);
 
     public String toString() {
         String out = "--Sensor--\n";
