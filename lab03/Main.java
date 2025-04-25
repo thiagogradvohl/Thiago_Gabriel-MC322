@@ -66,111 +66,118 @@ public class Main {
     
         //MENU INTERATIVO:
 
-        System.out.println("####### Menu Interativo #######");
-        Scanner scanner = new Scanner(System.in);
-
+        Scanner scanner = new Scanner(System.in);        
         //Robôs e Ambiente
-        System.out.println("Escolha o que deseja fazer:\n(1) Visualizar status dos robôs\n(2) Visualizar status do ambiente\n(3) Mover robôs\n(4) Utilizar sensores");
-        int resposta_1 = scanner.nextInt();
-        if(resposta_1 == 1)
-        //usuário deseja visualizar os robôs.
-        {
-            System.out.println("Escolha qual robô deseja ver o status:\n(1) Robô terrestre\n(2) Robô aéreo\n(3) Ambos robôs");
-            int resposta_2 = scanner.nextInt();
-            if(resposta_2 == 1)
+        while (true) {
+            System.out.println("########### Menu Interativo ###########");
+            System.out.println("Escolha o que deseja fazer:\n(1) Visualizar status dos robôs\n(2) Visualizar status do ambiente\n(3) Mover robôs\n(4) Utilizar sensores\n(5) Encerrar programa");
+            int resposta_1 = scanner.nextInt();
+            if(resposta_1 == 1)
+            //usuário deseja visualizar os robôs.
             {
-                System.err.println("Status do robô terrestre");
-                System.out.println(rt);
-            }
-            else if(resposta_2 == 2)
-            {
-                System.err.println("Status do robô aéreo");
-                System.out.println(ra);
-            }
-            else
-            {
-                System.out.println("Status do robô terrestre:");
-                System.out.println(rt);
-
-                System.out.println("Status do robô aéreo:");
-                System.out.println(ra);
-            }
-        }
-
-        else if(resposta_1 == 2)
-        {
-            System.out.println("Status do ambiente:");
-            System.out.println(a);
-        }
-        //movimentação dos robôs
-        else if(resposta_1 == 3)
-        {
-            System.out.println("Escolha o robô que deseja mover:\n(1) Robô terrestre\n(2) Robô aéreo");
-            int resposta_2 = scanner.nextInt();
-
-            int delta_x;
-            int delta_y;
-            
-
-            if(resposta_2 == 1)
-            {
-                int pos_x_antiga = rt.getPosicaox();
-                int pos_y_antiga = rt.getPosicaoy();
-
-                System.out.printf("Escolha por qual distância deseja movimentar o robô terrestre:\nNo eixo X: ");
-                delta_x = scanner.nextInt();
-                System.out.print("No eixo Y: ");
-                delta_y = scanner.nextInt();
-                rt.mover(delta_x, delta_y);
-                System.out.printf("O robô terrestre se moveu da posição (%d,%d) para a posição (%d,%d)\n",pos_x_antiga,pos_y_antiga,rt.getPosicaox(),rt.getPosicaoy());
-            }
-            else if(resposta_2 == 2)
-            {
-                int pos_x_antiga = ra.getPosicaox();
-                int pos_y_antiga = ra.getPosicaoy();
-                int pos_altitude_antiga = ra.getAltitude();
-                int delta_Z;
-
-                System.out.printf("Escolha por qual distância deseja movimentar o robô aéreo:\nNo eixo X: ");
-                delta_x = scanner.nextInt();
-
-                System.out.print("No eixo Y: ");
-                delta_y = scanner.nextInt();
-
-                System.out.print("No eixo Z: ");
-                delta_Z= scanner.nextInt();
-                if(delta_Z > 0)
+                System.out.println("Escolha qual robô deseja ver o status:\n(1) Robô terrestre\n(2) Robô aéreo\n(3) Ambos robôs");
+                int resposta_2 = scanner.nextInt();
+                if(resposta_2 == 1)
                 {
-                    ra.subir(delta_Z);
+                    System.err.println("Status do robô terrestre");
+                    System.out.println(rt);
+                }
+                else if(resposta_2 == 2)
+                {
+                    System.err.println("Status do robô aéreo");
+                    System.out.println(ra);
                 }
                 else
                 {
-                    ra.descer(-delta_Z);
+                    System.out.println("Status do robô terrestre:");
+                    System.out.println(rt);
+
+                    System.out.println("Status do robô aéreo:");
+                    System.out.println(ra);
                 }
+            }
 
-                ra.mover(delta_x,delta_y);
+            else if(resposta_1 == 2)
+            {
+                System.out.println("Status do ambiente:");
+                System.out.println(a);
+            }
+            //movimentação dos robôs
+            else if(resposta_1 == 3)
+            {
+                System.out.println("Escolha o robô que deseja mover:\n(1) Robô terrestre\n(2) Robô aéreo");
+                int resposta_2 = scanner.nextInt();
+
+                int delta_x;
+                int delta_y;
+                
+
+                if(resposta_2 == 1)
+                {
+                    int pos_x_antiga = rt.getPosicaox();
+                    int pos_y_antiga = rt.getPosicaoy();
+
+                    System.out.printf("Escolha por qual distância deseja movimentar o robô terrestre:\nNo eixo X: ");
+                    delta_x = scanner.nextInt();
+                    System.out.print("No eixo Y: ");
+                    delta_y = scanner.nextInt();
+                    rt.mover(delta_x, delta_y);
+                    System.out.printf("O robô terrestre se moveu da posição (%d,%d) para a posição (%d,%d)\n",pos_x_antiga,pos_y_antiga,rt.getPosicaox(),rt.getPosicaoy());
+                }
+                else if(resposta_2 == 2)
+                {
+                    int pos_x_antiga = ra.getPosicaox();
+                    int pos_y_antiga = ra.getPosicaoy();
+                    int pos_altitude_antiga = ra.getAltitude();
+                    int delta_Z;
+
+                    System.out.printf("Escolha por qual distância deseja movimentar o robô aéreo:\nNo eixo X: ");
+                    delta_x = scanner.nextInt();
+
+                    System.out.print("No eixo Y: ");
+                    delta_y = scanner.nextInt();
+
+                    System.out.print("No eixo Z: ");
+                    delta_Z= scanner.nextInt();
+                    if(delta_Z > 0)
+                    {
+                        ra.subir(delta_Z);
+                    }
+                    else
+                    {
+                        ra.descer(-delta_Z);
+                    }
+
+                    ra.mover(delta_x,delta_y);
+                
+                    System.out.printf("O robô terrestre se moveu da posição (%d,%d,%d) para a posição (%d,%d,%d)\n",pos_x_antiga,pos_y_antiga,pos_altitude_antiga,ra.getPosicaox(),ra.getPosicaoy(),ra.getAltitude());
+                }
+            }
             
-                System.out.printf("O robô terrestre se moveu da posição (%d,%d,%d) para a posição (%d,%d,%d)\n",pos_x_antiga,pos_y_antiga,pos_altitude_antiga,ra.getPosicaox(),ra.getPosicaoy(),ra.getAltitude());
+            //uso dos sensores
+            else if(resposta_1 == 4)
+            {
+
+                System.out.println("Escolha o robô que deseja ver o sensor:\n(1) Robô terrestre\n(2) Robô aéreo");
+                int resposta_2 = scanner.nextInt();
+
+                if(resposta_2 == 1)
+                {
+                    System.out.println("Relatório geral dos sensores para o robô terrestre: ");
+                    rt.usarSensores(a);
+                }
+                else if(resposta_2 == 2)
+                {
+                    System.out.println("Relatório geral dos sensores para o robô aéreo");
+                    ra.usarSensores(a);
+                }
             }
-        }
+            
+            else if (resposta_1 == 5) {
+                System.out.println("Programa encerrado.");
+                break;
+            }
         
-        //uso dos sensores
-        else if(resposta_1 == 4)
-        {
-
-            System.out.println("Escolha o robô que deseja ver o sensor:\n(1) Robô terrestre\n(2) Robô aéreo");
-            int resposta_2 = scanner.nextInt();
-
-            if(resposta_2 == 1)
-            {
-                System.out.println("Relatório geral dos sensores para o robô terrestre: ");
-                rt.usarSensores(a);
-            }
-            else if(resposta_2 == 2)
-            {
-                System.out.println("Relatório geral dos sensores para o robô aéreo");
-                ra.usarSensores(a);
-            }
         }
 
         scanner.close();
