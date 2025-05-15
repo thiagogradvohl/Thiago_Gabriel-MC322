@@ -28,10 +28,10 @@ public class Main {
         System.out.println(rt);
 
         System.out.println("######### Tentando adicionar Obstaculos ao Ambiente #########");
-        a.adicionarObstaculo(o1);
-        a.adicionarObstaculo(o2);
-        a.adicionarObstaculo(o3);
-        a.adicionarObstaculo(o4);
+        a.adicionarEntidade(o1);
+        a.adicionarEntidade(o2);
+        a.adicionarEntidade(o3);
+        a.adicionarEntidade(o4);
         System.out.println();
 
         System.out.println("######### Adicionando novos sensores aos robos #########");
