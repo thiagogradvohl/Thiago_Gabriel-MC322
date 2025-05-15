@@ -29,9 +29,9 @@ public class Ambiente {
                     this.mapa[i][j][k] = TipoEntidade.VAZIO;
     }
 
-    private void moverEntidade(Entidade e, int novoX, int novoY, int novoZ) {
+    public void moverEntidade(Entidade e, int novoX, int novoY, int novoZ) {
         if (e.getTipo() == TipoEntidade.ROBO)   //só robo é movimentado
-            e.movePara(novoX, novoY, novoZ);
+            ((Robo)e).moverPara(novoX, novoY, novoZ);
         //se nao for robo --> exceptionStaticObject
     }
 
@@ -106,8 +106,8 @@ public class Ambiente {
                 this.mapa[e.getX()][e.getY()][e.getZ()] = e.getTipo();  //atualiza o mapa para entidades pontuais
                 this.entidades.add(e);
             }
-            else if (e.getTipo() == TipoEntidade.OBSTACULO && !espacoOcupado(e.getX1(), e.getX(), e.getY1(), e.getY(), e.getZ())) {  //obstaculo é 3D
-                atualizarEspacoMapa(e.getX1(), e.getX(), e.getY1(), e.getY(), e.getZ(), e.getTipo());
+            else if (e.getTipo() == TipoEntidade.OBSTACULO && !espacoOcupado(((Obstaculo)e).getX1(), e.getX(), ((Obstaculo)e).getY1(), e.getY(), e.getZ())) {  //obstaculo é 3D
+                atualizarEspacoMapa(((Obstaculo)e).getX1(), e.getX(), ((Obstaculo)e).getY1(), e.getY(), e.getZ(), e.getTipo());
                 this.entidades.add(e);
             }
             // else --> exceptioncolision 
@@ -118,7 +118,7 @@ public class Ambiente {
     public void removerEntidade(Entidade e) {
         this.entidades.remove(e);
         if (e.getTipo() == TipoEntidade.OBSTACULO)
-            atualizarEspacoMapa(e.getX1(), e.getX(), e.getY1(), e.getY(), e.getZ(), TipoEntidade.VAZIO);
+            atualizarEspacoMapa(((Obstaculo)e).getX1(), e.getX(), ((Obstaculo)e).getY1(), e.getY(), e.getZ(), TipoEntidade.VAZIO);
         else
             this.mapa[e.getX()][e.getY()][e.getZ()] = TipoEntidade.VAZIO;  //atualiza o mapa
     }

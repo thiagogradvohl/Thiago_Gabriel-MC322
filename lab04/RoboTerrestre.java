@@ -1,14 +1,13 @@
-public class RoboTerrestre extends Robo {
-        //Essa subclasse representa os robos terrestres (metodo mover sobescrito depende da velocidade) e herda da classe Robo
+public abstract class RoboTerrestre extends Robo {
+    //Essa subclasse representa os robos terrestres (metodo mover sobescrito depende da velocidade) e herda da classe Robo
     private int velocidadeMaxima;
     private int velocidade;
     
-    public RoboTerrestre(int posicaox, int posicaoy, String nome, int velocidadeMaxima, int velocidade, Sensor sensor) {
-        super(posicaox, posicaoy, nome, sensor);
+    public RoboTerrestre(int X, int Y, int Z, String id, int velocidadeMaxima, int velocidade, Sensor sensor, EstadoRobo estado) {
+        super(X, Y, Z, id, sensor, estado);
         this.velocidadeMaxima = velocidadeMaxima;
         this.velocidade = velocidade;
     }
-
     
     public int getVelocidadeMaxima() {
         return velocidadeMaxima;    
@@ -29,20 +28,18 @@ public class RoboTerrestre extends Robo {
     }
 
     @Override
-    public void mover(int delta_x, int delta_y) {
+    public void moverPara(int X, int Y, int Z) {
         //metodo sobrescrito do Robo, move o robo se a sua velocidade for menor que a velocidade maxima
-        if (getVelocidade() > this.velocidadeMaxima || getPosicaox() + delta_x < 0 || getPosicaoy() + delta_y < 0)
-            System.out.printf("Não foi possível realizar o movimento.\n");
-        else {
-            setPosicaox(getPosicaox()+delta_x); 
-            setPosicaoy(getPosicaoy()+delta_y); 
-        } 
+        if (this.velocidade < this.velocidadeMaxima) {
+            super.moverPara(X, Y, Z);
+        }
+        //exception velocidade maxima
     }
 
     @Override
     public String toString() {
         String out = "";
-        out += "Robo terrestre " + getNome() + " esta na posicao " + "(" + getPosicaox() + ", " + getPosicaoy() + "), ";
+        out += "Robo terrestre " + getId() + " esta na posicao " + "(" + getX() + ", " + getY() + "), ";
         out += "com Velocidade = " + getVelocidade() + " x Velocidade Maxima = " + getVelocidadeMaxima() + ":\n";
         if (getSensores() == null) 
             out += "        |-->Ele nao possui sensores.";

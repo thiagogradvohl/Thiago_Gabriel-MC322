@@ -10,7 +10,7 @@ public enum TipoEntidade {
         this.representacao = representacao;
     }
 
-    public int getRepresentacao() {
+    public char getRepresentacao() {
         return representacao;
     }
 }

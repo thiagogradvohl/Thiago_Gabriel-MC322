@@ -1,63 +1,88 @@
 import java.util.List;
 import java.util.ArrayList;
 
-public class Robo 
-{
-    private String nome;
-    private int posicaox;
-    private int posicaoy;
+public abstract class Robo implements Entidade {
+    //rever exceprtions para usar sensores e mover
+    private String id;
+    private TipoEntidade tipo;
+    private EstadoRobo estado;
+    private int X;
+    private int Y;
+    private int Z;
     private List<Sensor> sensores;
-    
 
-    public Robo(int posicaox, int posicaoy, String nome, Sensor sensor) {
-        //Método construtor: Define o nome, a posicao x e a posicao y do robô.
-        this.nome = nome;
-        this.posicaox = posicaox;
-        this.posicaoy = posicaoy;
+    public Robo(int X, int Y, int Z, String id, Sensor sensor, EstadoRobo estado) {
+        //Método construtor: Define o id, a posicao x e a posicao y do robô.
+        this.id = id;
+        this.X = X;
+        this.Y = Y;
+        this.Z = Z;
         this.sensores = new ArrayList<Sensor>();
         this.sensores.add(sensor);
+        this.tipo = TipoEntidade.ROBO;
+        this.estado = estado;
     }
 
-    public String getNome() {
-        //retorna o nome do robô.
-        return nome;
+    public String getId() {
+        //retorna o id do robô.
+        return id;
     }
 
-    public int getPosicaox() {
+    public int getX() {
         //retorna a posição x do robô.
-        return posicaox;
+        return X;
     }
 
-    public int getPosicaoy() {
+    public TipoEntidade getTipo() {
+        return tipo;
+    }
+
+    public EstadoRobo getEstado() {
+        return estado;
+    }
+
+    public int getZ() {
+        return Z;
+    }
+
+    public int getY() {
         //retorna a posição y do robô.
-        return posicaoy;
+        return Y;
     }
-    public void setNome(String nome){
-        this.nome = nome;
+    public void setId(String id){
+        this.id = id;
     }
-    public void setPosicaox(int posicaox){
-        this.posicaox = posicaox;
+    public void setX(int X){
+        this.X = X;
     }
-    public void setPosicaoy(int posicaoy){
-        this.posicaoy = posicaoy;
+    public void setY(int Y){
+        this.Y = Y;
     }
     
-    public void mover(int deltaX, int deltaY) {
-        //move as posições x e y do robô de acordo com um delta x e um delta y.
-        int novo_x = this.posicaox + deltaX;
-        int novo_y = this.posicaoy + deltaY; 
-        if (novo_x >= 0 && novo_y >= 0) {
-            this.posicaox = novo_x;
-            this.posicaoy = novo_y; 
-            System.out.println("O robo se moveu!");
+    public void setTipo(TipoEntidade tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setEstado(EstadoRobo estado) {
+        this.estado = estado;
+    }
+
+    public void setZ(int z) {
+        Z = z;
+    }
+
+    public void moverPara(int X, int Y, int Z) {
+        if (X >= 0 && Y >= 0 && Z >= 0 && this.estado == EstadoRobo.LIGADO) {
+            this.X = X;
+            this.Y = Y;
+            this.Z = Z;
         }
-        else 
-            System.out.println("O robo nao se moveu, pois iria para coordenadas negativas.");
+        //exception robo desligado
     }
     
     public void exibirPosicao() {
         //imprime as posições x e y do robô.
-        System.out.printf("Posicao X: %d\nPosicao Y: %d\n", this.posicaox, this.posicaoy);
+        System.out.printf("Posicao X: %d\nPosicao Y: %d\n", this.X, this.Y);
     }
     
     public void adicionarSensor(Sensor sensor) {
@@ -68,6 +93,7 @@ public class Robo
         for (Sensor s : sensores) {
             s.monitorar(this, ambiente);
         }
+        //exception robo desligado
     }
 
     public List<Sensor> getSensores() {
@@ -82,9 +108,21 @@ public class Robo
         this.sensores.remove(sensor);
     }
 
+    public void desligar() {
+        if (this.estado == EstadoRobo.LIGADO)
+            this.estado = EstadoRobo.DESLIGADO;
+    }
+
+    public void ligar() {
+        if (this.estado == EstadoRobo.DESLIGADO)
+            this.estado = EstadoRobo.LIGADO;
+    }
+
+    public abstract void executarTarefa();
+
     public String toString() {
         String out = "";
-        out += "Robo " + getNome() + " esta na posicao " + "(" + getPosicaox() + ", " + getPosicaoy() + "):\n";
+        out += "Robo " + getId() + " esta na posicao " + "(" + getX() + ", " + getY() + "):\n";
         if (getSensores() == null) 
             out += "        |-->Ele nao possui sensores.";
         else {

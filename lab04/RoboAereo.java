@@ -1,11 +1,10 @@
-public class RoboAereo extends Robo {
+public abstract class RoboAereo extends Robo {
     //Essa subclasse representa os robos com altura (robos aereos) e herda da classe Robo
     private int altitude;
     private int altitudeMaxima;
 
-    public RoboAereo(int posicaox, int posicaoy, int altitude, int altitudeMaxima, String nome, Sensor sensor) {  //método construtor para o robo aereo
-        super(posicaox, posicaoy, nome, sensor);  //determina os atributos ja existentes na classe mae
-        this.altitude = altitude;
+    public RoboAereo(int X, int Y, int altitude, int altitudeMaxima, String id, Sensor sensor, EstadoRobo estado) {  //método construtor para o robo aereo
+        super(X, Y, altitude, id, sensor, estado);  //determina os atributos ja existentes na classe mae
         this.altitudeMaxima = altitudeMaxima;
     }
 
@@ -41,7 +40,7 @@ public class RoboAereo extends Robo {
     @Override
     public String toString() {
         String out = "";
-        out += "Robo aereo " + getNome() + " esta na posicao " + "(" + getPosicaox() + ", " + getPosicaoy() + ", " + getAltitude() + "), ";
+        out += "Robo aereo " + getId() + " esta na posicao " + "(" + getX() + ", " + getY() + ", " + getAltitude() + "), ";
         out += "com Altura maxima = " + getAltitudeMaxima() + ":\n";
         if (getSensores() == null) 
             out += "        |->Ele nao possui sensores.";

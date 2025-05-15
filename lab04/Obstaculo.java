@@ -1,86 +1,79 @@
-public class Obstaculo {
+public class Obstaculo implements Entidade {
     //Essa classe representa os obstaculos que serao colocados em um ambiente
     
-    private int posicao_x1;
-    private int posicao_y1;
-    private int altura;
-    private int posicao_x2;
-    private int posicao_y2;
-    private TipoObstaculo tipo;
-    
-    public Obstaculo(int posicao_x1, int posicao_y1, int altura, int posicao_x2, int posicao_y2, TipoObstaculo tipo) {
+    private int X1;
+    private int Y1;
+    private int Z;
+    private int X;
+    private int Y;
+    private char representacao;
+    private TipoObstaculo tipo_obs;
+    private TipoEntidade tipo;
+
+    public Obstaculo(int X1, int Y1, int Z, int X, int Y, TipoObstaculo tipo_obs) {
         //Metodo construtor: Nao utiliza o padrao do tipo do obstaculo
-        this.posicao_x1 = posicao_x1;
-        this.posicao_y1 = posicao_y1;
-        this.posicao_x2 = posicao_x2;
-        this.posicao_y2 = posicao_y2;
-        this.altura = altura;
-        this.tipo = tipo;
+        this.X1 = X1;
+        this.Y1 = Y1;
+        this.X = X;
+        this.Y = Y;
+        this.Z = Z;
+        this.tipo = TipoEntidade.OBSTACULO;
+        this.tipo_obs = tipo_obs;
+        this.representacao = TipoEntidade.OBSTACULO.getRepresentacao();
     }
 
-    public Obstaculo(int posicao_x1, int posicao_y1, TipoObstaculo tipo) {
-        //Método construtor: utiliza a altura, largura e comprimento padrao do tipo do obstaculo
+    public Obstaculo(int X1, int Y1, TipoObstaculo tipo_obs) {
+        //Método construtor: utiliza a Z, largura e comprimento padrao do tipo do obstaculo
         //posicao x1 e y1 sao o inicio do obstaculo
-        this.posicao_x1 = posicao_x1;
-        this.posicao_y1 = posicao_y1;
-        this.posicao_x2 = posicao_x1 + tipo.getComprimentoPadrao();
-        this.posicao_y2 = posicao_y1 + tipo.getLarguraPadrao();
-        this.altura = tipo.getAlturaPadrao();
-        this.tipo = tipo;
+        this.X1 = X1;
+        this.Y1 = Y1;
+        this.X = X1 + tipo_obs.getComprimentoPadrao();
+        this.Y = Y1 + tipo_obs.getLarguraPadrao();
+        this.Z = tipo_obs.getAlturaPadrao();
+        this.tipo = TipoEntidade.OBSTACULO;
+        this.tipo_obs = tipo_obs;
     }
 
-    public int getAltura() {
-        return altura;
+    public int getZ() {
+        return Z;
     }
 
-    public int getPosicao_x1() {
-        return posicao_x1;
+    public char getRepresentacao() {
+        return representacao;
     }
 
-    public int getPosicao_y1() {
-        return posicao_y1;
+    public TipoObstaculo getTipo_obs() {
+        return tipo_obs;
     }
 
-    public int getPosicao_x2() {
-        return posicao_x2;
-    }
-
-    public int getPosicao_y2() {
-        return posicao_y2;
-    }
-
-    public TipoObstaculo getTipo() {
+    public TipoEntidade getTipo() {
         return tipo;
     }
 
-    public void setTipo(TipoObstaculo tipo) {
-        this.tipo = tipo;
+    public int getX1() {
+        return X1;
     }
 
-    public void setPosicao_x1(int posicao_x1) {
-        this.posicao_x1 = posicao_x1;
+    public int getY1() {
+        return Y1;
     }
 
-    public void setPosicao_y1(int posicao_y1) {
-        this.posicao_y1 = posicao_y1;
+    public int getX() {
+        return X;
     }
 
-    public void setPosicao_x2(int posicao_x2) {
-        this.posicao_x2 = posicao_x2;
+    public int getY() {
+        return Y;
     }
 
-    public void setPosicao_y2(int posicao_y2) {
-        this.posicao_y2 = posicao_y2;
+    public TipoObstaculo getTipoObs() {
+        return tipo_obs;
     }
-
-    public void setAltura(int altura) {
-        this.altura = altura;
-    }
-
-    public String toString() {
+    
+    public String getDescricao() {  //getDescricao == toString?
         String out = "";
         out += "Obstaculo do tipo " + getTipo();
-        out += " ocupa o espaco (" + getPosicao_x1() + ", " + getPosicao_y1() + ") x (" + getPosicao_x2() + ", " + getPosicao_y2() + ") x (0, " + getAltura() + ")\n";
+        out += " ocupa o espaco (" + getX1() + ", " + getY1() + ") x (" + getX() + ", " + getY() + ") x (0, " + getZ() + ")\n";
         return out;
     }
 }
