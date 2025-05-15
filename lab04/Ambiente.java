@@ -2,23 +2,45 @@ import java.util.ArrayList;
 
 public class Ambiente {
     //Essa classe representa o ambiente onde sao adicionados robos e obstaculos
-    private int comprimento;
+    private int profundidade;
     private int largura;
-    private int altitude;
+    private int altura;
     private final int concentracao_o2;
     private final int temperatura;
-    private ArrayList<Robo> robos;
-    private ArrayList<Obstaculo> obstaculos;
-
-    public Ambiente(int comprimento, int largura, int altitude, int concentracao_o2, int temperatura) {
-        //Método construtor: Define a comprimento, a largura e cria os arrays que armazenam robos e obstaculos do ambiente.
-        this.comprimento = comprimento;
+    private TipoEntidade[][][] mapa;
+    private ArrayList<Entidade> entidades;
+    public Ambiente(int profundidade, int largura, int altura, int concentracao_o2, int temperatura) {
+        //Método construtor: Define a profundidade, a largura e cria os arrays que armazenam robos e obstaculos do ambiente.
+        this.profundidade = profundidade;
         this.largura = largura;
-        this.altitude = altitude;
+        this.altura = altura;
+        inicializarMapa();
         this.concentracao_o2 = concentracao_o2;
         this.temperatura = temperatura;
-        this.robos = new ArrayList<Robo>();
-        this.obstaculos = new ArrayList<Obstaculo>();
+    }
+
+    private void inicializarMapa() {
+        //inicializa o mapa com TipoEntidade Vazio
+        this.mapa = new TipoEntidade[largura][profundidade][altura];
+        int i, j, k;
+        for (i = 0; i < largura; i++)
+            for (j = 0; j < profundidade; j++)
+                for (k = 0; k < altura; k++)
+                    this.mapa[i][j][k] = TipoEntidade.VAZIO;
+    }
+
+    private void moverEntidade(Entidade e, int novoX, int novoY, int novoZ) {
+        if (e.getTipo() == TipoEntidade.ROBO)   //só robo é movimentado
+            e.movePara(novoX, novoY, novoZ);
+        //se nao for robo --> exceptionStaticObject
+    }
+
+    public TipoEntidade[][][] getMapa() {
+        return mapa;
+    }
+
+    public ArrayList<Entidade> getEntidades() {
+        return entidades;
     }
 
     public int getTemperatura() {
@@ -29,102 +51,97 @@ public class Ambiente {
         return concentracao_o2;
     }
     
-    public int getComprimento() {
-        //retorna a comprimento do ambiente de movimentação do robô.
-        return comprimento;
-    }
-    public void setComprimento(int comprimento) {
-        this.comprimento = comprimento;
-    }
-    
-    public ArrayList<Robo> getRobos() {
-        return robos;
-    }
-    public void setRobos(ArrayList<Robo> robos) {
-        this.robos = robos;
-    }
-
-    public ArrayList<Obstaculo> getObstaculos() {
-        return obstaculos;
-    }
-    public void setObstaculos(ArrayList<Obstaculo> obstaculos) {
-        this.obstaculos = obstaculos;
+    public int getProfundidade() {
+        //retorna a profundidade do ambiente de movimentação do robô.
+        return profundidade;
     }
 
     public int getLargura() {
         //retorna a largura do ambiente de movimentação do robô.
         return largura;
     }
-    public void setLargura(int largura) {
-        this.largura = largura;
+
+    public int getAltura(){
+        return altura;
     }
 
-    public int getAltitude(){
-        return altitude;
-    }
-    public void setAltitude(int altitude){
-        this.altitude = altitude;
-    }
-
-    public boolean dentroDosLimites(int x, int y, int altitude) {
+    private boolean dentroDosLimites(int x, int y, int z) {
         //retorna se o robo/obstaculo esta, ou nao, nos limites do ambiente.
-        if (x <= getComprimento() && y <= getLargura() && altitude <= getAltitude())
+        if (x <= getLargura() && y <= getProfundidade() && z <= getAltura())
                 return true;
         return false;
     }
 
-    public void adicionarRobo(Robo r) {
-        //adiciona o robo ao ambiente se ele estiver dentro dos limites
-        int altitude_robo = 0;  //para robo terrestre e classe Robo
-        if (r instanceof RoboAereo)    //se Robo for RoboAereo
-            altitude_robo = ((RoboAereo)r).getAltitude();
-
-        if (dentroDosLimites(r.getPosicaox(), r.getPosicaoy(), altitude_robo)) {
-            this.robos.add(r);
-            System.out.println("O robo foi adicionado ao ambiente!");
-        }
-        else
-            System.out.println("O robo nao foi adicionado ao ambiente! Ele esta fora dos limites.");
+    public void vizualizarAmbiente() {
+        int i, j, k;
+        for (i = 0; i < this.largura; i++)
+            for (j = 0; j < this.profundidade; j++)
+                for (k = altura; k >= 0; k--)
+                    System.out.println(this.mapa[i][j][k].getRepresentacao());
     }
 
-    public void removerRobo(Robo r) {
-        this.robos.remove(r);
+    private void atualizarEspacoMapa(int X1, int X2, int Y1, int Y2, int Z, TipoEntidade tipo) {
+        //Essa funcao eh utilizada para atualizar o mapa quando um obstaculo (tridimensional) eh removido ou adicionado
+        //as posicoes de X1 ate X2, Y1 ate Y2 e de 0 ate Z sao atualizadas para o TipoEntidade tipo
+        int i, j, k;
+        for (i = X1; i <= X2; i++)
+            for (j = Y1; j <= Y2; j++)
+                for (k = 0; k <= Z; k++)
+                    this.mapa[i][j][k] = tipo;
+    }
+
+    private boolean espacoOcupado(int X1, int X2, int Y1, int Y2, int Z) {
+        int i, j, k;
+        for (i = X1; i <= X2; i++)
+            for (j = Y1; j <= Y2; j++)
+                for (k = 0; k <= Z; k++)
+                    if (this.mapa[i][j][k] != TipoEntidade.VAZIO)
+                        return true;
+        return false; 
+    }
+
+    public void adicionarEntidade(Entidade e) {
+        if (dentroDosLimites(e.getX(), e.getY(), e.getZ())) {
+            if (e.getTipo() != TipoEntidade.OBSTACULO && !estaOcupado(e.getX(), e.getY(), e.getZ())) {
+                this.mapa[e.getX()][e.getY()][e.getZ()] = e.getTipo();  //atualiza o mapa para entidades pontuais
+                this.entidades.add(e);
+            }
+            else if (e.getTipo() == TipoEntidade.OBSTACULO && !espacoOcupado(e.getX1(), e.getX(), e.getY1(), e.getY(), e.getZ())) {  //obstaculo é 3D
+                atualizarEspacoMapa(e.getX1(), e.getX(), e.getY1(), e.getY(), e.getZ(), e.getTipo());
+                this.entidades.add(e);
+            }
+            // else --> exceptioncolision 
+        }
+        // else --> outofboundryexception
+    }
+
+    public void removerEntidade(Entidade e) {
+        this.entidades.remove(e);
+        if (e.getTipo() == TipoEntidade.OBSTACULO)
+            atualizarEspacoMapa(e.getX1(), e.getX(), e.getY1(), e.getY(), e.getZ(), TipoEntidade.VAZIO);
+        else
+            this.mapa[e.getX()][e.getY()][e.getZ()] = TipoEntidade.VAZIO;  //atualiza o mapa
+    }
+
+    private boolean estaOcupado(int x, int y, int z) {
+        if (mapa[x][y][z] != TipoEntidade.VAZIO)
+            return true;
+        return false;
     }
     
-    public void adicionarObstaculo(Obstaculo o) {
-        if (dentroDosLimites(o.getPosicao_x2(), o.getPosicao_y2(), o.getAltura())) {
-            this.obstaculos.add(o);
-            System.out.println("O obstaculo foi adicionado ao ambiente!");
-        }
-        else
-            System.out.println("O obstaculo nao foi adicionado ao ambiente! Ele esta fora dos limites.");
-    }
-
-    public void removerObstaculo(Obstaculo o) {
-        this.obstaculos.remove(o);
-    }
-
     public String toString() {
         String out = "";
-        out += "Ambiente com dimensoes " + getComprimento() + " x " + getLargura() + " x " + getAltitude();
+        out += "Ambiente com dimensoes " + getLargura() + " x " + getProfundidade() + " x " + getAltura();
         out += ", Temperatura = " + getTemperatura() + " C e Concentracao de O2 = " + getConcentracao_o2() + " mol/l:\n";
         
-        if (robos.size() == 0)
-            out += "  |-->O ambiente nao possui Robos.\n";
+        if (entidades.size() == 0)
+            out += "  |-->O ambiente nao possui Entidades.\n";
         else {
-            out += "  |-->Robos: \n";
-            for (int i = 0; i < robos.size(); i++)
-                out += "    ### " + robos.get(i);         
+            out += "  |-->Entidades: \n";
+            for (int i = 0; i < entidades.size(); i++)
+                out += "    ### " + entidades.get(i);         
         }
 
-        if (obstaculos .size() == 0)
-            out += "  |-->O ambiente nao possui obstaculos.\n";
-        
-        else {
-            out += "  |-->Obstaculos: \n";
-            for (int i = 0; i < obstaculos.size(); i++) 
-                out += "    ### " + obstaculos.get(i);
-        }
         return out;
     }
 }
