@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
 
-public abstract class Robo implements Entidade {
+public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     //rever exceprtions para usar sensores e mover
     private String id;
     private TipoEntidade tipo;
@@ -21,6 +21,10 @@ public abstract class Robo implements Entidade {
         this.sensores.add(sensor);
         this.tipo = TipoEntidade.ROBO;
         this.estado = estado;
+    }
+
+    public char getRepresentacao() {
+        return tipo.getRepresentacao();
     }
 
     public String getId() {
@@ -89,7 +93,8 @@ public abstract class Robo implements Entidade {
         this.sensores.add(sensor);
     }
 
-    public void usarSensores(Ambiente ambiente) {
+    @Override
+    public void acionarSensores(Ambiente ambiente) {
         for (Sensor s : sensores) {
             s.monitorar(this, ambiente);
         }

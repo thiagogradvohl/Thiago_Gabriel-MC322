@@ -38,7 +38,7 @@ public abstract class RoboAereo extends Robo {
     }
 
     @Override
-    public String toString() {
+    public String getDescricao() {
         String out = "";
         out += "Robo aereo " + getId() + " esta na posicao " + "(" + getX() + ", " + getY() + ", " + getAltitude() + "), ";
         out += "com Altura maxima = " + getAltitudeMaxima() + ":\n";

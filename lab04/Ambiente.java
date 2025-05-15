@@ -72,12 +72,21 @@ public class Ambiente {
         return false;
     }
 
-    public void vizualizarAmbiente() {
+    public void visualizarAmbiente() {
         int i, j, k;
-        for (i = 0; i < this.largura; i++)
-            for (j = 0; j < this.profundidade; j++)
-                for (k = altura; k >= 0; k--)
-                    System.out.println(this.mapa[i][j][k].getRepresentacao());
+        for (i = 0; i < this.largura; i++) {
+            for (j = 0; j < this.profundidade; j++) {
+                for (k = altura; k >= 0; k--) {
+                    if (this.mapa[i][j][k] != TipoEntidade.VAZIO) {
+                        System.out.printf(" %c ", this.mapa[i][j][k].getRepresentacao()); 
+                        break;
+                    }
+                    else if (k == 0)
+                        System.out.printf(" %c ", this.mapa[i][j][k].getRepresentacao());
+                }
+            }
+            System.out.println();
+        }           
     }
 
     private void atualizarEspacoMapa(int X1, int X2, int Y1, int Y2, int Z, TipoEntidade tipo) {

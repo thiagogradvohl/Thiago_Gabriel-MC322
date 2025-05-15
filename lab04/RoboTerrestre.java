@@ -37,7 +37,7 @@ public abstract class RoboTerrestre extends Robo {
     }
 
     @Override
-    public String toString() {
+    public String getDescricao() {
         String out = "";
         out += "Robo terrestre " + getId() + " esta na posicao " + "(" + getX() + ", " + getY() + "), ";
         out += "com Velocidade = " + getVelocidade() + " x Velocidade Maxima = " + getVelocidadeMaxima() + ":\n";

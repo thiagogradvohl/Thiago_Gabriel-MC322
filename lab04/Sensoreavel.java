@@ -1,3 +1,3 @@
 public interface Sensoreavel {
-    void acionarSensores();  //pode lancar robodesligadoexception
+    void acionarSensores(Ambiente ambiente);  //pode lancar robodesligadoexception
 }
