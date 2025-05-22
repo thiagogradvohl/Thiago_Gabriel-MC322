@@ -48,13 +48,14 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
     public void setEnergia(int energia){
         this.energia = energia;
     }
-    public List<Entidade> DestruirObstaculos() {
+    @Override
+    public void executarTarefa() {
     
         SensorProximidade sp = this.identificar_sp();
         if (this.entidades_proximas.isEmpty())
         {
             System.out.println("Não há obstáculos próximos a serem destruídos.");
-            return entidades_removidas;
+            return;
         }
 
     
@@ -63,7 +64,7 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
                 entidades_removidas.add(entidade);
             }
         }
-        return entidades_removidas;
+        
     }
     
 
