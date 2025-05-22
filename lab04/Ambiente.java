@@ -29,10 +29,25 @@ public class Ambiente {
                     this.mapa[i][j][k] = TipoEntidade.VAZIO;
     }
 
-    public void moverEntidade(Entidade e, int novoX, int novoY, int novoZ) {
-        if (e.getTipo() == TipoEntidade.ROBO)   //só robo é movimentado
-            ((Robo)e).moverPara(novoX, novoY, novoZ);
-        //se nao for robo --> exceptionStaticObject
+    public void moverEntidade(Entidade e, int novoX, int novoY, int novoZ) throws Exception {
+        if (e.getTipo() == TipoEntidade.ROBO) {  //só robo é movimentado
+            if (dentroDosLimites(e.getX(), e.getY(), e.getZ())) {
+                if (!estaOcupado(e.getX(), e.getY(), e.getZ())) {
+                    try {
+                        this.mapa[e.getX()][e.getY()][e.getZ()] = e.getTipo();  //atualiza o mapa para entidades pontuais
+                        ((Robo)e).moverPara(novoX, novoY, novoZ);
+                    } catch (RoboDesligadoException er) {
+                        throw new RoboDesligadoException();
+                    }
+                }
+                else 
+                    throw new ColisaoException();
+            }
+            else 
+                throw new ForaDosLimitesException();
+        }
+        else
+            throw new EntidadeEstaticaException();
     }
 
     public TipoEntidade[][][] getMapa() {
@@ -67,9 +82,7 @@ public class Ambiente {
 
     private boolean dentroDosLimites(int x, int y, int z) {
         //retorna se o robo/obstaculo esta, ou nao, nos limites do ambiente.
-        if (x <= getLargura() && y <= getProfundidade() && z <= getAltura())
-            return true;
-        return false;
+        return (x <= this.getLargura() && y <= this.getProfundidade() && z <= this.getAltura());
     }
 
     public void visualizarAmbiente() {
@@ -109,7 +122,7 @@ public class Ambiente {
         return false; 
     }
 
-    public void adicionarEntidade(Entidade e) {
+    public void adicionarEntidade(Entidade e) throws Exception {
         if (dentroDosLimites(e.getX(), e.getY(), e.getZ())) {
             if (e.getTipo() != TipoEntidade.OBSTACULO && !estaOcupado(e.getX(), e.getY(), e.getZ())) {
                 this.mapa[e.getX()][e.getY()][e.getZ()] = e.getTipo();  //atualiza o mapa para entidades pontuais
@@ -119,9 +132,11 @@ public class Ambiente {
                 atualizarEspacoMapa(((Obstaculo)e).getX1(), e.getX(), ((Obstaculo)e).getY1(), e.getY(), e.getZ(), e.getTipo());
                 this.entidades.add(e);
             }
-            // else --> exceptioncolision 
+            else 
+                throw new ColisaoException();
         }
-        // else --> outofboundryexception
+        else 
+            throw new ForaDosLimitesException();
     }
 
     public void removerEntidade(Entidade e) {
@@ -133,9 +148,7 @@ public class Ambiente {
     }
 
     private boolean estaOcupado(int x, int y, int z) {
-        if (mapa[x][y][z] != TipoEntidade.VAZIO)
-            return true;
-        return false;
+        return this.mapa[x][y][z] != TipoEntidade.VAZIO;
     }
     
     @Override

@@ -1,5 +1,5 @@
 public class RoboDesligadoException extends Exception {
     public RoboDesligadoException() {
-        super("O robô está desligado.");
+        super("O robo esta desligado.");
     }
 }

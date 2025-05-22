@@ -160,4 +160,6 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
             System.out.println("Mensagem recebida.");
         else
             throw new RoboDesligadoException();
+    }
 }
+
