@@ -7,19 +7,6 @@ public class AmbienteAereo extends Ambiente{
         this.altitude = altitude;
 
     }
-<<<<<<< HEAD
-
-    public int getAltitude()
-    {
-        return this.altitude;
-    }
-
-    public boolean dentroDosLimites(int x, int y, int z) {
-        // Verifica se o robô está dentro dos limites considerando x, y e z
-        return x <= getLargura() && x >= 0 && y >= 0 && y <= getcomprimento() && z <= getAltitude() && z >= 0;
-    }
-}
-=======
     
     public void dentroDosLimites(RoboAereo robo) {
         //retorna se o robô está, ou não, nos limites do ambiente.
@@ -38,4 +25,3 @@ public class AmbienteAereo extends Ambiente{
         this.altitude = altitude;
     }
 }
->>>>>>> c16809e (codigo concluido)

@@ -41,7 +41,7 @@ public class Main {
         robo_bb8.exibirPosicao();
 
 
-        //testando drone fotografo:
+        //testando drone fotografico:
         DroneFotografico drone_fotografo = new DroneFotografico(20, 20, 20, 60, "Legal", false);
         drone_fotografo.desligar_camera();
         drone_fotografo.tirar_foto();

@@ -20,11 +20,19 @@ public class Obstaculo
         return pos_x;
     }
 
+    public void setNome_obstaculo(String nome_obstaculo) {
+        this.nome_obstaculo = nome_obstaculo;
+    }
+    public void setPos_x(int pos_x) {
+        this.pos_x = pos_x;
+    }
+    public void setPos_y(int pos_y) {
+        this.pos_y = pos_y;
+    }
     public int getPosicaoy() {
         //retorna a posição y do Obstaculo.
         return pos_y;
     }
-   
     
     public void exibirPosicao() {
         //imprime as posições x e y do Obstaculo.

@@ -69,4 +69,12 @@ public class RoboAereo extends Robo {
         //imprime as posições x e y do robô.
         System.out.printf("Posicao X: %d\nPosicao Y: %d\nAltitude: %d\n", getPosicaox(), getPosicaoy(), getAltitude());
     }
+
+    public void setAltitude(int altitude) {
+        this.altitude = altitude;
+    }
+
+    public void setAltitudeMaxima(int altitudeMaxima) {
+        this.altitudeMaxima = altitudeMaxima;
+    }
 }

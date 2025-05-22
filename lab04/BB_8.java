@@ -1,14 +1,16 @@
-public class BB_8 extends RoboTerrestre {
+public class BB_8 extends RoboTerrestre implements Atacante {
     //esse robo se locomove como uma bola, com frequencia angular, diametro e velocidade caracteristicos
     private int diametro;
     private int frequencia_rotacao;
     private boolean modo_ataque;
+    private int municao;
 
-    public BB_8(int diametro, int frequencia_rotacao, int posicaox, int posicaoy, String nome, int velocidadeMaxima, boolean modo_ataque, Sensor sensor) {
-        super(posicaox, posicaoy, nome, velocidadeMaxima, 0, sensor);
+    public BB_8(int diametro, int frequencia_rotacao, boolean modo_ataque, int X, int Y, int Z, String id, int velocidadeMaxima, int municao, Sensor sensor, EstadoRobo estado) {
+        super(X, Y, Z, id, velocidadeMaxima, 0, sensor, estado);
         this.diametro = diametro;
         this.frequencia_rotacao = frequencia_rotacao;
         this.modo_ataque = modo_ataque;
+        this.municao = municao;
         setVelocidade(velocidade());
     }
 
@@ -19,14 +21,27 @@ public class BB_8 extends RoboTerrestre {
         return this.frequencia_rotacao * this.diametro * (int) Math.PI;
     }
 
-    public void atacar() {
-        if (this.modo_ataque)
-            System.out.printf("O BB_8 atacou o alvo na sua posicao: (%d, %d)\n", getPosicaox(), getPosicaoy());
+    @Override
+    public void executarTarefa() {  
+        //atacar a posicao em que esta
+        if (this.modo_ataque && this.municao > 0) {
+            if (this.municao >= 10)
+                this.municao -= 10;   //perda de 10 municoes por ataque
+            else   
+                this.municao = 0;
+            System.out.printf("O BB_8 atacou o alvo na sua posicao: (%d, %d, %d)\n", getX(), getY(), getZ());
+        }
         else
-            System.out.println("O robo nao atacou. O modo ataque esta desligado.");
+            System.out.println("O robo nao atacou. O modo ataque esta desligado.");  //exception no ammo or exception offattack
     }
 
-    public void ligar_modo_ataque() {
+    @Override
+    public void recarregarMunicao(int municao) {
+        this.municao += municao;
+    }
+
+    @Override
+    public void ligarModoAtaque() {
         if (this.modo_ataque) 
             System.out.println("O modo ataque ja esta ligado.");
         else {
@@ -35,7 +50,8 @@ public class BB_8 extends RoboTerrestre {
         }
     }
 
-    public void desligar_modo_ataque() {
+    @Override
+    public void desligarModoAtaque() {
         if (!this.modo_ataque) 
             System.out.println("O modo ataque ja esta desligado.");
         else {

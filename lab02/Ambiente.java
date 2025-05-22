@@ -20,13 +20,17 @@ public class Ambiente {
 
     public void dentroDosLimites(Robo robo) {
         //retorna se o robô está, ou não, nos limites do ambiente.
-<<<<<<< HEAD
-        return x <= this.largura && x >= 0 && y >= 0 && y <= this.comprimento;
-=======
         if (robo.getPosicaox() <= this.largura && robo.getPosicaox() >= 0 && robo.getPosicaoy() >= 0 && robo.getPosicaoy() <= this.comprimento)
             System.out.println("O robo esta dentro dos limites.");
         else
             System.out.println("O robo nao esta dentro dos limites.");
->>>>>>> c16809e (codigo concluido)
+    }
+
+    public void setComprimento(int comprimento) {
+        this.comprimento = comprimento;
+    }
+
+    public void setLargura(int largura) {
+        this.largura = largura;
     }
 }
