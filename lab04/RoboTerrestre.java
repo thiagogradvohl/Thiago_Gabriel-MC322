@@ -28,7 +28,7 @@ public abstract class RoboTerrestre extends Robo {
     }
 
     @Override
-    public void moverPara(int X, int Y, int Z) throws RoboDesligadoException{
+    public void moverPara(int X, int Y, int Z) throws Exception{
         //metodo sobrescrito do Robo, move o robo se a sua velocidade for menor que a velocidade maxima
         if (this.velocidade < this.velocidadeMaxima) {
             try {
@@ -37,7 +37,8 @@ public abstract class RoboTerrestre extends Robo {
                 throw new RoboDesligadoException();
             }
         }
-        //exception velocidade maxima
+        else   
+            throw new VelocidadeExcedidaException();
     }
 
     @Override

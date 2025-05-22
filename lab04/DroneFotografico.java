@@ -18,14 +18,14 @@ public class DroneFotografico extends RoboAereo implements Fotografico {
     }
 
     @Override
-    public void executarTarefa() {
+    public void executarTarefa() throws Exception {
         //essa funcao faz o drone tirar uma foto aerea de sua posicao 
         if (this.camera_ligada) {  
             System.out.printf("Foto tirada na posição: (%d, %d, %d).\n", getX(), getY(), getAltitude());
             this.fotos_tiradas++;
         }
         else 
-            System.out.printf("Não foi possível tirar a foto. A câmera está desligada.\n");
+            throw new CameraDesligadaException();
     }   
 
     @Override

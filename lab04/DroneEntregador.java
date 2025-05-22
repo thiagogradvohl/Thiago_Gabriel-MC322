@@ -23,7 +23,7 @@ public class DroneEntregador extends RoboAereo {
     }
     
     @Override
-    public void moverPara(int X, int Y, int Z) throws RoboDesligadoException{
+    public void moverPara(int X, int Y, int Z) throws Exception{
         if (CalculaDistanciaRestante() != 0) {
             try{
                 super.moverPara(X, Y, Z);

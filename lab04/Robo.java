@@ -80,7 +80,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         Z = z;
     }
 
-    public void moverPara(int X, int Y, int Z) throws RoboDesligadoException {
+    public void moverPara(int X, int Y, int Z) throws Exception {
         if (X >= 0 && Y >= 0 && Z >= 0 && this.estado == EstadoRobo.LIGADO) {
             this.X = X;
             this.Y = Y;
@@ -130,7 +130,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
             this.estado = EstadoRobo.LIGADO;
     }
 
-    public abstract void executarTarefa();
+    public abstract void executarTarefa() throws Exception;
 
     @Override
     public String getDescricao() {
