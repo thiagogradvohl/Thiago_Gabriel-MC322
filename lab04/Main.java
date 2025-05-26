@@ -23,7 +23,9 @@ public class Main {
 
         //Instanciando os robôs:
         BB_8 bb_8 = new BB_8(3, 20, true, 13, 13, 0, "BB8", 100, 30, sp1, EstadoRobo.LIGADO);
-        DestruidorObstaculos dos = new DestruidorObstaculos(30, 30, 30, "DO1", 100, 30, 30, sp2, EstadoRobo.DESLIGADO);
+        DestruidorObstaculos dos = new DestruidorObstaculos(30, 30, 30, "DO01", 100, 30, 30, sp2, EstadoRobo.DESLIGADO);
+        DroneEntregador der = new DroneEntregador(40, 40, 40, 50, "DE01", 0, 0, 0, so2, EstadoRobo.LIGADO, "Bolsa");
+        DroneFotografico df = new DroneFotografico(43, 43, 43, 48, "DF01", so1, EstadoRobo.LIGADO);
         System.out.println(bb_8.getDescricao());
         System.out.println(dos.getDescricao());
 

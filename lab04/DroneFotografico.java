@@ -20,12 +20,14 @@ public class DroneFotografico extends RoboAereo implements Fotografico {
     @Override
     public void executarTarefa() throws Exception {
         //essa funcao faz o drone tirar uma foto aerea de sua posicao 
-        if (this.camera_ligada) {  
+        if (this.camera_ligada && this.getEstado() == EstadoRobo.LIGADO) {  
             System.out.printf("Foto tirada na posição: (%d, %d, %d).\n", getX(), getY(), getAltitude());
             this.fotos_tiradas++;
         }
-        else 
+        else if (!this.camera_ligada)
             throw new CameraDesligadaException();
+        else
+            throw new RoboDesligadoException();    
     }   
 
     @Override
@@ -56,8 +58,14 @@ public class DroneFotografico extends RoboAereo implements Fotografico {
     @Override
     public String getDescricao() {
         String out = "";
-        out += "DroneFotografico " + getId() + " esta na posicao " + "(" + getX() + ", " + getY() + ", " + getAltitude() + "), ";
-        out += "com Altura maxima = " + getAltitudeMaxima() + " e " + getFotos_tiradas() + " fotos tiradas" + ":\n";
+        out += "DroneFotografico " + getId() + " (estado robo: " + getEstado() + ")";
+
+        out += " esta na posicao " + "(" + getX() + ", " + getY() + ", " + getAltitude() + "), ";
+        out += "com Altura maxima = " + getAltitudeMaxima() + " e " + getFotos_tiradas() + " fotos tiradas";
+        if (isCamera_ligada())
+            out += " (camera ligada):\n";
+        else
+            out += " (camera desligada):\n";
         if (getSensores() == null)  
             out += "        |->Ele nao possui sensores.";
         else {
