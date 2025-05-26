@@ -1,6 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
-public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAutonomo {
+public class DestruidorObstaculos extends RoboTerrestre implements Destruidor {
     //Subclasse de robos terrestres que percorre trechos de modo autonomo, usando uma bateria que descarrega pelo caminho
     private int energia;
     private List<Entidade> entidades_proximas;
@@ -32,6 +32,7 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
     public int getEnergia(){
         return this.energia;
     }
+    
     public SensorProximidade identificar_sp()
     {
         for (Sensor s : getSensores()) {
@@ -51,7 +52,6 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
     @Override
     public void executarTarefa() {
     
-        SensorProximidade sp = this.identificar_sp();
         if (this.entidades_proximas.isEmpty())
         {
             System.out.println("Não há obstáculos próximos a serem destruídos.");
@@ -66,8 +66,6 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
         }
         
     }
-    
-
     
     public void recarregarBateria(int energia_adicionada){
         //recarrega a bateria do robo por uma quantidade especificada
@@ -100,4 +98,34 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
 
         System.out.printf("Movimento realizado.\nBateria restante: %d\n", getEnergia());
     }
+
+    public List<Entidade> getEntidades_proximas() {
+        return entidades_proximas;
+    }
+    
+    public List<Entidade> getEntidades_removidas() {
+        return entidades_removidas;
+    }
+
+    @Override
+    public String getDescricao() {
+        String out = "";
+        out += "Robo DestruidorObstaculos " + getId();
+        out += " (" + getEstado() + ")";
+        out += " esta na posicao " + "(" + getX() + ", " + getY() + ", " + getZ() + "), ";
+        out += "com energia = " + getEnergia();
+        out += ", com Velocidade = " + getVelocidade() + " x Velocidade Maxima = " + getVelocidadeMaxima() + ":\n";
+        if (getEntidades_proximas() != null)
+            out += "        |-->Entidades proximas:\n";
+            for (Entidade e : getEntidades_proximas())
+                out += "          |-->" + e.getDescricao() + "\n";
+        if (getSensores() == null) 
+            out += "        |-->Ele nao possui sensores.";
+        else {
+            out += "        |-->Sensores:\n";
+            for (Sensor s : getSensores())
+                out += "          |-->" + s.toString() + "\n";
+        }
+        return out;
+    } 
 }

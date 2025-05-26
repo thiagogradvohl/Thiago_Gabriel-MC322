@@ -4,12 +4,12 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("######### Iniciando as classes #########");
 
-        Ambiente a = new Ambiente(30, 30, 20, 30, 10);
+        Ambiente a = new Ambiente(50, 50, 50, 30, 10);
         System.out.println(a);
 
         //Instanciando os sensores:
         SensorProximidade sp1 = new SensorProximidade(5);
-        SensorProximidade sp2 = new SensorProximidade(10);
+        SensorProximidade sp2 = new SensorProximidade(20);
         SensorOxigenio so1 = new SensorOxigenio(5, 30, 20);
         SensorOxigenio so2 = new SensorOxigenio(10, 30, 20);
         SensorTemperatura st1 = new SensorTemperatura(5, 100, 20);
@@ -22,10 +22,10 @@ public class Main {
         Obstaculo o4 = new Obstaculo(15, 15, TipoObstaculo.VULCAO);
 
         //Instanciando os robôs:
-        RoboTerrestre rt = new RoboTerrestre(10, 10, "CR7", 100, 50, sp1);
-        RoboAereo ra = new RoboAereo(13, 10, 30, 50, "R10", sp2);
-        System.out.println(ra);
-        System.out.println(rt);
+        BB_8 bb_8 = new BB_8(3, 20, true, 13, 13, 0, "BB8", 100, 30, sp1, EstadoRobo.LIGADO);
+        DestruidorObstaculos dos = new DestruidorObstaculos(30, 30, 30, "DO1", 100, 30, 30, sp2, EstadoRobo.DESLIGADO);
+        System.out.println(bb_8.getDescricao());
+        System.out.println(dos.getDescricao());
 
         System.out.println("######### Tentando adicionar Obstaculos ao Ambiente #########");
         a.adicionarEntidade(o1);
@@ -35,16 +35,16 @@ public class Main {
         System.out.println();
 
         System.out.println("######### Adicionando novos sensores aos robos #########");
-        ra.adicionarSensor(st1);
+        bb_8.adicionarSensor(st1);
         ra.adicionarSensor(so1);
         rt.adicionarSensor(so2);
         rt.adicionarSensor(st2);
         System.out.println(ra);
         System.out.println(rt);
 
-        System.out.println("######### Tentando adicionar os Robos Terrestre e Aereo ao ambiente (respectivamente) #########");
-        a.adicionarRobo(rt);
-        a.adicionarRobo(ra);
+        System.out.println("######### Tentando adicionar as Entidades ao Ambiente #########");
+        a.adicionarEntidade(bb_8);
+        a.adicionarEntidade(ra);
         System.out.println();    
         
         System.out.println("######## Movendo o Robo Aereo para dentro dos limites do Ambiente e adicionando-o #########");

@@ -23,20 +23,18 @@ public class Obstaculo implements Entidade {
     }
 
     public Obstaculo(int X1, int Y1, TipoObstaculo tipo_obs) {
-    //Método construtor: utiliza a altura, largura e comprimento padrao do tipo do obstaculo
-    //posicao x1 e y1 sao o inicio do obstaculo
-    this.X1 = X1;
-    this.Y1 = Y1;
-    this.X = this.X1 + tipo_obs.getComprimentoPadrao();
-    this.Y = this.Y1 + tipo_obs.getLarguraPadrao();
-    this.Z = tipo_obs.getAlturaPadrao();
-    this.tipo = TipoEntidade.OBSTACULO;
-    this.tipo_obs = tipo_obs;
-    this.representacao = TipoEntidade.OBSTACULO.getRepresentacao();
+        //Método construtor: utiliza a altura, largura e comprimento padrao do tipo do obstaculo
+        //posicao x1 e y1 sao o inicio do obstaculo
+        this.X1 = X1;
+        this.Y1 = Y1;
+        this.X = this.X1 + tipo_obs.getComprimentoPadrao();
+        this.Y = this.Y1 + tipo_obs.getLarguraPadrao();
+        this.Z = tipo_obs.getAlturaPadrao();
+        this.tipo = TipoEntidade.OBSTACULO;
+        this.tipo_obs = tipo_obs;
+        this.representacao = TipoEntidade.OBSTACULO.getRepresentacao();
     }
-
     
-
     @Override
     public int getZ() {
         return Z;

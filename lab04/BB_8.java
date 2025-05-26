@@ -21,6 +21,10 @@ public class BB_8 extends RoboTerrestre implements Atacante {
         return this.frequencia_rotacao * this.diametro * (int) Math.PI;
     }
 
+    public int getMunicao() {
+        return municao;
+    }
+
     @Override
     public void executarTarefa() {  
         //atacar a posicao em que esta
@@ -83,4 +87,27 @@ public class BB_8 extends RoboTerrestre implements Atacante {
     public void setModo_ataque(boolean modo_ataque) {
         this.modo_ataque = modo_ataque;
     }
+
+    @Override
+    public String getDescricao() {
+        String out = "";
+        out += "BB8 " + getId();
+        if (this.modo_ataque)
+            out += " (modo ataque: ligado)";
+        else   
+            out += " (modo ataque: desligado)";
+        out += " esta na posicao " + "(" + getX() + ", " + getY() + ", " + getZ() + "), ";
+        out += "com Municao = " + getMunicao();
+        out += ", com Diametro = " + getDiametro(); 
+        out += ", com  frequencia de rotacao = " + getFrequencia_rotacao();
+        out += ", e com Velocidade = " + getVelocidade() + " x Velocidade Maxima = " + getVelocidadeMaxima() + ":\n";
+        if (getSensores() == null) 
+            out += "        |-->Ele nao possui sensores.";
+        else {
+            out += "        |-->Sensores:\n";
+            for (Sensor s : getSensores())
+                out += "          |-->" + s.toString() + "\n";
+        }
+        return out;
+    } 
 }

@@ -4,12 +4,14 @@ public class DroneEntregador extends RoboAereo {
     int destino_X;
     int destino_Y;
     int destino_z;
+    String produto;
 
-    public DroneEntregador(int X, int Y, int altitude, int altitudeMaXima, String id, int destino_X, int destino_Y, int destino_z, int partida_X, int partida_Y, int partida_z, Sensor sensor, EstadoRobo estado){
+    public DroneEntregador(int X, int Y, int altitude, int altitudeMaXima, String id, int destino_X, int destino_Y, int destino_z, Sensor sensor, EstadoRobo estado, String produto){
         super(X, Y, altitude, altitudeMaXima, id, sensor, estado);
         this.destino_X = destino_X;
         this.destino_Y = destino_Y;
         this.destino_z = destino_z;
+        this.produto = produto;
     }
 
     public double CalculaDistanciaRestante(){
@@ -37,13 +39,68 @@ public class DroneEntregador extends RoboAereo {
     }
     
     @Override
-    public void executarTarefa() {
+    public void executarTarefa() throws Exception {
+        //realiza a entrega na posicao de destino e desliga automaticamente
         if (CalculaDistanciaRestante() == 0 && this.getEstado() == EstadoRobo.LIGADO) {
-            System.out.println("Encomenda entregue ao destino.");
+            System.out.printf("Encomenda %s entregue ao destino.\n", this.produto);
             this.setEstado(EstadoRobo.DESLIGADO);
         }
-        else if (this.getEstado() == EstadoRobo.DESLIGADO) {} //exception
+        else if (this.getEstado() == EstadoRobo.DESLIGADO)
+            throw new RoboDesligadoException(); //exception
 
-        else {} //exception ainda nao chegou ao destino
+        else 
+            System.out.printf("O robo ainda nao chegou ao seu destino (%d, %d, %d)!\n", this.destino_X, this.destino_Y, this.destino_z);
     }
+
+    public void setDestino_X(int destino_X) {
+        this.destino_X = destino_X;
+    }
+
+    public void setDestino_Y(int destino_Y) {
+        this.destino_Y = destino_Y;
+    }
+
+    public void setDestino_z(int destino_z) {
+        this.destino_z = destino_z;
+    }
+
+    @Override
+    public String getDescricao() {
+        String out = "";
+        out += "Robo DroneEntregador " + getId();
+        out += " (" + getEstado() + ")";
+        out += " esta na posicao " + "(" + getX() + ", " + getY() + ", " + getZ() + "), ";
+        out += "com altitude maxima = " + getAltitudeMaxima();
+        out += ", com destino em (" + getDestino_X() + ", " + getDestino_Y() + ", " + getDestino_z() + ")";
+        out += ", e carrega " + getProduto(); 
+
+        if (getSensores() == null) 
+            out += "        |-->Ele nao possui sensores.";
+        else {
+            out += "        |-->Sensores:\n";
+            for (Sensor s : getSensores())
+                out += "          |-->" + s.toString() + "\n";
+        }
+        return out;
+    }
+
+    public int getDestino_X() {
+        return destino_X;
+    }
+
+    public int getDestino_Y() {
+        return destino_Y;
+    }
+
+    public int getDestino_z() {
+        return destino_z;
+    }
+
+    public String getProduto() {
+        return produto;
+    }
+
+    public void setProduto(String produto) {
+        this.produto = produto;
+    } 
 }

@@ -4,10 +4,10 @@ public enum TipoObstaculo {
 
     PAREDE (3, 2, 3, true) ,
     ARVORE (3, 2, 1, true) ,
-    PREDIO (10, 5, 5, true) ,
-    VULCAO (12, 5, 6, true) ,
-    RIO (0, 4, 15, true) ,
-    CACHOEIRA (8, 4, 1, true) ,
+    PREDIO (5, 5, 5, true) ,
+    VULCAO (5, 5, 6, true) ,
+    RIO (0, 4, 10, true) ,
+    CACHOEIRA (5, 4, 1, true) ,
     OUTRO (-1, -1, -1, true) ;  //-1 representa dimensoes variaveis
 
     private final int alturaPadrao;
