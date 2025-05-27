@@ -1,73 +1,166 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("######### Iniciando as classes #########");
 
-        Ambiente a = new Ambiente(50, 50, 50, 30, 10);
-        System.out.println(a);
+        Ambiente a = new Ambiente(20, 20, 20, 30, 10);
 
         //Instanciando os sensores:
         SensorProximidade sp1 = new SensorProximidade(5);
-        SensorProximidade sp2 = new SensorProximidade(20);
+        SensorProximidade sp2 = new SensorProximidade(10);
         SensorOxigenio so1 = new SensorOxigenio(5, 30, 20);
         SensorOxigenio so2 = new SensorOxigenio(10, 30, 20);
         SensorTemperatura st1 = new SensorTemperatura(5, 100, 20);
         SensorTemperatura st2 = new SensorTemperatura(10, 10, 0);
         
         //Instanciando os obstaculos:
-        Obstaculo o1 = new Obstaculo(2, 2, TipoObstaculo.PAREDE);
-        Obstaculo o2 = new Obstaculo(7, 8, TipoObstaculo.CACHOEIRA);
-        Obstaculo o3 = new Obstaculo(20, 20, TipoObstaculo.RIO);
-        Obstaculo o4 = new Obstaculo(15, 15, TipoObstaculo.VULCAO);
+        Obstaculo o1 = new Obstaculo(1, 1, TipoObstaculo.PAREDE);
+        Obstaculo o2 = new Obstaculo(5, 15, TipoObstaculo.CACHOEIRA);
+        Obstaculo o3 = new Obstaculo(5, 5, TipoObstaculo.RIO);
+        Obstaculo o4 = new Obstaculo(14, 14, TipoObstaculo.VULCAO);
+        Obstaculo o5 = new Obstaculo(8, 13, TipoObstaculo.ARVORE);
+        Obstaculo[] obstaculos = {o1, o2, o3, o4, o5};
 
         //Instanciando os robôs:
-        BB_8 bb_8 = new BB_8(3, 20, true, 13, 13, 0, "BB8", 100, 30, sp1, EstadoRobo.LIGADO);
-        DestruidorObstaculos dos = new DestruidorObstaculos(30, 30, 30, "DO01", 100, 30, 30, sp2, EstadoRobo.DESLIGADO);
-        DroneEntregador der = new DroneEntregador(40, 40, 40, 50, "DE01", 0, 0, 0, so2, EstadoRobo.LIGADO, "Bolsa");
-        DroneFotografico df = new DroneFotografico(43, 43, 43, 48, "DF01", so1, EstadoRobo.LIGADO);
-        System.out.println(bb_8.getDescricao());
-        System.out.println(dos.getDescricao());
+        BB_8 bb_8 = new BB_8(3, 20, true, 15, 2, 0, "BB8-01", 100, 30, sp1, EstadoRobo.LIGADO);
+        DestruidorObstaculos dos = new DestruidorObstaculos(1, 19, 0, "DO01", 100, 30, 10, 20, sp2, EstadoRobo.DESLIGADO);
+        DroneEntregador der = new DroneEntregador(19, 19, 18, 50, "DE01", 0, 0, 0, so2, EstadoRobo.LIGADO, "Bolsa");
+        //drone fotografico fora do ambiente inicialmente
+        DroneFotografico df = new DroneFotografico(60, 60, 60, 60, "DF01", so1, EstadoRobo.LIGADO);
+        Robo[] robos = {bb_8, dos, der, df};
 
-        System.out.println("######### Tentando adicionar Obstaculos ao Ambiente #########");
-        a.adicionarEntidade(o1);
-        a.adicionarEntidade(o2);
-        a.adicionarEntidade(o3);
-        a.adicionarEntidade(o4);
+        System.out.println("######### Adicionando Obstaculos ao Ambiente #########");
+        for (Obstaculo obs : obstaculos) {
+            try {
+                a.adicionarEntidade(obs);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }   
+        System.out.println();
+
+        System.out.println("######### Tentando mover Obstaculo no Ambiente #########"); //objeto estatico exception
+        try {
+            a.moverEntidade(o1, 10, 10, 10);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println();
 
         System.out.println("######### Adicionando novos sensores aos robos #########");
         bb_8.adicionarSensor(st1);
-        ra.adicionarSensor(so1);
-        rt.adicionarSensor(so2);
-        rt.adicionarSensor(st2);
-        System.out.println(ra);
-        System.out.println(rt);
+        der.adicionarSensor(st2);
+        System.out.println(bb_8.getDescricao());
+        System.out.println(der.getDescricao());
 
-        System.out.println("######### Tentando adicionar as Entidades ao Ambiente #########");
-        a.adicionarEntidade(bb_8);
-        a.adicionarEntidade(ra);
-        System.out.println();    
+        System.out.println("######### Tentando adicionar os Robos ao Ambiente #########");
+        for (Robo robo : robos) {
+            try {
+                a.adicionarEntidade(robo);
+            } catch (Exception e) {
+                System.out.println(robo.getId() + " --> " + e.getMessage());
+            }
+        }   
         
-        System.out.println("######## Movendo o Robo Aereo para dentro dos limites do Ambiente e adicionando-o #########");
-        ra.descer(20);
-        System.out.println(ra);
-        a.adicionarRobo(ra);
+        System.out.println();
+        
+        System.out.println("######## Movendo o DroneFotografico (DF01) para dentro dos limites (posicao ocupada) do Ambiente e tentando adiciona-lo #########");
+        try {
+            df.moverPara(2, 2, 0);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());;
+        }
+        try {
+            a.adicionarEntidade(df); //colisaoexception
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+            System.out.println();
+
+        System.out.println("######## Movendo o DroneFotografico (DF01) para posicao livre do Ambiente e adicionando-o #########");
+        try {
+            df.moverPara(2, 18, 18); 
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try { 
+            a.adicionarEntidade(df);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println();
 
-        System.out.println("######## Testando os sensores (de Proximidade e de Oxigenio) do Robo Terrestre #########");
-        rt.usarSensores(a);
+        System.out.println("######## Tentando mover o DestruidorObstaculos (DO01) (desligado) #########");
+        try {
+            a.moverEntidade(dos,15, 15, 18); 
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println();
 
-        System.out.println("######## Testando os sensores (de Proximidade e de Temperatura) do Robo Aereo #########");
-        ra.usarSensores(a);
+        System.out.println("######## Ligando e tentando mover o DestruidorObstaculos (DO01) (bateria insuficiente) #########");
+        dos.ligar();
+        try {
+            a.moverEntidade(dos, 15, 15, 18);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println();
+        
+        System.out.println("######## Recarregando e movendo o DestruidorObstaculos (DO01) #########");
+        dos.recarregarBateria(20);
+        try {
+            a.moverEntidade(dos, 15, 15, 18);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println();
 
+        System.out.println("######## Tentando mover o DroneEntregador (DE01) para posicao ocupada #########");
+        try {
+            a.moverEntidade(der, 2, 2, 0); //colisao exception
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println();
+
+        System.out.println("######## Testando os sensores #########");
+        try {
+            System.out.println("Sensores BB8:");
+            bb_8.acionarSensores(a);
+            System.out.println();
+            System.out.println("Sensores DroneFotografico:");
+            df.acionarSensores(a);
+            System.out.println();
+            System.out.println("Sensores DroneEntregador:");
+            der.acionarSensores(a);
+            System.out.println();
+            System.out.println("Sensores DestruidorObstaculos:");
+            dos.acionarSensores(a);
+            System.out.println();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println();
+
+        System.out.println("######## Vizualizando ambiente #########");
+        a.visualizarAmbiente();
+        System.out.println();
         System.out.println(a);
+        System.out.println();
 
-    
+        System.out.println("######## Removendo Obstaculo ARVORE do Ambiente #########");
+        a.removerEntidade(o5);
+        System.out.println();
+
+        System.out.println("######## Vizualizando ambiente #########");
+        a.visualizarAmbiente();
+        System.out.println();
+
         //MENU INTERATIVO:
-
+        /*
         Scanner scanner = new Scanner(System.in);        
         //Robôs e Ambiente
         while (true) {
@@ -183,5 +276,6 @@ public class Main {
         }
 
         scanner.close();
+    */
     }
 }

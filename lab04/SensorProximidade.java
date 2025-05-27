@@ -40,6 +40,7 @@ public class SensorProximidade extends Sensor{
 
         for(Entidade ent : ambiente.getEntidades())
         {   
+            if (ent != robo) {
             double distancia = distancia3D(robo, ent);
 
             if(distancia == 0)   //robo colidiu
@@ -47,7 +48,7 @@ public class SensorProximidade extends Sensor{
             
             else if(distancia <= getRaio())
                 entidades_vizinhas.add(ent);
-
+            }
         }
 
         return entidades_vizinhas;

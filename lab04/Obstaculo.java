@@ -79,7 +79,7 @@ public class Obstaculo implements Entidade {
     @Override
     public String getDescricao() {  //getDescricao == toString?
         String out = "";
-        out += "Obstaculo do tipo " + getTipo();
+        out += "Obstaculo do tipo " + getTipo_obs();
         out += " ocupa o espaco (" + getX1() + ", " + getY1() + ") x (" + getX() + ", " + getY() + ") x (0, " + getZ() + ")\n";
         return out;
     }

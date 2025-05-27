@@ -58,14 +58,14 @@ public class DroneFotografico extends RoboAereo implements Fotografico {
     @Override
     public String getDescricao() {
         String out = "";
-        out += "DroneFotografico " + getId() + " (estado robo: " + getEstado() + ")";
+        out += "DroneFotografico " + getId() + " (" + getEstado();
+        if (isCamera_ligada())
+            out += " e camera LIGADA)";
+        else
+            out += " e camera DESLIGADA)";
 
         out += " esta na posicao " + "(" + getX() + ", " + getY() + ", " + getAltitude() + "), ";
-        out += "com Altura maxima = " + getAltitudeMaxima() + " e " + getFotos_tiradas() + " fotos tiradas";
-        if (isCamera_ligada())
-            out += " (camera ligada):\n";
-        else
-            out += " (camera desligada):\n";
+        out += "com Altura maxima = " + getAltitudeMaxima() + " e " + getFotos_tiradas() + " fotos tiradas:\n";
         if (getSensores() == null)  
             out += "        |->Ele nao possui sensores.";
         else {

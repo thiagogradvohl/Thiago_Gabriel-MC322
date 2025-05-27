@@ -92,10 +92,11 @@ public class BB_8 extends RoboTerrestre implements Atacante {
     public String getDescricao() {
         String out = "";
         out += "BB8 " + getId();
+        out += " (" + getEstado(); 
         if (this.modo_ataque)
-            out += " (modo ataque: ligado)";
+            out += " e modo ataque: LIGADO)";
         else   
-            out += " (modo ataque: desligado)";
+            out += " e modo ataque: DESLIGADO)";
         out += " esta na posicao " + "(" + getX() + ", " + getY() + ", " + getZ() + "), ";
         out += "com Municao = " + getMunicao();
         out += ", com Diametro = " + getDiametro(); 

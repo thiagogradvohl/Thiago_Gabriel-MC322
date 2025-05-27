@@ -9,11 +9,13 @@ public class Ambiente {
     private final int temperatura;
     private TipoEntidade[][][] mapa;
     private ArrayList<Entidade> entidades;
+
     public Ambiente(int profundidade, int largura, int altura, int concentracao_o2, int temperatura) {
         //Método construtor: Define a profundidade, a largura e cria os arrays que armazenam robos e obstaculos do ambiente.
         this.profundidade = profundidade;
         this.largura = largura;
         this.altura = altura;
+        this.entidades = new ArrayList<>();
         inicializarMapa();
         this.concentracao_o2 = concentracao_o2;
         this.temperatura = temperatura;
@@ -31,20 +33,27 @@ public class Ambiente {
 
     public void moverEntidade(Entidade e, int novoX, int novoY, int novoZ) throws Exception {
         if (e.getTipo() == TipoEntidade.ROBO) {  //só robo é movimentado
-            if (dentroDosLimites(e.getX(), e.getY(), e.getZ())) {
-                if (!estaOcupado(e.getX(), e.getY(), e.getZ())) {
-                    try {
-                        this.mapa[e.getX()][e.getY()][e.getZ()] = e.getTipo();  //atualiza o mapa para entidades pontuais
-                        ((Robo)e).moverPara(novoX, novoY, novoZ);
-                    } catch (RoboDesligadoException er) {
-                        throw new RoboDesligadoException();
+            if (((Robo)e).getEstado() == EstadoRobo.LIGADO) {
+                if (dentroDosLimites(novoX, novoY, novoY)) {
+                    if (!estaOcupado(novoX, novoY, novoZ)) {
+                        try {
+                            this.mapa[e.getX()][e.getY()][e.getZ()] = TipoEntidade.VAZIO; 
+                            this.mapa[novoX][novoY][novoZ] = e.getTipo();  //atualiza o mapa para entidades pontuais
+                            ((Robo)e).moverPara(novoX, novoY, novoZ);
+                        } catch (Exception err) {
+                            this.mapa[e.getX()][e.getY()][e.getZ()] = e.getTipo(); 
+                            this.mapa[novoX][novoY][novoZ] = TipoEntidade.VAZIO;  //reatualiza o mapa para entidades em caso de exception
+                            throw err;
+                        }
                     }
+                    else 
+                        throw new ColisaoException();
                 }
                 else 
-                    throw new ColisaoException();
+                    throw new ForaDosLimitesException();
             }
-            else 
-                throw new ForaDosLimitesException();
+            else
+                throw new RoboDesligadoException();
         }
         else
             throw new EntidadeEstaticaException();
@@ -89,7 +98,7 @@ public class Ambiente {
         int i, j, k;
         for (i = 0; i < this.largura; i++) {
             for (j = 0; j < this.profundidade; j++) {
-                for (k = altura; k >= 0; k--) {
+                for (k = altura - 1; k >= 0; k--) {
                     if (this.mapa[i][j][k] != TipoEntidade.VAZIO) {
                         System.out.printf(" %c ", this.mapa[i][j][k].getRepresentacao()); 
                         break;
@@ -122,7 +131,7 @@ public class Ambiente {
         return false; 
     }
 
-    public void adicionarEntidade(Entidade e) throws Exception {
+    public void adicionarEntidade(Entidade e) throws ColisaoException, ForaDosLimitesException {
         if (dentroDosLimites(e.getX(), e.getY(), e.getZ())) {
             if (e.getTipo() != TipoEntidade.OBSTACULO && !estaOcupado(e.getX(), e.getY(), e.getZ())) {
                 this.mapa[e.getX()][e.getY()][e.getZ()] = e.getTipo();  //atualiza o mapa para entidades pontuais
@@ -162,7 +171,7 @@ public class Ambiente {
         else {
             out += "  |-->Entidades: \n";
             for (int i = 0; i < entidades.size(); i++)
-                out += "    ### " + entidades.get(i);         
+                out += "    ### " + entidades.get(i).getDescricao();         
         }
 
         return out;

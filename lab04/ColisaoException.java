@@ -1,5 +1,5 @@
 public class ColisaoException extends Exception {
     public ColisaoException() {
-        super("Haveria uma colisao.");
+        super("ColisaoException: Haveria uma colisao.");
     }
 }

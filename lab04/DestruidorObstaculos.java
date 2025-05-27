@@ -1,17 +1,19 @@
 import java.util.List;
 import java.util.ArrayList;
-public class DestruidorObstaculos extends RoboTerrestre implements Destruidor {
+public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAutonomo {
     //Subclasse de robos terrestres que percorre trechos de modo autonomo, usando uma bateria que descarrega pelo caminho
     private int energia;
+    private int energia_minima;
     private List<Entidade> entidades_proximas;
     private List<Entidade> entidades_removidas = new ArrayList<>();
     
     
-    public DestruidorObstaculos(int X, int Y, int Z, String id, int velocidadeMaxima, int velocidade, int energia, Sensor sensor, EstadoRobo estado)
+    public DestruidorObstaculos(int X, int Y, int Z, String id, int velocidadeMaxima, int velocidade, int energia, int energia_minima, Sensor sensor, EstadoRobo estado)
 
     {
         super(X, Y, Z, id, velocidadeMaxima, velocidade, sensor, estado);
         this.energia = energia;
+        this.energia_minima = energia_minima;
     }
     public void atualizar_entidades(Ambiente ambiente)
     {
@@ -50,20 +52,23 @@ public class DestruidorObstaculos extends RoboTerrestre implements Destruidor {
         this.energia = energia;
     }
     @Override
-    public void executarTarefa() {
-    
-        if (this.entidades_proximas.isEmpty())
-        {
-            System.out.println("Não há obstáculos próximos a serem destruídos.");
-            return;
-        }
+    public void executarTarefa() throws Exception {
+        if (this.energia >= this.energia_minima) {
+            if (this.entidades_proximas.isEmpty())
+            {
+                System.out.println("Não há obstáculos próximos a serem destruídos.");
+                return;
+            }
 
-    
-        for (Entidade entidade : this.entidades_proximas) {
-            if (entidade instanceof Obstaculo) {
-                entidades_removidas.add(entidade);
+        
+            for (Entidade entidade : this.entidades_proximas) {
+                if (entidade instanceof Obstaculo) {
+                    entidades_removidas.add(entidade);
+                }
             }
         }
+        else
+            throw new BateriaInsuficienteException();
         
     }
     
@@ -79,24 +84,25 @@ public class DestruidorObstaculos extends RoboTerrestre implements Destruidor {
     }
 
     @Override
-    public void moverPara(int X, int Y, int Z) {
+    public void moverPara(int X, int Y, int Z) throws Exception {
         //move o robo em uma distancia especificada em cada eixo do plano, seguindo uma pré-determinada velocidade.
-        //computa o consumo de bateria do trajeto e verifica se ela será ou nao suficiente para o trajeto
-        int consumo = Math.abs(X - getX()) + Math.abs(Y - getY()) + Math.abs(Z - getZ()); 
-        if (energia < consumo) {
-            System.out.println("Bateria insuficiente para o movimento.\nFavor carregar.");
-            return;
+        //perde 10 de energia a cada movimento
+        if (this.energia < this.energia_minima) 
+            throw new BateriaInsuficienteException();
+        else {
+            try {
+                super.moverPara(X, Y, Z);
+                if (energia >= 10)
+                    this.energia -= 10;
+                else
+                    this.energia = 0;
+            } catch (RoboDesligadoException rde) {
+                throw new RoboDesligadoException();
+            } catch (VelocidadeExcedidaException vee) {
+                throw new VelocidadeExcedidaException();
+            }
         }
-        else if (getX() + X >= 0 && getY() >= 0) {
-            setX(X);
-            setY(Y);
-            setZ(Z);
-            this.energia -= consumo;
-        }
-        else
-            System.out.println("O robo nao se moveu, pois iria para coordenadas negativas.");
-
-        System.out.printf("Movimento realizado.\nBateria restante: %d\n", getEnergia());
+        
     }
 
     public List<Entidade> getEntidades_proximas() {
@@ -107,18 +113,23 @@ public class DestruidorObstaculos extends RoboTerrestre implements Destruidor {
         return entidades_removidas;
     }
 
+    public int getEnergia_minima() {
+        return energia_minima;
+    }
+
     @Override
     public String getDescricao() {
         String out = "";
-        out += "Robo DestruidorObstaculos " + getId();
+        out += "DestruidorObstaculos " + getId();
         out += " (" + getEstado() + ")";
         out += " esta na posicao " + "(" + getX() + ", " + getY() + ", " + getZ() + "), ";
-        out += "com energia = " + getEnergia();
+        out += "com energia = " + getEnergia() + " X energia minima = " + getEnergia_minima() ;
         out += ", com Velocidade = " + getVelocidade() + " x Velocidade Maxima = " + getVelocidadeMaxima() + ":\n";
-        if (getEntidades_proximas() != null)
+        if (getEntidades_proximas() != null) {
             out += "        |-->Entidades proximas:\n";
             for (Entidade e : getEntidades_proximas())
                 out += "          |-->" + e.getDescricao() + "\n";
+        }
         if (getSensores() == null) 
             out += "        |-->Ele nao possui sensores.";
         else {

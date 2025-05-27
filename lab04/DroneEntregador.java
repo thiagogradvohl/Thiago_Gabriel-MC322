@@ -67,12 +67,12 @@ public class DroneEntregador extends RoboAereo {
     @Override
     public String getDescricao() {
         String out = "";
-        out += "Robo DroneEntregador " + getId();
+        out += "DroneEntregador " + getId();
         out += " (" + getEstado() + ")";
         out += " esta na posicao " + "(" + getX() + ", " + getY() + ", " + getZ() + "), ";
         out += "com altitude maxima = " + getAltitudeMaxima();
         out += ", com destino em (" + getDestino_X() + ", " + getDestino_Y() + ", " + getDestino_z() + ")";
-        out += ", e carrega " + getProduto(); 
+        out += ", e carrega " + getProduto() + ":\n"; 
 
         if (getSensores() == null) 
             out += "        |-->Ele nao possui sensores.";
