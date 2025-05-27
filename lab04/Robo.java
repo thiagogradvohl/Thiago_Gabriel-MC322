@@ -4,7 +4,7 @@ import java.util.List;
 public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     //rever exceprtions para usar sensores e mover
     private String id;
-    private TipoEntidade tipo;
+    private final TipoEntidade tipo;
     private EstadoRobo estado;
     private int X;
     private int Y;
@@ -66,10 +66,6 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     }
     public void setY(int Y){
         this.Y = Y;
-    }
-    
-    public void setTipo(TipoEntidade tipo) {
-        this.tipo = tipo;
     }
 
     public void setEstado(EstadoRobo estado) {

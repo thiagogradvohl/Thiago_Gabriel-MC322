@@ -51,11 +51,6 @@ public class DroneFotografico extends RoboAereo implements Fotografico {
     }
 
     @Override
-    public void setCamera_ligada(boolean camera_ligada) {
-        this.camera_ligada = camera_ligada;
-    }
-
-    @Override
     public String getDescricao() {
         String out = "";
         out += "DroneFotografico " + getId() + " (" + getEstado();

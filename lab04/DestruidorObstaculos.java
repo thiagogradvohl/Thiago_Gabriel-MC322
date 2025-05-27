@@ -48,9 +48,6 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
         return null; 
     }
     
-    public void setEnergia(int energia){
-        this.energia = energia;
-    }
     @Override
     public void executarTarefa() throws Exception {
         if (this.energia >= this.energia_minima) {
@@ -72,9 +69,10 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
         
     }
     
+    @Override
     public void recarregarBateria(int energia_adicionada){
         //recarrega a bateria do robo por uma quantidade especificada
-        setEnergia(getEnergia()+energia_adicionada);
+        this.energia += energia_adicionada;
         if(getEnergia() > 100)
         {
             System.out.println("Carga concluída. Bateria completamente carregada.\n");
@@ -138,5 +136,8 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
                 out += "          |-->" + s.toString() + "\n";
         }
         return out;
+    }
+    public void setEnergia_minima(int energia_minima) {
+        this.energia_minima = energia_minima;
     } 
 }
