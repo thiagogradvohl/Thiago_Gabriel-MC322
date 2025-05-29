@@ -41,12 +41,13 @@ public class DroneEntregador extends RoboAereo {
     @Override
     public void executarTarefa() throws Exception {
         //realiza a entrega na posicao de destino e desliga automaticamente
-        if (CalculaDistanciaRestante() == 0 && this.getEstado() == EstadoRobo.LIGADO) {
+        if (this.getEstado() == EstadoRobo.DESLIGADO)
+            throw new RoboDesligadoException(); //exception
+            
+        else if (CalculaDistanciaRestante() == 0) {
             System.out.printf("Encomenda %s entregue ao destino.\n", this.produto);
             this.setEstado(EstadoRobo.DESLIGADO);
         }
-        else if (this.getEstado() == EstadoRobo.DESLIGADO)
-            throw new RoboDesligadoException(); //exception
 
         else 
             System.out.printf("O robo ainda nao chegou ao seu destino (%d, %d, %d)!\n", this.destino_X, this.destino_Y, this.destino_z);

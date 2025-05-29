@@ -36,7 +36,7 @@ public class Main {
             try {
                 a.adicionarEntidade(obs);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
         }   
         System.out.println();
@@ -45,7 +45,7 @@ public class Main {
         try {
             a.moverEntidade(o1, 10, 10, 10);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         System.out.println();
 
@@ -60,7 +60,7 @@ public class Main {
             try {
                 a.adicionarEntidade(robo);
             } catch (Exception e) {
-                System.out.println(robo.getId() + " --> " + e.getMessage());
+                e.printStackTrace();
             }
         }   
         
@@ -70,12 +70,12 @@ public class Main {
         try {
             df.moverPara(2, 2, 0);
         } catch (Exception e) {
-            System.out.println(e.getMessage());;
+            e.printStackTrace();
         }
         try {
             a.adicionarEntidade(df); //colisaoexception
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
             System.out.println();
 
@@ -83,12 +83,12 @@ public class Main {
         try {
             df.moverPara(2, 18, 18); 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         try { 
             a.adicionarEntidade(df);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         System.out.println();
 
@@ -96,7 +96,7 @@ public class Main {
         try {
             a.moverEntidade(dos,15, 15, 18); 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         System.out.println();
 
@@ -105,7 +105,7 @@ public class Main {
         try {
             a.moverEntidade(dos, 15, 15, 18);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         System.out.println();
         
@@ -114,7 +114,7 @@ public class Main {
         try {
             a.moverEntidade(dos, 15, 15, 18);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         System.out.println();
 
@@ -122,7 +122,7 @@ public class Main {
         try {
             a.moverEntidade(der, 2, 2, 0); //colisao exception
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         System.out.println();
 
@@ -141,7 +141,7 @@ public class Main {
             dos.acionarSensores(a);
             System.out.println();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         System.out.println();
 
@@ -158,6 +158,70 @@ public class Main {
         System.out.println("######## Vizualizando ambiente #########");
         a.visualizarAmbiente();
         System.out.println();
+
+        System.out.println("######## Comunicacao entre robos #########");
+        //Instanciando a CentralComunicacao
+        CentralComunicacao co = new CentralComunicacao();
+        String mensagem1 = "Ola, eu sou o " + bb_8.getId() + ". Qual o seu nome?";
+        String resposta1 = "Ola, eu sou o " + der.getId() + ".";
+        String mensagem2 = "Ola, " + df.getId() + ". Qual a sua posicao?";
+        String resposta2 = "Ola, " + dos.getId() + ". Estou na posicao: (" + df.getX() + ", " + df.getY() + ", " + df.getAltitude() + ")."; 
+        //enviando mensagem 1
+        try { 
+            bb_8.enviarMensagem(der, mensagem1);
+            co.registrarMensagem(bb_8.getId(), mensagem1);
+        } catch (RoboDesligadoException e) {
+            e.printStackTrace();
+        }
+        //rescebendo mensagem 1
+        try { 
+            der.receberMensagem(mensagem1);
+        } catch (RoboDesligadoException e) {
+            e.printStackTrace();
+        }
+
+        //enviando resposta 1
+        try { 
+            der.enviarMensagem(bb_8, resposta1);
+            co.registrarMensagem(der.getId(), resposta1);
+        } catch (RoboDesligadoException e) {
+            e.printStackTrace();
+        }
+        //recebendo resposta 1
+        try { 
+            bb_8.receberMensagem(resposta1);
+        } catch (RoboDesligadoException e) {
+            e.printStackTrace();
+        }
+
+        //enviando mensagem 2
+        try { 
+            dos.enviarMensagem(df, mensagem2);
+            co.registrarMensagem(dos.getId(), mensagem2);
+        } catch (RoboDesligadoException e) {
+            e.printStackTrace();
+        }
+        //rescebendo mensagem 1
+        try { 
+            df.receberMensagem(mensagem2);
+        } catch (RoboDesligadoException e) {
+            e.printStackTrace();
+        }
+
+        //enviando resposta 2
+        try { 
+            df.enviarMensagem(dos, resposta2);
+            co.registrarMensagem(df.getId(), resposta2);
+        } catch (RoboDesligadoException e) {
+            e.printStackTrace();
+        }
+        //recebendo resposta 2
+        try { 
+            dos.receberMensagem(resposta2);
+        } catch (RoboDesligadoException e) {
+            e.printStackTrace();
+        }
+
 
         //MENU INTERATIVO:
         /*
