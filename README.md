@@ -1,4 +1,4 @@
-# 🧪 Laboratórios MC322
+# Laboratórios MC322
 
 **Equipe:**  
 - Thiago Gradvohl de Oliveira (RA: 281378)  
@@ -89,3 +89,8 @@ Este repositório conterá os códigos referentes aos laboratórios da disciplin
 
 ```bash
 git clone https://github.com/thiagogradvohl/Thiago_Gabriel-MC322.git
+
+### 2) Acesse a pasta `lab04` do repositório:
+
+```bash
+cd Thiago_Gabriel-MC322/lab04
