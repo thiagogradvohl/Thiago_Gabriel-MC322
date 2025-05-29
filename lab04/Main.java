@@ -2,6 +2,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    public static 
     public static void main(String[] args) {
         System.out.println("######### Iniciando as classes #########");
 
@@ -36,7 +37,7 @@ public class Main {
             try {
                 a.adicionarEntidade(obs);
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }   
         System.out.println();
@@ -45,7 +46,7 @@ public class Main {
         try {
             a.moverEntidade(o1, 10, 10, 10);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         System.out.println();
 
@@ -60,7 +61,7 @@ public class Main {
             try {
                 a.adicionarEntidade(robo);
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(robo.getId() + " --> " + e.getMessage());
             }
         }   
         
@@ -70,12 +71,12 @@ public class Main {
         try {
             df.moverPara(2, 2, 0);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());;
         }
         try {
             a.adicionarEntidade(df); //colisaoexception
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
             System.out.println();
 
@@ -83,12 +84,12 @@ public class Main {
         try {
             df.moverPara(2, 18, 18); 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         try { 
             a.adicionarEntidade(df);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         System.out.println();
 
@@ -96,7 +97,7 @@ public class Main {
         try {
             a.moverEntidade(dos,15, 15, 18); 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         System.out.println();
 
@@ -105,7 +106,7 @@ public class Main {
         try {
             a.moverEntidade(dos, 15, 15, 18);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         System.out.println();
         
@@ -114,7 +115,7 @@ public class Main {
         try {
             a.moverEntidade(dos, 15, 15, 18);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         System.out.println();
 
@@ -122,7 +123,7 @@ public class Main {
         try {
             a.moverEntidade(der, 2, 2, 0); //colisao exception
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         System.out.println();
 
@@ -141,7 +142,7 @@ public class Main {
             dos.acionarSensores(a);
             System.out.println();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         System.out.println();
 
@@ -158,11 +159,9 @@ public class Main {
         System.out.println("######## Vizualizando ambiente #########");
         a.visualizarAmbiente();
         System.out.println();
-
-        System.out.println("######## Comunicacao entre robos #########");
-        //Instanciando a CentralComunicacao
+        
         CentralComunicacao co = new CentralComunicacao();
-        String mensagem1 = "Ola, eu sou o " + bb_8.getId() + ". Qual o seu nome?";
+        String mensagem1 = "isto é o que os meus sensores estão acusando:";
         String resposta1 = "Ola, eu sou o " + der.getId() + ".";
         String mensagem2 = "Ola, " + df.getId() + ". Qual a sua posicao?";
         String resposta2 = "Ola, " + dos.getId() + ". Estou na posicao: (" + df.getX() + ", " + df.getY() + ", " + df.getAltitude() + ")."; 
@@ -173,173 +172,215 @@ public class Main {
         } catch (RoboDesligadoException e) {
             e.printStackTrace();
         }
-        //rescebendo mensagem 1
+        //recebendo mensagem 1
         try { 
             der.receberMensagem(mensagem1);
         } catch (RoboDesligadoException e) {
             e.printStackTrace();
         }
 
-        //enviando resposta 1
-        try { 
-            der.enviarMensagem(bb_8, resposta1);
-            co.registrarMensagem(der.getId(), resposta1);
-        } catch (RoboDesligadoException e) {
-            e.printStackTrace();
-        }
-        //recebendo resposta 1
-        try { 
-            bb_8.receberMensagem(resposta1);
-        } catch (RoboDesligadoException e) {
-            e.printStackTrace();
-        }
 
-        //enviando mensagem 2
-        try { 
-            dos.enviarMensagem(df, mensagem2);
-            co.registrarMensagem(dos.getId(), mensagem2);
-        } catch (RoboDesligadoException e) {
-            e.printStackTrace();
-        }
-        //rescebendo mensagem 1
-        try { 
-            df.receberMensagem(mensagem2);
-        } catch (RoboDesligadoException e) {
-            e.printStackTrace();
-        }
+        //  MENU INTERATIVO 
 
-        //enviando resposta 2
-        try { 
-            df.enviarMensagem(dos, resposta2);
-            co.registrarMensagem(df.getId(), resposta2);
-        } catch (RoboDesligadoException e) {
-            e.printStackTrace();
-        }
-        //recebendo resposta 2
-        try { 
-            dos.receberMensagem(resposta2);
-        } catch (RoboDesligadoException e) {
-            e.printStackTrace();
-        }
+        Scanner scanner = new Scanner(System.in);
 
+        //1)Listar Robôs
 
-        //MENU INTERATIVO:
-        /*
-        Scanner scanner = new Scanner(System.in);        
-        //Robôs e Ambiente
-        while (true) {
-            System.out.println("########### Menu Interativo ###########");
-            System.out.println("Escolha o que deseja fazer:\n(1) Visualizar status dos robôs\n(2) Visualizar status do ambiente\n(3) Mover robôs\n(4) Utilizar sensores\n(5) Encerrar programa");
+        while (true)
+        {
+            System.out.println("####### Menu Interativo #######");
+            System.out.println(
+            "Escolha o que deseja fazer:\n"
+            + "(1) Listar todos os robôs\n"
+            + "(2) Escolher robô para interagir\n"
+            + "(3) Visualizar ambiente\n"
+            + "(4) Ver status do ambiente\n"
+            + "(5)Listar mensagens trocadas"
+            );
+
             int resposta_1 = scanner.nextInt();
-            if(resposta_1 == 1)
-            //usuário deseja visualizar os robôs.
-            {
-                System.out.println("Escolha qual robô deseja ver o status:\n(1) Robô terrestre\n(2) Robô aéreo\n(3) Ambos robôs");
-                int resposta_2 = scanner.nextInt();
-                if(resposta_2 == 1)
-                {
-                    System.err.println("Status do robô terrestre");
-                    System.out.println(rt);
-                }
-                else if(resposta_2 == 2)
-                {
-                    System.err.println("Status do robô aéreo");
-                    System.out.println(ra);
-                }
-                else
-                {
-                    System.out.println("Status do robô terrestre:");
-                    System.out.println(rt);
 
-                    System.out.println("Status do robô aéreo:");
-                    System.out.println(ra);
+            if (resposta_1 == 1) //listando os robôs e seus respectivos estados
+            {
+                System.out.println("Robôs disponíveis:");
+                for(int i = 0; i < robos.length; i++)
+                {
+                    System.out.printf("%d) %s (Status: %s)\n",i+1,robos[i].getId(),robos[i].getEstado());
                 }
             }
 
-            else if(resposta_1 == 2)
+            else if (resposta_1 == 2)
             {
-                System.out.println("Status do ambiente:");
-                System.out.println(a);
-            }
-            //movimentação dos robôs
-            else if(resposta_1 == 3)
-            {
-                System.out.println("Escolha o robô que deseja mover:\n(1) Robô terrestre\n(2) Robô aéreo");
-                int resposta_2 = scanner.nextInt();
+                System.out.println("Escolha um robô:");
+                for(int i = 0; i < robos.length; i++)
+                {
+                    System.out.printf("(%d) %s\n",i+1,robos[i].getId());
+                }
+                int resposta_2 = scanner.nextInt();//qual robo
 
-                int delta_x;
-                int delta_y;
+                System.out.println(
+                "Escolha o que deseja fazer com o robô selecionado:\n"
+                + "(1) Visualizar status\n"
+                + "(2) Executar funcionalidades\n"
+                + "(3)Mudar estado do sistema\n"
+                + "(4) Mover robô"
+                );
+
+
+                int resposta_3 = scanner.nextInt();//atividade do robo
+
+                if (resposta_3 == 1)//visualizando status
+                {
+                    robos[resposta_2-1].toString();
+                }
                 
-
-                if(resposta_2 == 1)
+                else if (resposta_3 == 2)
                 {
-                    int pos_x_antiga = rt.getPosicaox();
-                    int pos_y_antiga = rt.getPosicaoy();
+                    System.out.println(
+                    "Escolha qual funcionalidade deseja utilizar:\n"
+                    + "(1) Comunicar-se\n"
+                    + "(2) Usar sensores\n"
+                    + "(3) Executar tarefas próprias\n"
+                    );
+                    
 
-                    System.out.printf("Escolha por qual distância deseja movimentar o robô terrestre:\nNo eixo X: ");
-                    delta_x = scanner.nextInt();
-                    System.out.print("No eixo Y: ");
-                    delta_y = scanner.nextInt();
-                    rt.mover(delta_x, delta_y);
-                    System.out.printf("O robô terrestre se moveu da posição (%d,%d) para a posição (%d,%d)\n",pos_x_antiga,pos_y_antiga,rt.getPosicaox(),rt.getPosicaoy());
-                }
-                else if(resposta_2 == 2)
-                {
-                    int pos_x_antiga = ra.getPosicaox();
-                    int pos_y_antiga = ra.getPosicaoy();
-                    int pos_altitude_antiga = ra.getAltitude();
-                    int delta_Z;
-
-                    System.out.printf("Escolha por qual distância deseja movimentar o robô aéreo:\nNo eixo X: ");
-                    delta_x = scanner.nextInt();
-
-                    System.out.print("No eixo Y: ");
-                    delta_y = scanner.nextInt();
-
-                    System.out.print("No eixo Z: ");
-                    delta_Z= scanner.nextInt();
-                    if(delta_Z > 0)
+                    int resposta_4 = scanner.nextInt(); // funcionalidade
+                    if (resposta_4 == 1)//comunicação
                     {
-                        ra.subir(delta_Z);
+                        try 
+                        { 
+                            System.out.println("Escolha a mensagem que deseja enviar:");
+                            System.out.println("(1)Caro <destinatário>, eu estou na posição <(x,y,x)> ");
+                            System.out.println("(2) Ola, eu sou o <nome_do_robo>.");
+                            int resposta_6 = scanner.nextInt();
+
+
+
+                            System.out.println("Escolha o robô que receberá a mensagem:]");
+                            for(int j=0; j < robos.length;j++)
+                            {
+                                if(j != resposta_2)
+                                {
+                                    System.out.printf("(%d) %s",j+1,robos[resposta_2-1]);
+                                }
+                            }
+                            int resposta_5 = scanner.nextInt();
+                            if (resposta_6 == 1)
+                            {
+                                String msg_1 = String.format("Caro %s,eu estou na posição (%d,%d,%d)",robos[resposta_5-1].getId(),robos[resposta_2-1].getX(),robos[resposta_2-1].getY(),robos[resposta_2-1].getZ());
+                                try
+                                { 
+                                    robos[resposta_2-1].enviarMensagem(robos[resposta_5-1], msg_1);
+
+                                    co.registrarMensagem(robos[resposta_2-1].getId(), msg_1);
+                                }
+                                catch (RoboDesligadoException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            else if (resposta_6 == 2)
+                            {
+                                String msg_2 = String.format("Ola, %s,eu sou o %s",robos[resposta_5-1].getId(),robos[resposta_2-1].getId());
+                                try
+                                { 
+                                    robos[resposta_2-1].enviarMensagem(robos[resposta_5-1], msg_2);
+
+                                    co.registrarMensagem(robos[resposta_2-1].getId(), msg_2);
+                                }
+                                catch (RoboDesligadoException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            
+                            bb_8.enviarMensagem(der, mensagem1);
+                            co.registrarMensagem(bb_8.getId(), mensagem1);
+                        } catch (RoboDesligadoException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    else if (resposta_4 == 2)//sensores
+                    {
+                        try
+                        {
+                            robos[resposta_2-1].acionarSensores(a);
+                        } 
+                        
+                        catch (RoboDesligadoException e) {
+                            e.printStackTrace();
+                        }
                     }
                     else
                     {
-                        ra.descer(-delta_Z);
+                        try
+                        {
+                            robos[resposta_2-1].executarTarefa();
+                        } 
+                        
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
+                }
 
-                    ra.mover(delta_x,delta_y);
+                else if(resposta_3 == 3)//ligar/desligar
+                {
+                    if (robos[resposta_2-1].getEstado() == EstadoRobo.DESLIGADO)
+                    {
+                        robos[resposta_2-1].ligar();
+                        System.out.println("O robô está ligado...");
+                    }
+                    else if (robos[resposta_2-1].getEstado() == EstadoRobo.DESLIGADO)
+                    {
+                        robos[resposta_2-1].desligar();
+                        System.out.println("O robô está desligado...");
+                    }
+                }
+                else//mover
+                {
+                    int pos_x_antiga = robos[resposta_2-1].getX();
+                    int pos_y_antiga = robos[resposta_2-1].getY();
+                    int pos_z_antiga = robos[resposta_2-1].getZ();
+                    
+
+                    System.out.printf("Escolha por qual distância deseja movimentar o robô %s :\nNo eixo X: ",robos[resposta_2-1].getId());
+                    int delta_x = scanner.nextInt();
+
+                    System.out.print("No eixo Y: ");
+                    int delta_y = scanner.nextInt();
+
+                    System.out.print("No eixo Z: ");
+                    int delta_Z= scanner.nextInt();
+                    
+                    try 
+                    {
+                        a.moverEntidade(robos[resposta_2-1], pos_x_antiga+delta_x, pos_y_antiga+delta_y, pos_z_antiga+delta_Z);
+                    } 
+                    catch (Exception e) 
+                    {
+                        e.printStackTrace();
+                    }
                 
-                    System.out.printf("O robô terrestre se moveu da posição (%d,%d,%d) para a posição (%d,%d,%d)\n",pos_x_antiga,pos_y_antiga,pos_altitude_antiga,ra.getPosicaox(),ra.getPosicaoy(),ra.getAltitude());
+                    System.out.printf("O robô terrestre se moveu da posição (%d,%d,%d) para a posição (%d,%d,%d)\n",pos_x_antiga,pos_y_antiga,pos_z_antiga,robos[resposta_2-1].getX(),robos[resposta_2-1].getY(),robos[resposta_2-1].getZ());
                 }
-            }
-            
-            //uso dos sensores
-            else if(resposta_1 == 4)
+                }
+            else if (resposta_1 == 3)//visualizar ambiente
             {
+                a.visualizarAmbiente();
+            }
+            else if (resposta_1 == 4)
+            {
+                a.toString();
+            }
+            else
+            {
+                co.exibirMensagens();
+            }
 
-                System.out.println("Escolha o robô que deseja ver o sensor:\n(1) Robô terrestre\n(2) Robô aéreo");
-                int resposta_2 = scanner.nextInt();
 
-                if(resposta_2 == 1)
-                {
-                    System.out.println("Relatório geral dos sensores para o robô terrestre: ");
-                    rt.usarSensores(a);
-                }
-                else if(resposta_2 == 2)
-                {
-                    System.out.println("Relatório geral dos sensores para o robô aéreo");
-                    ra.usarSensores(a);
-                }
             }
             
-            else if (resposta_1 == 5) {
-                System.out.println("Programa encerrado.");
-                break;
-            }
-        
-        }
 
-        scanner.close();
-    */
-    }
+        }
 }
+
