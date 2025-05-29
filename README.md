@@ -50,7 +50,7 @@ Exceptions adicionadas:
 
 Instrucoes para Compilacao e Execucao:
     1) Clonando o repositorio na sua máquina:
-        git clone https://github.com/thiagogradvohl/Thiago_Gabriel-MC322.git
+       ```` git clone https://github.com/thiagogradvohl/Thiago_Gabriel-MC322.git 
 
     2) Acesse a pasta lab04 do repositório
         cd Thiago_Gabriel-MC322/lab04
