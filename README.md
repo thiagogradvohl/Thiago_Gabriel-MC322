@@ -86,11 +86,31 @@ Este repositório conterá os códigos referentes aos laboratórios da disciplin
 ## ▶️ Instruções para Compilação e Execução:
 
 ### 1) Clonando o repositório na sua máquina:
-
-```bash
-git clone https://github.com/thiagogradvohl/Thiago_Gabriel-MC322.git
+   ```bash
+   git clone https://github.com/thiagogradvohl/Thiago_Gabriel-MC322.git
+   ``
 
 ### 2) Acesse a pasta `lab04` do repositório:
-
-```bash
-cd Thiago_Gabriel-MC322/lab04
+   ```bash
+   cd Thiago_Gabriel-MC322/lab04
+   ```
+### 3) Compile e execute o arquivo Main.java
+### 3.1) Usando uma IDE (como IntelliJ IDEA, Eclipse, NetBeans, VsCode)
+   Importe a pasta lab04 como um novo projeto ou módulo;
+   Localize o arquivo Main.java;
+   Clique com o botão direito e selecione "Run" ou "Executar".
+### 3.2) Pelo Terminal:
+   Certifique-se de ter o Java Development Kit (JDK) instalado.
+   Verifique com:
+   ```bash
+   java -version
+   javac -version
+   ```  
+   Compile o arquivo Main.java:
+   ```bash
+   javac Main.java
+   ```  
+   Execute o programa:
+   ```bash
+   java Main
+   ```
