@@ -88,7 +88,7 @@ Este repositório conterá os códigos referentes aos laboratórios da disciplin
 ### 1) Clonando o repositório na sua máquina:
    ```bash
    git clone https://github.com/thiagogradvohl/Thiago_Gabriel-MC322.git
-   ``
+   ```
 
 ### 2) Acesse a pasta `lab04` do repositório:
    ```bash
