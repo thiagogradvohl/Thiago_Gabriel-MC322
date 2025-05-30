@@ -15,31 +15,35 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
         this.energia = energia;
         this.energia_minima = energia_minima;
     }
-    public void atualizar_entidades(Ambiente ambiente)
+
+    @Override
+    public void atualizar_ambiente(Ambiente ambiente)
     {
-        //put try/except later on
         if (this.entidades_removidas.isEmpty())
-        {
             return;
-        }
         
         for(Entidade entidade : this.entidades_removidas)
-        {
             ambiente.removerEntidade(entidade);
-        }
-        SensorProximidade sp = this.identificar_sp();
-        entidades_removidas = sp.identificarEntidades(this, ambiente);
-
     }
+
+    @Override
+    public void atualizar_entidades_proximas(Ambiente a) {
+        SensorProximidade sp = this.identificar_sp();
+        if (sp != null)
+            this.entidades_proximas = sp.identificarEntidades(this, a);
+        else 
+            System.out.println("Nao foi possivel atualizar as entidades. Sensor de proximidade nao identificado.");
+    }
+
     public int getEnergia(){
         return this.energia;
     }
     
+    @Override
     public SensorProximidade identificar_sp()
     {
         for (Sensor s : getSensores()) {
             if (s instanceof SensorProximidade) {
-                System.out.println("Sensor de proximidade localizado...");
                 return (SensorProximidade) s;
             }
         }
@@ -51,16 +55,21 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
     @Override
     public void executarTarefa() throws Exception {
         if (this.energia >= this.energia_minima) {
-            if (this.entidades_proximas.isEmpty())
+            boolean tem_obstaculo = false;
+            for (Entidade e: this.entidades_proximas) {
+                if (e instanceof Obstaculo)
+                    tem_obstaculo = true;
+            }
+            if (!tem_obstaculo)
             {
                 System.out.println("Não há obstáculos próximos a serem destruídos.");
                 return;
             }
 
-        
+            this.energia -= this.energia_minima;   //perde energia  
             for (Entidade entidade : this.entidades_proximas) {
                 if (entidade instanceof Obstaculo) {
-                    entidades_removidas.add(entidade);
+                    this.entidades_removidas.add(entidade);
                 }
             }
         }
@@ -78,7 +87,7 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
             System.out.println("Carga concluída. Bateria completamente carregada.\n");
             return;
         }
-        System.out.printf("Status da bateria: %d\n", getEnergia());
+        System.out.printf("Status da bateria: %d\n(Bateria minima: %d)\n", getEnergia(), getEnergia_minima());
     }
 
     @Override

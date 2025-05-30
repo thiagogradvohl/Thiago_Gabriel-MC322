@@ -26,18 +26,19 @@ public class BB_8 extends RoboTerrestre implements Atacante {
     }
 
     @Override
-    public void executarTarefa() throws RoboDesligadoException {  
+    public void executarTarefa() throws Exception {  
         //atacar a posicao em que esta
         if (this.getEstado() == EstadoRobo.LIGADO) {
-            if (this.modo_ataque && this.municao > 0) {
-                if (this.municao >= 10)
+            if (this.modo_ataque) {
+                if (municao >= 10) {  //municao minima para ataque eh de 10
                     this.municao -= 10;   //perda de 10 municoes por ataque
-                else   
-                    this.municao = 0;
-                System.out.printf("O BB_8 atacou o alvo na sua posicao: (%d, %d, %d)\n", getX(), getY(), getZ());
+                    System.out.printf("O BB_8 atacou o alvo na sua posicao: (%d, %d, %d)\n", getX(), getY(), getZ());
+                }
+                else
+                    throw new MunicaoInsuficienteException();
             }
             else
-                System.out.println("O robo nao atacou. O modo ataque esta desligado.");  //exception no ammo or exception offattack
+                throw new ModoAtaqueDesligadoException();
         }
         else
             throw new RoboDesligadoException();    

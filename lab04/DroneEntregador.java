@@ -25,20 +25,6 @@ public class DroneEntregador extends RoboAereo {
     }
     
     @Override
-    public void moverPara(int X, int Y, int Z) throws Exception{
-        if (CalculaDistanciaRestante() != 0) {
-            try{
-                super.moverPara(X, Y, Z);
-            } catch (RoboDesligadoException e) {
-                throw new RoboDesligadoException();
-            }
-        }
-
-        if (CalculaDistanciaRestante() == 0)
-            executarTarefa();
-    }
-    
-    @Override
     public void executarTarefa() throws Exception {
         //realiza a entrega na posicao de destino e desliga automaticamente
         if (this.getEstado() == EstadoRobo.DESLIGADO)
@@ -46,11 +32,19 @@ public class DroneEntregador extends RoboAereo {
             
         else if (CalculaDistanciaRestante() == 0) {
             System.out.printf("Encomenda %s entregue ao destino.\n", this.produto);
+            this.produto = "Nada";
             this.setEstado(EstadoRobo.DESLIGADO);
         }
 
         else 
             System.out.printf("O robo ainda nao chegou ao seu destino (%d, %d, %d)!\n", this.destino_X, this.destino_Y, this.destino_z);
+    }
+
+    public void novaEntrega(int novoDestinoX, int novoDestinoY, int novoDestinoZ, String novoProduto) {
+        this.destino_X = novoDestinoX;
+        this.destino_Y = novoDestinoY;
+        this.destino_z = novoDestinoZ;
+        this.produto = novoProduto;
     }
 
     public void setDestino_X(int destino_X) {

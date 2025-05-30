@@ -81,6 +81,12 @@ Este repositório conterá os códigos referentes aos laboratórios da disciplin
 6. **`RoboDesligadoException`**:  
    Lançada ao tentar mover, acionar sensores ou `executarTarefa()` com `EstadoRobo` **DESLIGADO** nas classes `Robo` ou `Ambiente`.
 
+7. **`MunicaoInsuficienteException`**:  
+   Lançada ao tentar `executarTarefa()` (atacar) na classe `BB_8` com `municao` inferior a 10.
+
+8. **`ModoAtaqueDesligadoException`**:  
+   Lançada ao tentar `executarTarefa()` (atacar) na classe `BB_8` com `modo ataque` **DESLIGADO**.
+
 ---
 
 ## ▶️ Instruções para Compilação e Execução:
