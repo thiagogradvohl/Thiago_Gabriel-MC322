@@ -3,6 +3,10 @@ package main;
 import java.util.Scanner;
 
 import exceptions.*;
+import missao.MissaoBuscarPonto;
+import missao.MissaoDestruirObstaculo;
+import missao.MissaoExplorar;
+import missao.MissaoMonitorar;
 import robo.*;
 import sensores.*;
 import ambiente.*;
@@ -16,14 +20,17 @@ public class Main {
 
         Ambiente a = new Ambiente(20, 20, 20, 30, 10);
 
+        
         //Instanciando os sensores:
         SensorProximidade sp1 = new SensorProximidade(5);
         SensorProximidade sp2 = new SensorProximidade(10);
+        SensorProximidade sp3 = new SensorProximidade(8);
+        SensorProximidade sp4 = new SensorProximidade(11);
         SensorOxigenio so1 = new SensorOxigenio(5, 30, 20);
         SensorOxigenio so2 = new SensorOxigenio(10, 30, 20);
         SensorTemperatura st1 = new SensorTemperatura(5, 100, 20);
         SensorTemperatura st2 = new SensorTemperatura(10, 10, 0);
-        
+
         //Instanciando os obstaculos:
         Obstaculo o1 = new Obstaculo(1, 1, TipoObstaculo.PAREDE);
         Obstaculo o2 = new Obstaculo(5, 15, TipoObstaculo.CACHOEIRA);
@@ -32,13 +39,25 @@ public class Main {
         Obstaculo o5 = new Obstaculo(8, 13, TipoObstaculo.ARVORE);
         Obstaculo[] obstaculos = {o1, o2, o3, o4, o5};
 
+        //Instanciando as Missoes:
+        MissaoBuscarPonto mbp = new MissaoBuscarPonto(10, 10, 10);
+        MissaoDestruirObstaculo mdo = new MissaoDestruirObstaculo(o4);
+        MissaoExplorar me = new MissaoExplorar(10);
+        MissaoMonitorar mm = new MissaoMonitorar();
+        
         //Instanciando os robôs:
         BB_8 bb_8 = new BB_8(3, 20, true, 15, 2, 0, "BB8-01", 100, 0, sp1, EstadoRobo.LIGADO);
         DestruidorObstaculos dos = new DestruidorObstaculos(1, 19, 0, "DO01", 100, 30, 10, 20, sp2, EstadoRobo.DESLIGADO);
         DroneEntregador der = new DroneEntregador(19, 19, 18, 50, "DE01", 0, 0, 0, so2, EstadoRobo.LIGADO, "Bolsa");
         //drone fotografico fora do ambiente inicialmente
         DroneFotografico df = new DroneFotografico(60, 60, 60, 60, "DF01", so1, EstadoRobo.LIGADO);
-        Robo[] robos = {bb_8, dos, der, df};
+        //AgentesInteligentes:
+        DestruidorObstaculoInteligente doi = new DestruidorObstaculoInteligente(3, 3, 15, "DOI-01", sp3, EstadoRobo.DESLIGADO, null);
+        RoboBuscaPonto rbp = new RoboBuscaPonto(17, 17, 2, "RBP-01", st2, EstadoRobo.LIGADO, null);
+        RoboMonitoramento rm = new RoboMonitoramento(6, 18, 18, "RM-01", st1, EstadoRobo.DESLIGADO, null);
+        RoboExplorador re = new RoboExplorador(15, 5, 5, "RE-01", sp4, EstadoRobo.LIGADO, null);
+
+        Robo[] robos = {bb_8, dos, der, df, doi, rbp, rm, re};
 
         System.out.println("######### Adicionando Obstaculos ao Ambiente #########");
         for (Obstaculo obs : obstaculos) {
@@ -169,8 +188,6 @@ public class Main {
         System.out.println();
         
         CentralComunicacao co = new CentralComunicacao();
-
-
 
         //  MENU INTERATIVO 
 

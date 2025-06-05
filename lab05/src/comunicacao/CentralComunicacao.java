@@ -1,3 +1,4 @@
+package comunicacao;
 import java.util.ArrayList;
 
 public class CentralComunicacao {

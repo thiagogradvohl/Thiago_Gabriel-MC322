@@ -50,10 +50,6 @@ public class Obstaculo implements Entidade {
         return representacao;
     }
 
-    public TipoObstaculo getTipo_obs() {
-        return tipo_obs;
-    }
-
     @Override
     public TipoEntidade getTipo() {
         return tipo;
@@ -84,7 +80,7 @@ public class Obstaculo implements Entidade {
     @Override
     public String getDescricao() {  //getDescricao == toString?
         String out = "";
-        out += "Obstaculo do tipo " + getTipo_obs();
+        out += "Obstaculo do tipo " + getTipoObs();
         out += " ocupa o espaco (" + getX1() + ", " + getY1() + ") x (" + getX() + ", " + getY() + ") x (0, " + getZ() + ")\n";
         return out;
     }
