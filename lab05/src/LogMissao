@@ -1,0 +1,57 @@
+====== LOG DA Missao Buscar Ponto (10, 10, 10) ======
+
+Status: Nao Executada
+
+Posicoes Visitadas:
+- Ainda nao foram visitadas posicoes
+
+Sensores Ativados:
+- Nenhum sensor foi ativado
+
+Obstaculos Detectados:
+- Nenhum obstaculo foi detectdo
+
+#####################################################################################################################################
+====== LOG DA Missao Remover Obstaculo VULCAO ======
+
+Status: Nao Executada
+
+Posicoes Visitadas:
+- (15, 2, 0)
+
+Sensores Ativados:
+- Sensor de Proximidade: Raio de varredura = 5.0
+
+Obstaculos Detectados:
+- Obstaculo do tipo RIO ocupa o espaco (5, 5) x (15, 9) x (0, 0)
+
+
+#####################################################################################################################################
+====== LOG DA Missao Explorar raio de 10.0 ======
+
+Status: Nao Executada
+
+Posicoes Visitadas:
+- Ainda nao foram visitadas posicoes
+
+Sensores Ativados:
+- Nenhum sensor foi ativado
+
+Obstaculos Detectados:
+- Nenhum obstaculo foi detectdo
+
+#####################################################################################################################################
+====== LOG DA Missao Monitorar ======
+
+Status: Nao Executada
+
+Posicoes Visitadas:
+- Ainda nao foram visitadas posicoes
+
+Sensores Ativados:
+- Nenhum sensor foi ativado
+
+Obstaculos Detectados:
+- Nenhum obstaculo foi detectdo
+
+#####################################################################################################################################

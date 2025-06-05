@@ -1,13 +1,17 @@
 package robo;
 import sensores.*;
+import ambiente.Ambiente;
+import exceptions.RoboDesligadoException;
+import exceptions.SemMissaoException;
+import missao.*;
 
-public abstract class RoboAereo extends Robo {
+public abstract class RoboAereo extends AgenteInteligente {
     //Essa subclasse representa os robos com altura (robos aereos) e herda da classe Robo
     private int altitude;
     private int altitudeMaxima;
 
-    public RoboAereo(int X, int Y, int altitude, int altitudeMaxima, String id, Sensor sensor, EstadoRobo estado) {  //método construtor para o robo aereo
-        super(X, Y, altitude, id, sensor, estado);  //determina os atributos ja existentes na classe mae
+    public RoboAereo(int X, int Y, int altitude, int altitudeMaxima, String id, Sensor sensor, EstadoRobo estado, Missao missao) {  //método construtor para o robo aereo
+        super(X, Y, altitude, id, sensor, estado, missao);  //determina os atributos ja existentes na classe mae
         this.altitudeMaxima = altitudeMaxima;
     }
 
@@ -38,6 +42,18 @@ public abstract class RoboAereo extends Robo {
 
     public void setAltitudeMaxima(int altitudeMaxima) {
         this.altitudeMaxima = altitudeMaxima;
+    }
+
+    @Override
+    public void executarMissao(Ambiente a) throws Exception {
+        if (this.getEstado() == EstadoRobo.LIGADO) {
+            if (this.temMissao())
+                this.missao.executar(this, a);
+            else 
+                throw new SemMissaoException();
+        }
+        else 
+            throw new RoboDesligadoException();
     }
 
     @Override

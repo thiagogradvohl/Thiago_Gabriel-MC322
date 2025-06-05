@@ -1,6 +1,8 @@
 package robo;
 import sensores.Sensor;
+import ambiente.Ambiente;
 import exceptions.*;
+import missao.*;
 
 public class DroneEntregador extends RoboAereo {
     //Essa é uma subclasse de robos aereos que representam robos entregadores. 
@@ -10,8 +12,8 @@ public class DroneEntregador extends RoboAereo {
     int destino_z;
     String produto;
 
-    public DroneEntregador(int X, int Y, int altitude, int altitudeMaXima, String id, int destino_X, int destino_Y, int destino_z, Sensor sensor, EstadoRobo estado, String produto){
-        super(X, Y, altitude, altitudeMaXima, id, sensor, estado);
+    public DroneEntregador(int X, int Y, int altitude, int altitudeMaXima, String id, int destino_X, int destino_Y, int destino_z, Sensor sensor, EstadoRobo estado, String produto, Missao missao){
+        super(X, Y, altitude, altitudeMaXima, id, sensor, estado, missao);
         this.destino_X = destino_X;
         this.destino_Y = destino_Y;
         this.destino_z = destino_z;
@@ -102,4 +104,12 @@ public class DroneEntregador extends RoboAereo {
     public void setProduto(String produto) {
         this.produto = produto;
     } 
+
+    public void executarMissao(Ambiente a) throws Exception {
+    if (this.temMissao())
+        this.missao.executar(this, a);
+    else 
+        throw new SemMissaoException();
+    }
+    
 }

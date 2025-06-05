@@ -3,16 +3,12 @@ package main;
 import java.util.Scanner;
 
 import exceptions.*;
-import missao.MissaoBuscarPonto;
-import missao.MissaoDestruirObstaculo;
-import missao.MissaoExplorar;
-import missao.MissaoMonitorar;
+import missao.*;
 import robo.*;
 import sensores.*;
 import ambiente.*;
 import obstaculo.*;
 import comunicacao.*;
-import entidade.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -41,23 +37,20 @@ public class Main {
 
         //Instanciando as Missoes:
         MissaoBuscarPonto mbp = new MissaoBuscarPonto(10, 10, 10);
-        MissaoDestruirObstaculo mdo = new MissaoDestruirObstaculo(o4);
+        MissaoRemoverObstaculo mdo = new MissaoRemoverObstaculo(o4);
         MissaoExplorar me = new MissaoExplorar(10);
         MissaoMonitorar mm = new MissaoMonitorar();
+        Missao[] missoes = {mbp, mdo, me, mm};
+        LogMissoes log_missoes = new LogMissoes(missoes);
         
         //Instanciando os robôs:
-        BB_8 bb_8 = new BB_8(3, 20, true, 15, 2, 0, "BB8-01", 100, 0, sp1, EstadoRobo.LIGADO);
-        DestruidorObstaculos dos = new DestruidorObstaculos(1, 19, 0, "DO01", 100, 30, 10, 20, sp2, EstadoRobo.DESLIGADO);
-        DroneEntregador der = new DroneEntregador(19, 19, 18, 50, "DE01", 0, 0, 0, so2, EstadoRobo.LIGADO, "Bolsa");
+        BB_8 bb_8 = new BB_8(3, 20, true, 15, 2, 0, "BB8-01", 100, 0, sp1, EstadoRobo.LIGADO, null);
+        DestruidorObstaculos dos = new DestruidorObstaculos(1, 19, 0, "DO01", 100, 30, 10, 20, sp2, EstadoRobo.DESLIGADO, null);
+        DroneEntregador der = new DroneEntregador(19, 19, 18, 50, "DE01", 0, 0, 0, so2, EstadoRobo.LIGADO, "Bolsa", null);
         //drone fotografico fora do ambiente inicialmente
-        DroneFotografico df = new DroneFotografico(60, 60, 60, 60, "DF01", so1, EstadoRobo.LIGADO);
-        //AgentesInteligentes:
-        DestruidorObstaculoInteligente doi = new DestruidorObstaculoInteligente(3, 3, 15, "DOI-01", sp3, EstadoRobo.DESLIGADO, null);
-        RoboBuscaPonto rbp = new RoboBuscaPonto(17, 17, 2, "RBP-01", st2, EstadoRobo.LIGADO, null);
-        RoboMonitoramento rm = new RoboMonitoramento(6, 18, 18, "RM-01", st1, EstadoRobo.DESLIGADO, null);
-        RoboExplorador re = new RoboExplorador(15, 5, 5, "RE-01", sp4, EstadoRobo.LIGADO, null);
+        DroneFotografico df = new DroneFotografico(60, 60, 60, 60, "DF01", so1, EstadoRobo.LIGADO, null);
 
-        Robo[] robos = {bb_8, dos, der, df, doi, rbp, rm, re};
+        Robo[] robos = {bb_8, dos, der, df};
 
         System.out.println("######### Adicionando Obstaculos ao Ambiente #########");
         for (Obstaculo obs : obstaculos) {
@@ -80,6 +73,9 @@ public class Main {
         System.out.println("######### Adicionando novos sensores aos robos #########");
         bb_8.adicionarSensor(st1);
         der.adicionarSensor(st2);
+        der.adicionarSensor(sp3);
+        df.adicionarSensor(sp4);
+
         System.out.println(bb_8.getDescricao());
         System.out.println(der.getDescricao());
 
@@ -197,6 +193,7 @@ public class Main {
 
         while (true)
         {   
+            log_missoes.registrarLog("LogMissao");
             dos.atualizar_entidades_proximas(a); //atualiza as entidades para o destruior obstaculos a cada interacao
             System.out.println("####### Menu Interativo #######");
             System.out.println(
@@ -234,9 +231,11 @@ public class Main {
                 + "(1) Visualizar status\n"
                 + "(2) Executar funcionalidades\n"
                 + "(3) Mudar estado do robo\n"
-                + "(4) Mover robô"
+                + "(4) Mover robô\n"
+                + "(5) Ver Missao\n"
+                + "(6) Definir Missao"
                 );
-
+                
                 int resposta_3 = scanner.nextInt();//atividade do robo
 
                 if (resposta_3 == 1)//visualizando status
@@ -247,34 +246,35 @@ public class Main {
                 else if (resposta_3 == 2)
                 {
                     System.out.println(
-                    "Escolha qual funcionalidade deseja utilizar:\n"
-                    + "(1) Comunicar-se\n"
-                    + "(2) Usar sensores\n"
-                    + "(3) Executar tarefas próprias"
-                    );
-                    
-
-                    int resposta_4 = scanner.nextInt(); // funcionalidade
-                    if (resposta_4 == 1)//comunicação
-                    {
-                        System.out.println("Escolha a mensagem que deseja enviar:");
-                        System.out.println("(1) Caro <destinatário>, eu estou na posição <(x,y,z)> ");
-                        System.out.println("(2) Ola, eu sou o <nome_do_robo>.");
-                        int resposta_6 = scanner.nextInt();
-                        System.out.println("Escolha o robô que receberá a mensagem:");
-
-                        for(int j=0; j < robos.length ;j++)
-                            if(j != resposta_2 - 1)
-                                System.out.printf("(%d) %s\n",j+1,robos[j].getId());
-                            
-                        int resposta_5 = scanner.nextInt();
-                        if (resposta_6 == 1)
+                        "Escolha qual funcionalidade deseja utilizar:\n"
+                        + "(1) Comunicar-se\n"
+                        + "(2) Usar sensores\n"
+                        + "(3) Executar tarefas próprias\n"
+                        + "(4) Executar Missao"
+                        );
+                        
+                        
+                        int resposta_4 = scanner.nextInt(); // funcionalidade
+                        if (resposta_4 == 1)//comunicação
                         {
-                            String msg_1 = String.format("Caro %s,eu estou na posição (%d,%d,%d)",robos[resposta_5-1].getId(),robos[resposta_2-1].getX(),robos[resposta_2-1].getY(),robos[resposta_2-1].getZ());
+                            System.out.println("Escolha a mensagem que deseja enviar:");
+                            System.out.println("(1) Caro <destinatário>, eu estou na posição <(x,y,z)> ");
+                            System.out.println("(2) Ola, eu sou o <nome_do_robo>.");
+                            int resposta_6 = scanner.nextInt();
+                            System.out.println("Escolha o robô que receberá a mensagem:");
+                            
+                            for(int j=0; j < robos.length ;j++)
+                            if(j != resposta_2 - 1)
+                            System.out.printf("(%d) %s\n",j+1,robos[j].getId());
+                            
+                            int resposta_5 = scanner.nextInt();
+                            if (resposta_6 == 1)
+                            {
+                                String msg_1 = String.format("Caro %s,eu estou na posição (%d,%d,%d)",robos[resposta_5-1].getId(),robos[resposta_2-1].getX(),robos[resposta_2-1].getY(),robos[resposta_2-1].getZ());
                             try
                             { 
                                 robos[resposta_2-1].enviarMensagem(robos[resposta_5-1], msg_1);
-
+                                
                                 co.registrarMensagem(robos[resposta_2-1].getId(), msg_1);
                             }
                             catch (RoboDesligadoException e) {
@@ -287,7 +287,7 @@ public class Main {
                             try
                             { 
                                 robos[resposta_2-1].enviarMensagem(robos[resposta_5-1], msg_2);
-
+                                
                                 co.registrarMensagem(robos[resposta_2-1].getId(), msg_2);
                             }
                             catch (RoboDesligadoException e) {
@@ -295,7 +295,7 @@ public class Main {
                             }
                         }
                     }                    
-
+                    
                     else if (resposta_4 == 2)//sensores
                     {
                         try
@@ -315,7 +315,7 @@ public class Main {
                             int tarefa = scanner.nextInt();
                             if (tarefa == 1) {
                                 try {
-                                   robos[resposta_2-1].executarTarefa(); 
+                                    robos[resposta_2-1].executarTarefa(); 
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -327,9 +327,9 @@ public class Main {
                             }
                             if (tarefa == 3) {
                                 if (bb_8.isModo_ataque())
-                                    bb_8.desligarModoAtaque();
+                                bb_8.desligarModoAtaque();
                                 else   
-                                    bb_8.ligarModoAtaque();
+                                bb_8.ligarModoAtaque();
                             }
                         }
                         else if (robos[resposta_2-1] instanceof DroneEntregador) {
@@ -358,7 +358,7 @@ public class Main {
                             }
                         }
     
-
+                        
                         else if (robos[resposta_2-1] instanceof DroneFotografico) {
                             System.out.printf("(1) Executar Tarefa (fotografar)\n(2) Ligar/Desligar Camera\n");
                             int tarefa = scanner.nextInt();
@@ -366,17 +366,17 @@ public class Main {
                                try { 
                                 robos[resposta_2-1].executarTarefa();
                                } catch (Exception e) {
-                                e.printStackTrace();
-                               }
+                                   e.printStackTrace();
+                                }
                             }
                             else if (tarefa == 2) {
                                 if (df.isCamera_ligada()) 
-                                    df.desligar_camera();
+                                df.desligar_camera();
                                 else 
-                                    df.ligar_camera();
+                                df.ligar_camera();
                             }
                         }
-
+                        
                         else if (robos[resposta_2-1] instanceof DestruidorObstaculos) {
                             System.out.printf("(1) Executar Tarefa (destruir obstaculo)\n(2) Recarregar Bateria\n");
                             int tarefa = scanner.nextInt();
@@ -394,7 +394,22 @@ public class Main {
                                 dos.recarregarBateria(scanner.nextInt());
                             }
                         }
-
+                    }
+                    else if (resposta_4 == 4) {
+                        if (robos[resposta_2-1] instanceof RoboTerrestre)
+                        try {
+                            ((RoboTerrestre)robos[resposta_2-1]).executarMissao(a);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        else {
+                            try {
+                                ((RoboAereo)robos[resposta_2-1]).executarMissao(a);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } 
+                        
                     }
                 }
 
@@ -417,13 +432,13 @@ public class Main {
                     int pos_y_antiga = robos[resposta_2-1].getY();
                     int pos_z_antiga = robos[resposta_2-1].getZ();
                     
-
+                    
                     System.out.printf("Escolha para onde deseja movimentar o robô %s :\nNo eixo X: ",robos[resposta_2-1].getId());
                     int novoX = scanner.nextInt();
-
+                    
                     System.out.print("No eixo Y: ");
                     int novoY = scanner.nextInt();
-
+                    
                     System.out.print("No eixo Z: ");
                     int novoZ = scanner.nextInt();
                     
@@ -436,10 +451,29 @@ public class Main {
                     {
                         e.printStackTrace();
                     }         
-                  
+                    
+                }
+
+                else if (resposta_3 == 5) {
+                    if (((AgenteInteligente)robos[resposta_2-1]).temMissao())
+                        System.out.println(((AgenteInteligente)robos[resposta_2-1]).getMissao());
+                    else   
+                        System.out.println("O robo ainda nao possui uma missao.");
+                }
+                
+                else if (resposta_3 == 6) {
+                    if (!((AgenteInteligente)robos[resposta_2-1]).temMissao()) {
+                        System.out.println("Escolha a missao a ser adicionada:");
+                        for (int i = 1; i < missoes.length + 1; i++) 
+                            System.out.printf("(%d) %s\n", i, missoes[i-1]);
+                        int resposta_7 = scanner.nextInt();
+                        ((AgenteInteligente)robos[resposta_2-1]).definirMissao(missoes[resposta_7-1]);
+                    }
+                    else
+                        System.out.println("Missao substituida.");
                 }
             }
-
+            
             else if (resposta_1 == 3)//visualizar ambiente
             {
                 a.visualizarAmbiente();

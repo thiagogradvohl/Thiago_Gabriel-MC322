@@ -2,6 +2,7 @@ package robo;
 
 import exceptions.*;
 import sensores.*;
+import missao.*;
 
 public class BB_8 extends RoboTerrestre implements Atacante {
     //esse robo se locomove como uma bola, com frequencia angular, diametro e velocidade caracteristicos
@@ -10,8 +11,8 @@ public class BB_8 extends RoboTerrestre implements Atacante {
     private boolean modo_ataque;
     private int municao;
 
-    public BB_8(int diametro, int frequencia_rotacao, boolean modo_ataque, int X, int Y, int Z, String id, int velocidadeMaxima, int municao, Sensor sensor, EstadoRobo estado) {
-        super(X, Y, Z, id, velocidadeMaxima, 0, sensor, estado);
+    public BB_8(int diametro, int frequencia_rotacao, boolean modo_ataque, int X, int Y, int Z, String id, int velocidadeMaxima, int municao, Sensor sensor, EstadoRobo estado, Missao missao) {
+        super(X, Y, Z, id, velocidadeMaxima, 0, sensor, estado, missao);
         this.diametro = diametro;
         this.frequencia_rotacao = frequencia_rotacao;
         this.modo_ataque = modo_ataque;

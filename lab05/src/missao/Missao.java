@@ -11,4 +11,5 @@ public interface Missao {
     boolean isExecutada();
     List<Sensor> getSensoresAtivados();
     List<Entidade> getObstaculosDetectados();
+    List<String> getPosicoesVisitadas();
 }

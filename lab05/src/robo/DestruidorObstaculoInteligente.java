@@ -1,7 +1,6 @@
 package robo;
 
-import missao.Missao;
-import missao.MissaoDestruirObstaculo;
+import missao.*;
 import sensores.Sensor;
 import ambiente.*;
 import exceptions.MissaoIncompativelException;

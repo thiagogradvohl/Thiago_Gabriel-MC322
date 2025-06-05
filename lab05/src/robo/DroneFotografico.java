@@ -1,13 +1,14 @@
 package robo;
 import sensores.Sensor;
 import exceptions.*;
+import missao.*;
 
 public class DroneFotografico extends RoboAereo implements Fotografico {
     private boolean camera_ligada;
     private int fotos_tiradas; //quantidade de fotos tiradas
 
-    public DroneFotografico(int X, int Y, int altitude, int altitudeMaxima, String Id, Sensor sensor, EstadoRobo estado) {
-        super(X, Y, altitude, altitudeMaxima, Id, sensor, estado);
+    public DroneFotografico(int X, int Y, int altitude, int altitudeMaxima, String Id, Sensor sensor, EstadoRobo estado, Missao missao) {
+        super(X, Y, altitude, altitudeMaxima, Id, sensor, estado, missao);
         this.camera_ligada = false;
         this.fotos_tiradas = 0;
     }

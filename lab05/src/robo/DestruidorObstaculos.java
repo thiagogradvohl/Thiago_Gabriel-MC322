@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import entidade.*;
 import sensores.*;
 import ambiente.*;
+import missao.*;
 import obstaculo.*;
 import exceptions.*;
 
@@ -16,10 +17,9 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
     private List<Entidade> entidades_removidas = new ArrayList<>();
     
     
-    public DestruidorObstaculos(int X, int Y, int Z, String id, int velocidadeMaxima, int velocidade, int energia, int energia_minima, Sensor sensor, EstadoRobo estado)
-
+    public DestruidorObstaculos(int X, int Y, int Z, String id, int velocidadeMaxima, int velocidade, int energia, int energia_minima, Sensor sensor, EstadoRobo estado, Missao missao)
     {
-        super(X, Y, Z, id, velocidadeMaxima, velocidade, sensor, estado);
+        super(X, Y, Z, id, velocidadeMaxima, velocidade, sensor, estado, missao);
         this.energia = energia;
         this.energia_minima = energia_minima;
     }
@@ -154,7 +154,15 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
         }
         return out;
     }
+
     public void setEnergia_minima(int energia_minima) {
         this.energia_minima = energia_minima;
     } 
+
+    public void executarMissao(Ambiente a) throws Exception {
+        if (this.temMissao())
+            this.missao.executar(this, a);
+        else 
+            throw new SemMissaoException();
+    }
 }

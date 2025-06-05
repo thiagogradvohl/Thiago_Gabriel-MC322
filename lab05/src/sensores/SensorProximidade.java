@@ -1,6 +1,5 @@
 package sensores;
 import java.util.ArrayList;
-import java.util.List;
 
 import ambiente.*;
 import obstaculo.*;
@@ -18,15 +17,17 @@ public class SensorProximidade extends Sensor{
         //calcula a distancia entre o robo e uma dada entidade
         double distancia_x;
         double distancia_y;
+        double distancia_z;
         if (ent.getTipo() == TipoEntidade.OBSTACULO) {
             distancia_x = distancia1D(robo.getX(), ((Obstaculo)ent).getX1(), ent.getX());
             distancia_y = distancia1D(robo.getY(), ((Obstaculo)ent).getY1(), ent.getY());
+            distancia_z = distancia1D(robo.getZ(), 0, ent.getZ());
         }
         else {  //entidade for robo
             distancia_x = distancia1D(robo.getX(), ent.getX(), ent.getX());
-            distancia_y = distancia1D(robo.getY(), ent.getY(), ent.getY());  
+            distancia_y = distancia1D(robo.getY(), ent.getY(), ent.getY()); 
+            distancia_z = distancia1D(robo.getZ(), ent.getZ(), ent.getZ()); 
         }
-        double distancia_z = distancia1D(robo.getZ(), 0, ent.getZ());
         return  Math.sqrt(Math.pow(distancia_x, 2) + Math.pow(distancia_y, 2) + Math.pow(distancia_z, 2));
     }
 
@@ -40,34 +41,34 @@ public class SensorProximidade extends Sensor{
         return 0;
     }
 
-    public List<Entidade> identificarEntidades(Robo robo, Ambiente ambiente){
+    public ArrayList<Entidade> identificarEntidades(Robo robo, Ambiente ambiente){
         
-        List<Entidade> entidades_vizinhas = new ArrayList<>();
+        ArrayList<Entidade> entidades_vizinhas = new ArrayList<>();
 
         for(Entidade ent : ambiente.getEntidades())
         {   
-            if (ent != robo) {
-            double distancia = distancia3D(robo, ent);
+            if (!ent.equals(robo)) {
+                double distancia = distancia3D(robo, ent);
 
-            if(distancia == 0)   //robo colidiu
-                System.out.printf("Robô colidiu com o %s!\nPosição da colisão: (%d, %d, %d)", ent.getTipo(), robo.getX(), robo.getY(), robo.getZ());
+                if(distancia == 0.0)   //robo colidiu
+                    System.out.printf("Robô colidiu com o %s!\nPosição da colisão: (%d, %d, %d)\n", ent.getTipo(), robo.getX(), robo.getY(), robo.getZ());
             
-            else if(distancia <= getRaio())
-                entidades_vizinhas.add(ent);
+                else if(distancia <= getRaio())
+                    entidades_vizinhas.add(ent);
             }
         }
 
         return entidades_vizinhas;
     }
 
-    public void exibirEntidades(List<Entidade> entidades) {
+    public void exibirEntidades(ArrayList<Entidade> entidades) {
         for(Entidade ent : entidades)
             System.out.printf("    |-> %s", ent.getDescricao());
     }
 
     @Override
     public void monitorar(Robo robo, Ambiente ambiente) {
-        List<Entidade> entidades_vizinhas = identificarEntidades(robo, ambiente);
+        ArrayList<Entidade> entidades_vizinhas = identificarEntidades(robo, ambiente);
         if (!entidades_vizinhas.isEmpty()) {
             System.out.printf("->Entidades encontrados pelo Sensor de Proximidade (no raio de proximidade igual a %.1f):\n", getRaio());
             exibirEntidades(entidades_vizinhas);
