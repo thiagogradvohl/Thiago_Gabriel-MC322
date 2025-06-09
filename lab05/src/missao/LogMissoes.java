@@ -7,6 +7,7 @@ import sensores.*;
 import entidade.*;
 
 public class LogMissoes {
+    //essa classe eh responsavel por registrar o log de missoes em um arquivo de texto
     Missao[] missoes;
 
     public LogMissoes(Missao[] missoes) {

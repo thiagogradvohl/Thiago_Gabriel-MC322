@@ -73,4 +73,12 @@ public class MissaoExplorar implements Missao {
         out += "Missao Explorar raio de " + this.raioExploracao;
         return out;
     }
+
+    public double getRaioExploracao() {
+        return raioExploracao;
+    }
+
+    public void setRaioExploracao(double raioExploracao) {
+        this.raioExploracao = raioExploracao;
+    }
 }

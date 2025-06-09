@@ -62,27 +62,31 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
     
     @Override
     public void executarTarefa() throws Exception {
-        if (this.energia >= this.energia_minima) {
-            boolean tem_obstaculo = false;
-            for (Entidade e: this.entidades_proximas) {
-                if (e instanceof Obstaculo)
-                    tem_obstaculo = true;
-            }
-            if (!tem_obstaculo)
-            {
-                System.out.println("Não há obstáculos próximos a serem destruídos.");
-                return;
-            }
+        if (this.getEstado() == EstadoRobo.LIGADO) {
+            if (this.energia >= this.energia_minima) {
+                boolean tem_obstaculo = false;
+                for (Entidade e: this.entidades_proximas) {
+                    if (e instanceof Obstaculo)
+                        tem_obstaculo = true;
+                }
+                if (!tem_obstaculo)
+                {
+                    System.out.println("Não há obstáculos próximos a serem destruídos.");
+                    return;
+                }
 
-            this.energia -= this.energia_minima;   //perde energia  
-            for (Entidade entidade : this.entidades_proximas) {
-                if (entidade instanceof Obstaculo) {
-                    this.entidades_removidas.add(entidade);
+                this.energia -= this.energia_minima;   //perde energia  
+                for (Entidade entidade : this.entidades_proximas) {
+                    if (entidade instanceof Obstaculo) {
+                        this.entidades_removidas.add(entidade);
+                    }
                 }
             }
+            else
+                throw new BateriaInsuficienteException();
         }
         else
-            throw new BateriaInsuficienteException();
+            throw new RoboDesligadoException();
         
     }
     
@@ -158,11 +162,4 @@ public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAut
     public void setEnergia_minima(int energia_minima) {
         this.energia_minima = energia_minima;
     } 
-
-    public void executarMissao(Ambiente a) throws Exception {
-        if (this.temMissao())
-            this.missao.executar(this, a);
-        else 
-            throw new SemMissaoException();
-    }
 }

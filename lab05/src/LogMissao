@@ -17,14 +17,13 @@ Obstaculos Detectados:
 Status: Nao Executada
 
 Posicoes Visitadas:
-- (15, 2, 0)
+- Ainda nao foram visitadas posicoes
 
 Sensores Ativados:
-- Sensor de Proximidade: Raio de varredura = 5.0
+- Nenhum sensor foi ativado
 
 Obstaculos Detectados:
-- Obstaculo do tipo RIO ocupa o espaco (5, 5) x (15, 9) x (0, 0)
-
+- Nenhum obstaculo foi detectdo
 
 #####################################################################################################################################
 ====== LOG DA Missao Explorar raio de 10.0 ======

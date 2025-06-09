@@ -1,6 +1,5 @@
 package robo;
 import sensores.Sensor;
-import ambiente.Ambiente;
 import exceptions.*;
 import missao.*;
 
@@ -105,11 +104,4 @@ public class DroneEntregador extends RoboAereo {
         this.produto = produto;
     } 
 
-    public void executarMissao(Ambiente a) throws Exception {
-    if (this.temMissao())
-        this.missao.executar(this, a);
-    else 
-        throw new SemMissaoException();
-    }
-    
 }

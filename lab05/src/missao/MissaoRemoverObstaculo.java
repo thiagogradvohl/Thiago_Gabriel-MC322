@@ -46,6 +46,9 @@ public class MissaoRemoverObstaculo implements Missao {
     
     @Override
     public void executar(Robo r, Ambiente a) throws Exception {
+        //remove obstaculo definido como alvo e atualiza o ambiente.
+        //isso soh eh possivel caso o robo encontre o obstaculo proximo a ele
+        //atraves do sensor de proximidade aclopado
         String posicao = "(" + r.getX() + ", " + r.getY() + ", " + r.getZ() + ")";
         if (!this.posicoesVisitadas.contains(posicao))
             this.posicoesVisitadas.add(posicao);
@@ -83,6 +86,14 @@ public class MissaoRemoverObstaculo implements Missao {
         out += this.alvo.getTipoObs();
 
         return out;
+    }
+
+    public Obstaculo getAlvo() {
+        return alvo;
+    }
+
+    public void setAlvo(Obstaculo alvo) {
+        this.alvo = alvo;
     }
 
 }

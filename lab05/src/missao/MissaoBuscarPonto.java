@@ -78,4 +78,16 @@ public class MissaoBuscarPonto implements Missao {
         out += " (" + this.X + ", " + this.Y + ", " + this.Z + ")"; 
         return out;
     }
+
+    public void setX(int x) {
+        X = x;
+    }
+
+    public void setY(int y) {
+        Y = y;
+    }
+
+    public void setZ(int z) {
+        Z = z;
+    }
 }
