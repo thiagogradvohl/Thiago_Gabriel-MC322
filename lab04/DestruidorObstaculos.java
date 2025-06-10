@@ -1,4 +1,7 @@
 import java.util.List;
+
+import exceptions.BateriaInsuficienteException;
+
 import java.util.ArrayList;
 public class DestruidorObstaculos extends RoboTerrestre implements DestruidorAutonomo {
     //Subclasse de robos terrestres que percorre trechos de modo autonomo, usando uma bateria que descarrega pelo caminho

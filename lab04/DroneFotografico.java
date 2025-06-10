@@ -1,3 +1,5 @@
+import exceptions.CameraDesligadaException;
+
 public class DroneFotografico extends RoboAereo implements Fotografico {
     private boolean camera_ligada;
     private int fotos_tiradas; //quantidade de fotos tiradas
